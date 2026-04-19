@@ -1,0 +1,127 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+}
+
+.modal {
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: slideUp 0.3s ease;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.closeBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.geoBtn {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.15s;
+}
+
+.geoBtn:hover {
+    background: #2d3d55;
+}
+
+.geoBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+    border: 1px solid transparent;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.searchInput:focus {
+    border-color: var(--accent-gold);
+}
+
+.searchInput::placeholder {
+    color: var(--text-secondary);
+}
+
+.cityList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.cityBtn {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.15s;
+}
+
+.cityBtn:hover {
+    background: var(--bg-elevated);
+}
+
+.cityBtnActive {
+    background: var(--bg-elevated);
+    border-left: 3px solid var(--accent-gold);
+}
+
+.cityName {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.cityCoords {
+    font-size: 11px;
+    color: var(--text-secondary);
+}

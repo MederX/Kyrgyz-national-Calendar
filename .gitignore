@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+
+Front/node_modules/
+Front/dist/
+Front/dev-dist/
+
+Back/__pycache__/
+Back/uvicorn.log
+
+out.json
+*.bsp
+*.download*
