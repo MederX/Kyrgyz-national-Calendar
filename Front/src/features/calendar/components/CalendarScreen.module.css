@@ -33,7 +33,7 @@
     height: 75vh;
     min-width: 500px;
     min-height: 500px;
-    opacity: 0.05;
+    opacity: 0.04;
     pointer-events: none;
     z-index: 0;
     color: var(--text-primary);
@@ -57,10 +57,11 @@
 
 .title {
     font-family: var(--font-family-serif);
-    font-size: 30px;
+    font-size: 36px;
     font-weight: 700;
     color: var(--text-primary);
-    letter-spacing: -0.2px;
+    letter-spacing: -0.3px;
+    line-height: 1.1;
 }
 
 .controls {
@@ -213,8 +214,8 @@
 }
 
 .monthHeader {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     color: var(--text-primary);
     letter-spacing: 0.5px;
     text-align: left;
@@ -225,9 +226,9 @@
     flex-shrink: 0;
     padding: 4px 8px;
     border-radius: 999px;
-    background: rgba(13, 148, 136, 0.14);
-    border: 1px solid rgba(45, 212, 191, 0.22);
-    color: var(--color-ramadan);
+    background: rgba(46, 196, 182, 0.14);
+    border: 1px solid rgba(46, 196, 182, 0.3);
+    color: var(--color-islamic);
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.04em;

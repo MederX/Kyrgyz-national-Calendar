@@ -7,31 +7,35 @@
 
 :root {
   /* Default Dark Theme (Nature/Mountains Night) */
-  --bg-primary: #0b1A27;
-  /* Deep night sky over mountains */
-  --bg-surface: #142F34;
-  /* Coniferous Green */
-  --bg-elevated: #1F3A41;
-  --bg-border: rgba(255, 255, 255, 0.08);
+  --bg-primary: #08131C;
+  --bg-surface: #112028;
+  --bg-elevated: #1A2E36;
+  --bg-border: rgba(255, 255, 255, 0.10);
 
   /* Accents */
   --accent-gold: #E9C46A;
-  /* Soft gold / rye */
   --accent-gold-light: #F4A261;
 
-  /* Text */
-  --text-primary: #F3F0E6;
-  /* Bleached felt */
-  --text-secondary: #B0B9BE;
+  /* Text — improved contrast */
+  --text-primary: #EAEAEA;
+  --text-secondary: #93A3AB;
+  --text-muted: #56686F;
 
-  /* Event Colors (Natural palette) */
-  --color-new-moon: #1D3557;
-  --color-full-moon: #E9C46A;
+  /* Role-based Event Colors */
+  --color-moon: #E9C46A;
+  /* Gold — Lunar events */
+  --color-islamic: #2EC4B6;
+  /* Teal-Green — Islamic events */
+  --color-holiday: #ef4444;
+  /* Red — State holidays */
   --color-togool: #8ECAE6;
-  --color-ramadan: #C76A50;
-  /* Terracotta / clay */
-  --color-eid: #2A9D8F;
-  /* Deep Malachite */
+  /* Sky Blue — Togool */
+
+  /* Legacy aliases for backwards compat */
+  --color-new-moon: #8ECAE6;
+  --color-full-moon: #E9C46A;
+  --color-ramadan: #2EC4B6;
+  --color-eid: #2EC4B6;
 
   /* Radii */
   --radius-sm: 6px;
@@ -46,24 +50,27 @@
 [data-theme='light'] {
   /* Light Theme (Old Parchment) */
   --bg-primary: #F4EBD9;
-  /* Parchment backing */
-  --bg-surface: #EADBC0;
-  /* Slightly darker parchment */
-  --bg-elevated: #DFCEB4;
-  --bg-border: rgba(45, 35, 30, 0.1);
+  --bg-surface: #E8D8C0;
+  --bg-elevated: #DACFB8;
+  --bg-border: rgba(45, 35, 30, 0.12);
 
   --accent-gold: #AF6A31;
-  /* Deep clay/gold */
   --accent-gold-light: #D58943;
 
-  --text-primary: #2D231E;
-  /* Charcoal/Dark Brown */
+  --text-primary: #1E1A17;
   --text-secondary: #5A4C45;
+  --text-muted: #8C7B72;
 
+  /* Role-based (light) */
+  --color-moon: #C97A18;
+  --color-islamic: #1D736A;
+  --color-holiday: #c42b2b;
+  --color-togool: #1E6C8E;
+
+  /* Legacy */
   --color-new-moon: #4A5D6B;
   --color-full-moon: #E4A620;
-  --color-togool: #1E6C8E;
-  --color-ramadan: #AD4B33;
+  --color-ramadan: #1D736A;
   --color-eid: #1D736A;
 }
 
@@ -163,5 +170,20 @@ button {
 
   to {
     opacity: 1;
+  }
+}
+
+/* ── Today pulse animation ── */
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0px rgba(233, 196, 106, 0.5);
+  }
+
+  70% {
+    box-shadow: 0 0 0 6px rgba(233, 196, 106, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0px rgba(233, 196, 106, 0);
   }
 }

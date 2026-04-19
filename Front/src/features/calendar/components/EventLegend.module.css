@@ -1,9 +1,9 @@
 .legendContainer {
     display: flex;
     justify-content: center;
-    gap: 32px;
+    gap: 40px;
     flex-wrap: wrap;
-    padding: 24px;
+    padding: 28px 32px;
     background: var(--bg-surface);
     border-radius: var(--radius-lg);
     border: 1px solid var(--bg-border);
@@ -30,7 +30,7 @@
 .itemGroup {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 }
 
 .item {
@@ -60,7 +60,8 @@
 }
 
 .label {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-primary);
     font-weight: 500;
+    line-height: 1.4;
 }

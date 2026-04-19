@@ -8,13 +8,14 @@ interface Props {
 
 const COLOR_MAP: Record<string, string> = {
     new_moon: 'var(--color-new-moon)',
-    full_moon: 'var(--color-full-moon)',
+    full_moon: 'var(--color-moon)',
     togool: 'var(--color-togool)',
-    eid_al_fitr: 'var(--color-eid)',
-    ramadan: 'var(--color-ramadan)',
+    eid_al_fitr: 'var(--color-islamic)',
+    ramadan: 'var(--color-islamic)',
     kadyr_tun: 'var(--accent-gold)',
-    ai_bashi: 'var(--color-ramadan)',
-    kurman_ait: 'var(--color-eid)',
+    ai_bashi: 'var(--color-islamic)',
+    kurman_ait: 'var(--color-islamic)',
+    holiday: 'var(--color-holiday)',
 };
 
 export const EventMarker: React.FC<Props> = ({ type }) => {
@@ -37,7 +38,7 @@ export const EventMarker: React.FC<Props> = ({ type }) => {
         return <span style={{ fontSize: '15px', lineHeight: 1 }}>☾</span>;
     }
     if (type === 'holiday') {
-        return <span className={styles.dot} style={{ backgroundColor: '#ef4444' }} />;
+        return <span className={styles.dot} style={{ backgroundColor: 'var(--color-holiday)' }} />;
     }
     if (type === 'new_moon') {
         return (

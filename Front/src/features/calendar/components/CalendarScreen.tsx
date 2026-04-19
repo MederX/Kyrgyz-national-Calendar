@@ -178,9 +178,14 @@ export const CalendarScreen: React.FC = () => {
                     <h1 className={styles.title}>
                         {language === 'ky' ? 'Кыргыз Элинин Улуттук ай күн календары' : 'Национальный лунно-солнечный календарь кыргызского народа'}
                     </h1>
-                    <span className={styles.animalYear} style={{ display: 'block', fontSize: '18px', fontWeight: 600, color: 'var(--text-secondary)', marginTop: '8px' }}>
-                        {selectedYear} — {language === 'ky' ? 'Жыл:' : 'Год:'} {animalName}
-                    </span>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginTop: '10px' }}>
+                        <span style={{ fontSize: '32px', fontWeight: 800, color: 'var(--accent-gold)', fontFamily: 'var(--font-family-serif)', lineHeight: 1 }}>
+                            {selectedYear}
+                        </span>
+                        <span style={{ fontSize: '15px', fontWeight: 500, color: 'var(--text-secondary)' }}>
+                            {language === 'ky' ? 'Жыл:' : 'Год:'} {animalName}
+                        </span>
+                    </div>
                 </div>
 
                 <div className={styles.controls}>
