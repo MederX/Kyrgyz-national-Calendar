@@ -1,5 +1,4 @@
 .cell {
-    aspect-ratio: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,9 +7,9 @@
     border-radius: 14px;
     background: transparent;
     transition: all 0.2s ease;
-    min-height: 38px;
+    min-height: 56px;
     position: relative;
-    padding: 2px 0;
+    padding: 6px 0;
 }
 
 .active {
@@ -84,13 +83,13 @@
 }
 
 .ramadanBandContinuesLeft {
-    left: -1px;
+    left: -2px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
 
 .ramadanBandContinuesRight {
-    right: -1px;
+    right: -2px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
