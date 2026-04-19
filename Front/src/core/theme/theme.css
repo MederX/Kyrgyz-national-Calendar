@@ -50,9 +50,9 @@
 [data-theme='light'] {
   /* Light Theme (Old Parchment) */
   --bg-primary: #F4EBD9;
-  --bg-surface: #E8D8C0;
-  --bg-elevated: #DACFB8;
-  --bg-border: rgba(45, 35, 30, 0.12);
+  --bg-surface: #EDE0CA;
+  --bg-elevated: #E3D5BA;
+  --bg-border: rgba(100, 75, 50, 0.14);
 
   --accent-gold: #AF6A31;
   --accent-gold-light: #D58943;
