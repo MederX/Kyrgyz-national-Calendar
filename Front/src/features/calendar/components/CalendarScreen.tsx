@@ -36,6 +36,10 @@ const ANIMAL_NAMES_RU = [
     'Мышь', 'Корова', 'Барс', 'Заяц', 'Дракон', 'Змея', 'Лошадь', 'Овца', 'Обезьяна', 'Петух', 'Собака', 'Кабан'
 ];
 
+const ANIMAL_EMOJIS = [
+    '🐀', '🐄', '🐯', '🐇', '🐉', '🐍', '🐎', '🐑', '🐒', '🐓', '🐕', '🐗'
+];
+
 export const CalendarScreen: React.FC = () => {
     const {
         selectedYear,
@@ -104,7 +108,9 @@ export const CalendarScreen: React.FC = () => {
         return `${d} ${monthName.split(' ')[0]}`;
     }, [selectedDateStr, language]);
 
-    const animalName = language === 'ky' ? ANIMAL_NAMES_KY[(selectedYear - 4) % 12] : ANIMAL_NAMES_RU[(selectedYear - 4) % 12];
+    const animalIndex = (selectedYear - 4) % 12;
+    const animalName = language === 'ky' ? ANIMAL_NAMES_KY[animalIndex] : ANIMAL_NAMES_RU[animalIndex];
+    const animalEmoji = ANIMAL_EMOJIS[animalIndex];
     const ramadanSummary = useMemo(() => {
         if (periods.length === 0) {
             return null;
@@ -183,7 +189,7 @@ export const CalendarScreen: React.FC = () => {
                             {selectedYear}
                         </span>
                         <span style={{ fontSize: '15px', fontWeight: 500, color: 'var(--text-secondary)' }}>
-                            {language === 'ky' ? 'Жыл:' : 'Год:'} {animalName}
+                            {language === 'ky' ? 'Жыл:' : 'Год:'} {animalEmoji} {animalName}
                         </span>
                     </div>
                 </div>
