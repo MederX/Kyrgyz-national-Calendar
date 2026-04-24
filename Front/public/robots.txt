@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kyrgyz-national-calendar.onrender.com/sitemap.xml
