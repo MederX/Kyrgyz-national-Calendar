@@ -28,6 +28,13 @@ const MONTH_NAMES_RU = [
     'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
 ];
 
+const KY_DAY_NAMES = [
+    '', 'бири', 'экиси', 'үчү', 'төртү', 'беши', 'алтысы', 'жетиси', 'сегизи', 'тогузу', 'ону',
+    'он бири', 'он экиси', 'он үчү', 'он төртү', 'он беши', 'он алтысы', 'он жетиси', 'он сегизи', 'он тогузу', 'жыйырмасы',
+    'жыйырма бири', 'жыйырма экиси', 'жыйырма үчү', 'жыйырма төртү', 'жыйырма беши', 'жыйырма алтысы', 'жыйырма жетиси', 'жыйырма сегизи', 'жыйырма тогузу', 'отузу',
+    'отуз бири'
+];
+
 const ANIMAL_NAMES_KY = [
     'Чычкан', 'Уй', 'Барс', 'Коён', 'Улуу', 'Жылан', 'Жылкы', 'Кой', 'Маймыл', 'Тоок', 'Ит', 'Доңуз'
 ];
@@ -104,8 +111,19 @@ export const CalendarScreen: React.FC = () => {
     const selectedDateLabel = useMemo(() => {
         if (!selectedDateStr) return '';
         const [, m, d] = selectedDateStr.split('-').map(Number);
-        const monthName = language === 'ky' ? MONTH_NAMES_KY[m - 1] : MONTH_NAMES_RU[m - 1];
-        return `${d} ${monthName.split(' ')[0]}`;
+
+        if (language === 'ky') {
+            let baseMonth = MONTH_NAMES_KY[m - 1].split('(')[0].trim();
+            if (baseMonth.endsWith('айы')) {
+                baseMonth = baseMonth.replace('айы', 'айынын');
+            } else {
+                baseMonth = baseMonth + ' айынын';
+            }
+            return `${baseMonth} ${KY_DAY_NAMES[d]}`;
+        }
+
+        const monthName = MONTH_NAMES_RU[m - 1];
+        return `${d} ${monthName.toLowerCase()}`;
     }, [selectedDateStr, language]);
 
     const animalIndex = (selectedYear - 4) % 12;

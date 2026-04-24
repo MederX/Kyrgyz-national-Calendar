@@ -12,7 +12,7 @@ export const TogoolInfoModal: React.FC<Props> = ({ language, onClose }) => {
         <div className={styles.backdrop} onClick={onClose}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
-                    <h3>{language === 'ky' ? 'Тоогол деген эмне?' : 'Что такое Тоогол?'}</h3>
+                    <h3>{language === 'ky' ? 'Тогол деген эмне?' : 'Что такое Тогол?'}</h3>
                     <button className={styles.closeBtn} onClick={onClose}>✕</button>
                 </div>
 
@@ -36,7 +36,7 @@ export const TogoolInfoModal: React.FC<Props> = ({ language, onClose }) => {
                     {language === 'ky' ? (
                         <div className={styles.text}>
                             <p>
-                                <strong>Тоогол</strong> — Айдын Үркөр (Плеядалар) топ жылдызы менен
+                                <strong>Тогол</strong> - Айдын Үркөр (Плеяда) топ жылдызы менен
                                 асман сферасында бир сызыкта кесилишүү (же жакындашуу) учуру.
                             </p>
                             <p>
@@ -44,7 +44,7 @@ export const TogoolInfoModal: React.FC<Props> = ({ language, onClose }) => {
                                 мезгил алмашуусун жана табияттын өзгөрүүсүн алдын ала билүү үчүн колдонуп келишкен.
                             </p>
                             <p>
-                                Ай менен Үркөр тогошкон күнү аба ырайы кескин өзгөрүшү мүмкүн —
+                                Ай менен Үркөр тогошкон күнү аба ырайы кескин өзгөрүшү мүмкүн -
                                 шамал согуп, жаан-чачын күтүлөт. Бул кыргыздардын салттуу жыл сүрүүсүнүн
                                 өзгөчө негизи болуп саналат.
                             </p>
@@ -52,7 +52,7 @@ export const TogoolInfoModal: React.FC<Props> = ({ language, onClose }) => {
                     ) : (
                         <div className={styles.text}>
                             <p>
-                                <strong>Тоогол</strong> — это момент схождения (или максимального сближения)
+                                <strong>Тогол</strong> - это момент схождения (или максимального сближения)
                                 Луны со звездным скоплением Плеяды (Үркөр).
                             </p>
                             <p>
@@ -60,7 +60,7 @@ export const TogoolInfoModal: React.FC<Props> = ({ language, onClose }) => {
                                 предсказания погоды, смены сезонов и изменений в природе.
                             </p>
                             <p>
-                                Считается, что в день Тоогола может резко измениться погода —
+                                Считается, что в день Тогола может резко измениться погода -
                                 ожидается сильный ветер или осадки. Это уникальная основа
                                 традиционного кыргызского календаря.
                             </p>

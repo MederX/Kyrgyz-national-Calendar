@@ -34,7 +34,7 @@ export const EventLegend: React.FC<Props> = ({ language }) => {
             items: [
                 { type: 'new_moon', label_ky: 'Ай жаңырган күн', label_ru: 'Новолуние', renderIcon: () => <TundukIcon /> },
                 { type: 'full_moon', label_ky: 'Ай толгон күн', label_ru: 'Полнолуние', renderIcon: () => <span style={{ fontSize: '11px', marginRight: '6px' }}>🌕</span> },
-                { type: 'togool', label_ky: 'Тоогол ⓘ', label_ru: 'Тоогол ⓘ', isInteractive: true, onClick: () => setShowTogoolInfo(true), renderIcon: () => <TogoolIcon /> },
+                { type: 'togool', label_ky: 'Тогол ⓘ', label_ru: 'Тогол ⓘ', isInteractive: true, onClick: () => setShowTogoolInfo(true), renderIcon: () => <TogoolIcon /> },
             ]
         },
         {
