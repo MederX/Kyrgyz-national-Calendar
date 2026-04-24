@@ -200,7 +200,7 @@ export const CalendarScreen: React.FC = () => {
             <header className={styles.header}>
                 <div className={styles.headerText}>
                     <h1 className={styles.title}>
-                        {language === 'ky' ? 'Кыргыз Элинин Улуттук ай күн календары' : 'Национальный лунно-солнечный календарь кыргызского народа'}
+                        {language === 'ky' ? 'Кыргыз Элинин Улуттук ай күн календары' : 'Кыргызский национальный календарь'}
                     </h1>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginTop: '10px' }}>
                         <span style={{ fontSize: '32px', fontWeight: 800, color: 'var(--accent-gold)', fontFamily: 'var(--font-family-serif)', lineHeight: 1 }}>
