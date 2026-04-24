@@ -1,3 +1,4 @@
+https://kyrgyz-national-calendar.onrender.com/
 # Kyrgyz Root Calendar
 
 Backend on FastAPI computes astronomical events for a Kyrgyz traditional calendar. Frontend on React/Vite renders a yearly calendar with moon phases, Togool events, Ramadan, Eid al-Fitr, Muchol start, and state holidays.
