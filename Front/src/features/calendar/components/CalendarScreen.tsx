@@ -146,9 +146,9 @@ export const CalendarScreen: React.FC = () => {
 
             if (language === 'ky') {
                 const startDay = startDate.getUTCDate();
-                const startMonth = MONTH_NAMES_RU[startDate.getUTCMonth()].toLowerCase();
+                const startMonth = MONTH_NAMES_KY[startDate.getUTCMonth()].split('(')[0].trim().toLowerCase();
                 const endDay = endDate.getUTCDate();
-                const endMonth = MONTH_NAMES_RU[endDate.getUTCMonth()].toLowerCase();
+                const endMonth = MONTH_NAMES_KY[endDate.getUTCMonth()].split('(')[0].trim().toLowerCase();
                 return `${startDay}-${startMonth} - ${endDay}-${endMonth}`;
             }
 
