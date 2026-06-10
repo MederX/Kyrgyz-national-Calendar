@@ -1,0 +1,233 @@
+<style>
+  .knc-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .knc-card {
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #08131c;
+    color: #eef4f5;
+    cursor: pointer;
+  }
+  .knc-card:hover { border-color: #e9c46a; }
+  .pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 390px;
+  }
+  .theme {
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .dark-a {
+    background:
+      radial-gradient(circle at 50% 24%, rgba(142,202,230,.08), transparent 32%),
+      linear-gradient(180deg, #08131c, #071018);
+  }
+  .light-a {
+    background:
+      radial-gradient(circle at 50% 24%, rgba(175,106,49,.08), transparent 34%),
+      linear-gradient(180deg, #f7efe2, #efe2cd);
+    color: #211b17;
+  }
+  .dark-b {
+    background:
+      radial-gradient(circle at 20% 10%, rgba(233,196,106,.06), transparent 28%),
+      linear-gradient(180deg, #0b1720 0%, #08131c 54%, #071017 100%);
+  }
+  .light-b {
+    background:
+      radial-gradient(circle at 20% 10%, rgba(233,196,106,.14), transparent 30%),
+      linear-gradient(180deg, #fff8ec 0%, #f3e7d4 55%, #eadcc6 100%);
+    color: #1f1a16;
+  }
+  .dark-c {
+    background:
+      linear-gradient(135deg, rgba(233,196,106,.04), transparent 26%),
+      linear-gradient(180deg, #0e1a22, #0a141b);
+  }
+  .light-c {
+    background:
+      linear-gradient(135deg, rgba(42,75,64,.05), transparent 28%),
+      linear-gradient(180deg, #faf7ef, #eee7db);
+    color: #1f1a16;
+  }
+  .watermark {
+    position: absolute;
+    inset: auto -20px -80px auto;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    border: 30px solid currentColor;
+    opacity: .035;
+  }
+  .light-a .watermark { opacity: .04; }
+  .light-b .watermark { opacity: .035; }
+  .light-c .watermark { opacity: .03; }
+  .label {
+    position: relative;
+    z-index: 1;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    color: #e9c46a;
+    margin-bottom: 16px;
+  }
+  .light-a .label, .light-b .label, .light-c .label { color: #9b6530; }
+  .title {
+    position: relative;
+    z-index: 1;
+    font-family: Georgia, serif;
+    font-size: 22px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .control {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 11px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+  .light-a .control, .light-b .control, .light-c .control {
+    border-color: rgba(80,55,35,.16);
+    background: rgba(255,255,255,.38);
+  }
+  .month {
+    position: relative;
+    z-index: 1;
+    margin-top: 8px;
+    padding: 13px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.025);
+  }
+  .light-a .month, .light-b .month, .light-c .month {
+    border-color: rgba(80,55,35,.14);
+    background: rgba(255,255,255,.28);
+  }
+  .month h4 {
+    margin: 0 0 12px;
+    font-family: system-ui, sans-serif;
+    font-size: 14px;
+    letter-spacing: .04em;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+  .day {
+    height: 28px;
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+    font-family: system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .event {
+    border: 1px solid rgba(233,196,106,.3);
+    color: #e9c46a;
+    background: rgba(233,196,106,.08);
+  }
+  .light-a .event, .light-b .event, .light-c .event {
+    color: #8b5a21;
+    border-color: rgba(139,90,33,.25);
+    background: rgba(139,90,33,.07);
+  }
+  .body {
+    padding: 14px 16px 18px;
+    background: rgba(255,255,255,.035);
+    min-height: 156px;
+  }
+  .body h3 { margin: 0 0 8px; font-size: 16px; }
+  .body p { margin: 0; font-size: 13px; line-height: 1.45; color: #c1ced2; }
+  @media (max-width: 980px) {
+    .knc-options { grid-template-columns: 1fr; }
+  }
+</style>
+
+<h2>Фон и дневная/темная тема</h2>
+<p class="subtitle">Убираем грубую шершавость. Цель: спокойная поверхность, хороший контраст, национальная атмосфера без визуальной грязи.</p>
+
+<div class="knc-options">
+  <div class="knc-card card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="pair">
+      <div class="theme dark-a">
+        <div class="watermark"></div>
+        <div class="label">ТҮН</div>
+        <div class="title">Кыргыз ай күн календары</div>
+        <div class="control">2026 · Бишкек</div>
+        <div class="month"><h4>БИРДИН АЙЫ</h4><div class="grid"><span class="day">1</span><span class="day">2</span><span class="day event">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span></div></div>
+      </div>
+      <div class="theme light-a">
+        <div class="watermark"></div>
+        <div class="label">КҮН</div>
+        <div class="title">Кыргыз ай күн календары</div>
+        <div class="control">2026 · Бишкек</div>
+        <div class="month"><h4>БИРДИН АЙЫ</h4><div class="grid"><span class="day">1</span><span class="day">2</span><span class="day event">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span></div></div>
+      </div>
+    </div>
+    <div class="body">
+      <h3>A. Чистый parchment</h3>
+      <p>Сохраняет теплую дневную тему, но почти убирает шум. Самый близкий к текущей идее, только спокойнее.</p>
+    </div>
+  </div>
+
+  <div class="knc-card card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="pair">
+      <div class="theme dark-b">
+        <div class="watermark"></div>
+        <div class="label">ТҮН</div>
+        <div class="title">Кыргыз ай күн календары</div>
+        <div class="control">2026 · Бишкек</div>
+        <div class="month"><h4>БИРДИН АЙЫ</h4><div class="grid"><span class="day">1</span><span class="day">2</span><span class="day event">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span></div></div>
+      </div>
+      <div class="theme light-b">
+        <div class="watermark"></div>
+        <div class="label">КҮН</div>
+        <div class="title">Кыргыз ай күн календары</div>
+        <div class="control">2026 · Бишкек</div>
+        <div class="month"><h4>БИРДИН АЙЫ</h4><div class="grid"><span class="day">1</span><span class="day">2</span><span class="day event">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span></div></div>
+      </div>
+    </div>
+    <div class="body">
+      <h3>B. Теплый свет</h3>
+      <p>Дневная тема более светлая и гостеприимная. Но есть риск снова уйти в бежевую “старую бумагу”.</p>
+    </div>
+  </div>
+
+  <div class="knc-card card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="pair">
+      <div class="theme dark-c">
+        <div class="watermark"></div>
+        <div class="label">ТҮН</div>
+        <div class="title">Кыргыз ай күн календары</div>
+        <div class="control">2026 · Бишкек</div>
+        <div class="month"><h4>БИРДИН АЙЫ</h4><div class="grid"><span class="day">1</span><span class="day">2</span><span class="day event">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span></div></div>
+      </div>
+      <div class="theme light-c">
+        <div class="watermark"></div>
+        <div class="label">КҮН</div>
+        <div class="title">Кыргыз ай күн календары</div>
+        <div class="control">2026 · Бишкек</div>
+        <div class="month"><h4>БИРДИН АЙЫ</h4><div class="grid"><span class="day">1</span><span class="day">2</span><span class="day event">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span></div></div>
+      </div>
+    </div>
+    <div class="body">
+      <h3>C. Чистый современный</h3>
+      <p>Меньше этно-бумажности, больше современного интерфейса. Хорош для читаемости, но может стать слишком нейтральным.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,283 @@
+<style>
+  .options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .design-card {
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #0a141b;
+    color: #eef4f5;
+    cursor: pointer;
+  }
+  .design-card:hover { border-color: #e9c46a; }
+  .demo {
+    padding: 22px;
+    min-height: 430px;
+    background:
+      linear-gradient(135deg, rgba(233,196,106,.035), transparent 30%),
+      linear-gradient(180deg, #0e1a22, #0a141b);
+  }
+  .month-title {
+    font: 800 18px/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: .04em;
+    margin-bottom: 14px;
+  }
+  .week,
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+  }
+  .week {
+    color: #a9b9bf;
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .cell {
+    height: 58px;
+    border-radius: 8px;
+    position: relative;
+    border: 1px solid transparent;
+    background: rgba(255,255,255,.025);
+  }
+  .num {
+    position: absolute;
+    top: 8px;
+    left: 9px;
+    font: 700 19px/1 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #f4f8f8;
+    z-index: 2;
+  }
+  .badge {
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,.08);
+    z-index: 2;
+  }
+  .badge svg {
+    width: 16px;
+    height: 16px;
+  }
+  .ai { color: #8ecae6; }
+  .ramadan { color: #2ec4b6; }
+  .eid { color: #34d399; }
+  .moon { color: #e9c46a; }
+  .togol { color: #8ecae6; }
+  .period {
+    border-color: rgba(46,196,182,.22);
+  }
+  .a .period {
+    background: rgba(46,196,182,.12);
+  }
+  .b .period {
+    background:
+      linear-gradient(90deg, rgba(46,196,182,.20), rgba(46,196,182,.08));
+  }
+  .c .period {
+    background: rgba(46,196,182,.07);
+    box-shadow: inset 0 -4px 0 rgba(46,196,182,.42);
+  }
+  .period-start {
+    border-top-left-radius: 999px;
+    border-bottom-left-radius: 999px;
+  }
+  .period-end {
+    border-top-right-radius: 999px;
+    border-bottom-right-radius: 999px;
+  }
+  .period-mid {
+    border-radius: 2px;
+  }
+  .legend {
+    display: grid;
+    gap: 9px;
+    margin-top: 20px;
+    padding: 13px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.035);
+  }
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .legend-row svg {
+    width: 19px;
+    height: 19px;
+  }
+  .swatch {
+    width: 28px;
+    height: 16px;
+    border-radius: 999px;
+    background: rgba(46,196,182,.16);
+    border: 1px solid rgba(46,196,182,.28);
+  }
+  .c .swatch {
+    background: rgba(46,196,182,.07);
+    box-shadow: inset 0 -4px 0 rgba(46,196,182,.42);
+  }
+  .body {
+    padding: 14px 16px 18px;
+    background: rgba(255,255,255,.035);
+    min-height: 156px;
+  }
+  .body h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+  }
+  .body p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #c1ced2;
+  }
+  .note {
+    margin-top: 12px;
+    color: #f0d68b;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  @media (max-width: 980px) {
+    .options { grid-template-columns: 1fr; }
+  }
+</style>
+
+<h2>Ай башы / Рамазан / Орозо айт как три разных элемента</h2>
+<p class="subtitle">Сохраняем близость к текущему дизайну: Ай башы отдельной датой, Рамазан фоном периода, Орозо айт отдельной финальной датой.</p>
+
+<div class="options">
+  <div class="design-card card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="demo a">
+      <div class="month-title">ЧЫН КУРАН (МАРТ)</div>
+      <div class="week"><span>ДҮЙ</span><span>ШЕЙ</span><span>ШАР</span><span>БЕЙ</span><span>ЖУМ</span><span>ИШЕ</span><span>ЖЕК</span></div>
+      <div class="grid">
+        <div class="cell"><span class="num">1</span></div>
+        <div class="cell"><span class="num">2</span></div>
+        <div class="cell"><span class="num">3</span></div>
+        <div class="cell"><span class="num">4</span></div>
+        <div class="cell"><span class="num">5</span></div>
+        <div class="cell"><span class="num">6</span></div>
+        <div class="cell ai"><span class="num">7</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><path d="M7 19h10"/></svg></span></div>
+        <div class="cell period period-start"><span class="num">8</span></div>
+        <div class="cell period period-mid"><span class="num">9</span></div>
+        <div class="cell period period-mid moon"><span class="num">10</span><span class="badge"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="7"/></svg></span></div>
+        <div class="cell period period-mid"><span class="num">11</span></div>
+        <div class="cell period period-mid"><span class="num">12</span></div>
+        <div class="cell period period-mid"><span class="num">13</span></div>
+        <div class="cell period period-end"><span class="num">14</span></div>
+        <div class="cell period period-start"><span class="num">15</span></div>
+        <div class="cell period period-mid"><span class="num">16</span></div>
+        <div class="cell period period-mid togol"><span class="num">17</span><span class="badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.2 6.1L21 12l-6.8 2.9L12 21l-2.2-6.1L3 12l6.8-2.9z"/></svg></span></div>
+        <div class="cell period period-mid"><span class="num">18</span></div>
+        <div class="cell period period-mid"><span class="num">19</span></div>
+        <div class="cell period period-mid"><span class="num">20</span></div>
+        <div class="cell period period-end"><span class="num">21</span></div>
+        <div class="cell eid"><span class="num">22</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 15c3-4 9-4 12 0"/><path d="M5 18h14"/><circle cx="12" cy="13" r="2"/></svg></span></div>
+      </div>
+      <div class="legend">
+        <div class="legend-row ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><path d="M7 19h10"/></svg>Ай башы</div>
+        <div class="legend-row ramadan"><span class="swatch"></span>Рамазан күндөрү</div>
+        <div class="legend-row eid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 15c3-4 9-4 12 0"/><path d="M5 18h14"/><circle cx="12" cy="13" r="2"/></svg>Орозо айт</div>
+      </div>
+    </div>
+    <div class="body">
+      <h3>A. Близко к текущему</h3>
+      <p>Рамазан остается мягкой бирюзовой заливкой, Ай башы серпом, Орозо айт отдельным праздничным знаком.</p>
+      <div class="note">Самый близкий к текущему дизайну.</div>
+    </div>
+  </div>
+
+  <div class="design-card card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="demo b">
+      <div class="month-title">ЧЫН КУРАН (МАРТ)</div>
+      <div class="week"><span>ДҮЙ</span><span>ШЕЙ</span><span>ШАР</span><span>БЕЙ</span><span>ЖУМ</span><span>ИШЕ</span><span>ЖЕК</span></div>
+      <div class="grid">
+        <div class="cell"><span class="num">1</span></div>
+        <div class="cell"><span class="num">2</span></div>
+        <div class="cell"><span class="num">3</span></div>
+        <div class="cell"><span class="num">4</span></div>
+        <div class="cell"><span class="num">5</span></div>
+        <div class="cell"><span class="num">6</span></div>
+        <div class="cell ai"><span class="num">7</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><path d="M12 4v3"/></svg></span></div>
+        <div class="cell period period-start"><span class="num">8</span></div>
+        <div class="cell period period-mid"><span class="num">9</span></div>
+        <div class="cell period period-mid"><span class="num">10</span></div>
+        <div class="cell period period-mid"><span class="num">11</span></div>
+        <div class="cell period period-mid"><span class="num">12</span></div>
+        <div class="cell period period-mid"><span class="num">13</span></div>
+        <div class="cell period period-end"><span class="num">14</span></div>
+        <div class="cell period period-start"><span class="num">15</span></div>
+        <div class="cell period period-mid"><span class="num">16</span></div>
+        <div class="cell period period-mid"><span class="num">17</span></div>
+        <div class="cell period period-mid"><span class="num">18</span></div>
+        <div class="cell period period-mid"><span class="num">19</span></div>
+        <div class="cell period period-mid"><span class="num">20</span></div>
+        <div class="cell period period-end"><span class="num">21</span></div>
+        <div class="cell eid"><span class="num">22</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="10" width="14" height="10" rx="1"/><path d="M12 10v10M5 14h14"/><path d="M9 10c-2-2 0-5 3 0M15 10c2-2 0-5-3 0"/></svg></span></div>
+      </div>
+      <div class="legend">
+        <div class="legend-row ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><path d="M12 4v3"/></svg>Ай башы</div>
+        <div class="legend-row ramadan"><span class="swatch"></span>Рамазан күндөрү</div>
+        <div class="legend-row eid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="10" width="14" height="10" rx="1"/><path d="M12 10v10M5 14h14"/><path d="M9 10c-2-2 0-5 3 0M15 10c2-2 0-5-3 0"/></svg>Орозо айт</div>
+      </div>
+    </div>
+    <div class="body">
+      <h3>B. Чуть праздничнее</h3>
+      <p>Рамазан-фон сильнее, Орозо айт обозначен подарком. Понятно как праздник, но дальше от текущего характера.</p>
+    </div>
+  </div>
+
+  <div class="design-card card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="demo c">
+      <div class="month-title">ЧЫН КУРАН (МАРТ)</div>
+      <div class="week"><span>ДҮЙ</span><span>ШЕЙ</span><span>ШАР</span><span>БЕЙ</span><span>ЖУМ</span><span>ИШЕ</span><span>ЖЕК</span></div>
+      <div class="grid">
+        <div class="cell"><span class="num">1</span></div>
+        <div class="cell"><span class="num">2</span></div>
+        <div class="cell"><span class="num">3</span></div>
+        <div class="cell"><span class="num">4</span></div>
+        <div class="cell"><span class="num">5</span></div>
+        <div class="cell"><span class="num">6</span></div>
+        <div class="cell ai"><span class="num">7</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="8" cy="17" r="1" fill="currentColor" stroke="none"/></svg></span></div>
+        <div class="cell period"><span class="num">8</span></div>
+        <div class="cell period"><span class="num">9</span></div>
+        <div class="cell period"><span class="num">10</span></div>
+        <div class="cell period"><span class="num">11</span></div>
+        <div class="cell period"><span class="num">12</span></div>
+        <div class="cell period"><span class="num">13</span></div>
+        <div class="cell period"><span class="num">14</span></div>
+        <div class="cell period"><span class="num">15</span></div>
+        <div class="cell period"><span class="num">16</span></div>
+        <div class="cell period"><span class="num">17</span></div>
+        <div class="cell period"><span class="num">18</span></div>
+        <div class="cell period"><span class="num">19</span></div>
+        <div class="cell period"><span class="num">20</span></div>
+        <div class="cell period"><span class="num">21</span></div>
+        <div class="cell eid"><span class="num">22</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 20h16"/><path d="M6 20V11l6-5 6 5v9"/><path d="M10 20v-5a2 2 0 0 1 4 0v5"/></svg></span></div>
+      </div>
+      <div class="legend">
+        <div class="legend-row ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="8" cy="17" r="1" fill="currentColor" stroke="none"/></svg>Ай башы</div>
+        <div class="legend-row ramadan"><span class="swatch"></span>Рамазан күндөрү</div>
+        <div class="legend-row eid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 20h16"/><path d="M6 20V11l6-5 6 5v9"/><path d="M10 20v-5a2 2 0 0 1 4 0v5"/></svg>Орозо айт</div>
+      </div>
+    </div>
+    <div class="body">
+      <h3>C. Самый спокойный фон</h3>
+      <p>Рамазан отмечен нижней линией, не заливкой. Меньше визуального шума, но период может быть менее заметен.</p>
+    </div>
+  </div>
+</div>

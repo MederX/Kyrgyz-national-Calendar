@@ -1,0 +1,281 @@
+<style>
+  .options {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .card-option {
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #0a141b;
+    color: #eef4f5;
+    cursor: pointer;
+  }
+  .card-option:hover {
+    border-color: #e9c46a;
+  }
+  .demo {
+    padding: 18px;
+    background:
+      linear-gradient(135deg, rgba(233,196,106,.035), transparent 30%),
+      linear-gradient(180deg, #0e1a22, #0a141b);
+  }
+  .context {
+    display: grid;
+    gap: 14px;
+  }
+  .cell {
+    width: 58px;
+    height: 58px;
+    border-radius: 8px;
+    position: relative;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.04);
+  }
+  .num {
+    position: absolute;
+    top: 8px;
+    left: 9px;
+    font: 700 19px/1 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #f4f8f8;
+  }
+  .badge {
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,.08);
+    color: #34d399;
+  }
+  .badge svg {
+    width: 17px;
+    height: 17px;
+  }
+  .legend-row {
+    min-height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.035);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #34d399;
+  }
+  .legend-row svg {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 auto;
+  }
+  .popup {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #34d399;
+  }
+  .popup svg {
+    width: 31px;
+    height: 31px;
+    color: #08131c;
+  }
+  .card-body {
+    padding: 12px 14px 15px;
+    background: rgba(255,255,255,.035);
+    min-height: 132px;
+  }
+  .card-body h3 {
+    margin: 0 0 7px;
+    font-size: 15px;
+  }
+  .card-body p {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.42;
+    color: #c1ced2;
+  }
+  .mini-month {
+    margin-top: 22px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    background: #0a141b;
+  }
+  .month-title {
+    font: 800 18px/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: .04em;
+    margin-bottom: 14px;
+  }
+  .week,
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 58px);
+    gap: 6px;
+  }
+  .week {
+    color: #a9b9bf;
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .period {
+    background: rgba(46,196,182,.07);
+    box-shadow: inset 0 -4px 0 rgba(46,196,182,.42);
+    border-color: rgba(46,196,182,.18);
+  }
+  @media (max-width: 1100px) {
+    .options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .week, .grid { grid-template-columns: repeat(7, minmax(38px, 58px)); }
+  }
+  @media (max-width: 640px) {
+    .options { grid-template-columns: 1fr; }
+  }
+</style>
+
+<h2>Орозо айт: полумесяц + маленькая праздничная точка</h2>
+<p class="subtitle">Визуализирую один выбранный принцип в разных исполнениях. Сравниваем читаемость в ячейке, легенде и попапе.</p>
+
+<div class="options">
+  <div class="card-option card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="demo">
+      <div class="context">
+        <div class="cell"><span class="num">22</span><span class="badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.7" fill="currentColor" stroke="none"/></svg>
+        </span></div>
+        <div class="legend-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.7" fill="currentColor" stroke="none"/></svg>
+          Орозо айт
+        </div>
+        <div class="popup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.7" fill="currentColor" stroke="none"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. Точка справа сверху</h3>
+      <p>Самый близкий к текущему исламскому символу. Отличие от Ай башы есть, но оно довольно тонкое.</p>
+    </div>
+  </div>
+
+  <div class="card-option card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="demo">
+      <div class="context">
+        <div class="cell"><span class="num">22</span><span class="badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.35" fill="currentColor" stroke="none"/><circle cx="19.5" cy="11" r="1.05" fill="currentColor" stroke="none"/></svg>
+        </span></div>
+        <div class="legend-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.35" fill="currentColor" stroke="none"/><circle cx="19.5" cy="11" r="1.05" fill="currentColor" stroke="none"/></svg>
+          Орозо айт
+        </div>
+        <div class="popup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.35" fill="currentColor" stroke="none"/><circle cx="19.5" cy="11" r="1.05" fill="currentColor" stroke="none"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. Две праздничные точки</h3>
+      <p>Чуть праздничнее и заметнее, но есть риск, что маленький знак станет шумным.</p>
+    </div>
+  </div>
+
+  <div class="card-option card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="demo">
+      <div class="context">
+        <div class="cell"><span class="num">22</span><span class="badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.6" fill="currentColor" stroke="none"/><path d="M18 5.5v1.1M18 9.4v1.1M15.5 8h1.1M19.4 8h1.1" stroke="currentColor" stroke-width="1.2"/></svg>
+        </span></div>
+        <div class="legend-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.6" fill="currentColor" stroke="none"/><path d="M18 5.5v1.1M18 9.4v1.1M15.5 8h1.1M19.4 8h1.1" stroke="currentColor" stroke-width="1.2"/></svg>
+          Орозо айт
+        </div>
+        <div class="popup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.6" fill="currentColor" stroke="none"/><path d="M18 5.5v1.1M18 9.4v1.1M15.5 8h1.1M19.4 8h1.1" stroke="currentColor" stroke-width="1.2"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. Точка-искра</h3>
+      <p>Лучше сообщает “праздник”, но в маленьком размере может быть слишком детализировано.</p>
+    </div>
+  </div>
+
+  <div class="card-option card" data-choice="d" onclick="toggleSelect(this)">
+    <div class="demo">
+      <div class="context">
+        <div class="cell"><span class="num">22</span><span class="badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8"/><path d="M14.8 6.2A6.5 6.5 0 1 0 18 17a5.6 5.6 0 1 1-3.2-10.8z"/><circle cx="17" cy="8" r="1.35" fill="currentColor" stroke="none"/></svg>
+        </span></div>
+        <div class="legend-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8"/><path d="M14.8 6.2A6.5 6.5 0 1 0 18 17a5.6 5.6 0 1 1-3.2-10.8z"/><circle cx="17" cy="8" r="1.35" fill="currentColor" stroke="none"/></svg>
+          Орозо айт
+        </div>
+        <div class="popup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8"/><path d="M14.8 6.2A6.5 6.5 0 1 0 18 17a5.6 5.6 0 1 1-3.2-10.8z"/><circle cx="17" cy="8" r="1.35" fill="currentColor" stroke="none"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>D. Праздничный круг</h3>
+      <p>Сильнее отличается от Ай башы: это уже не просто серп, а отдельное событие.</p>
+    </div>
+  </div>
+
+  <div class="card-option card" data-choice="e" onclick="toggleSelect(this)">
+    <div class="demo">
+      <div class="context">
+        <div class="cell"><span class="num">22</span><span class="badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.4" fill="currentColor" stroke="none"/><path d="M7 19h11" stroke="currentColor" stroke-width="1.7"/></svg>
+        </span></div>
+        <div class="legend-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.4" fill="currentColor" stroke="none"/><path d="M7 19h11" stroke="currentColor" stroke-width="1.7"/></svg>
+          Орозо айт
+        </div>
+        <div class="popup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.4" fill="currentColor" stroke="none"/><path d="M7 19h11" stroke="currentColor" stroke-width="1.7"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>E. Точка + горизонт</h3>
+      <p>Идея завершения поста и наступления праздника. Близко к текущему, но немного богаче.</p>
+    </div>
+  </div>
+</div>
+
+<div class="mini-month">
+  <div class="month-title">В контексте месяца: вариант D как пример</div>
+  <div class="week"><span>ДҮЙ</span><span>ШЕЙ</span><span>ШАР</span><span>БЕЙ</span><span>ЖУМ</span><span>ИШЕ</span><span>ЖЕК</span></div>
+  <div class="grid">
+    <div class="cell"><span class="num">1</span></div>
+    <div class="cell"><span class="num">2</span></div>
+    <div class="cell"><span class="num">3</span></div>
+    <div class="cell"><span class="num">4</span></div>
+    <div class="cell"><span class="num">5</span></div>
+    <div class="cell"><span class="num">6</span></div>
+    <div class="cell" style="color:#8ecae6"><span class="num">7</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><path d="M7 19h10"/></svg></span></div>
+    <div class="cell period"><span class="num">8</span></div>
+    <div class="cell period"><span class="num">9</span></div>
+    <div class="cell period"><span class="num">10</span></div>
+    <div class="cell period"><span class="num">11</span></div>
+    <div class="cell period"><span class="num">12</span></div>
+    <div class="cell period"><span class="num">13</span></div>
+    <div class="cell period"><span class="num">14</span></div>
+    <div class="cell period"><span class="num">15</span></div>
+    <div class="cell period"><span class="num">16</span></div>
+    <div class="cell period"><span class="num">17</span></div>
+    <div class="cell period"><span class="num">18</span></div>
+    <div class="cell period"><span class="num">19</span></div>
+    <div class="cell period"><span class="num">20</span></div>
+    <div class="cell period"><span class="num">21</span></div>
+    <div class="cell" style="color:#34d399"><span class="num">22</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8"/><path d="M14.8 6.2A6.5 6.5 0 1 0 18 17a5.6 5.6 0 1 1-3.2-10.8z"/><circle cx="17" cy="8" r="1.35" fill="currentColor" stroke="none"/></svg></span></div>
+  </div>
+</div>

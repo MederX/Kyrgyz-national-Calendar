@@ -1,0 +1,232 @@
+<style>
+  .knc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .knc-preview {
+    min-height: 520px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: #08131c;
+    color: #edf3f4;
+    overflow: hidden;
+    position: relative;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .knc-preview.light {
+    background: #f4ebd9;
+    color: #211b17;
+  }
+  .knc-pad { padding: 22px; }
+  .knc-title {
+    font-family: Georgia, serif;
+    font-size: 24px;
+    line-height: 1.15;
+    margin: 0 0 8px;
+  }
+  .knc-sub {
+    font-size: 14px;
+    line-height: 1.45;
+    color: #a9bbc0;
+    margin-bottom: 16px;
+  }
+  .light .knc-sub { color: #5f5047; }
+  .knc-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 16px 0;
+    padding: 11px 12px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 8px;
+    background: rgba(255,255,255,.04);
+  }
+  .light .knc-toolbar {
+    border-color: rgba(80,55,35,.16);
+    background: rgba(255,255,255,.38);
+  }
+  .knc-year { color: #e9c46a; font-weight: 800; font-size: 24px; }
+  .knc-pill {
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 999px;
+    padding: 5px 9px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .light .knc-pill { border-color: rgba(80,55,35,.18); }
+  .knc-explain {
+    padding: 13px;
+    border-left: 4px solid #e9c46a;
+    background: rgba(233,196,106,.10);
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.45;
+    margin-bottom: 16px;
+  }
+  .knc-legend {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px 10px;
+    font-size: 12px;
+    margin: 16px 0 20px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 8px;
+  }
+  .light .knc-legend { border-color: rgba(80,55,35,.16); }
+  .knc-months {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .knc-month {
+    height: 82px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.035);
+    padding: 8px;
+  }
+  .light .knc-month {
+    border-color: rgba(80,55,35,.15);
+    background: rgba(255,255,255,.42);
+  }
+  .knc-month h4 {
+    margin: 0 0 8px;
+    font-size: 10px;
+    letter-spacing: .05em;
+  }
+  .knc-dots {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  .knc-dot {
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: .48;
+  }
+  .knc-sidebar-layout {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    min-height: 520px;
+  }
+  .knc-side {
+    padding: 18px 14px;
+    background: rgba(255,255,255,.055);
+    border-right: 1px solid rgba(255,255,255,.10);
+  }
+  .knc-side .knc-title { font-size: 19px; }
+  .knc-side-list { display: grid; gap: 9px; font-size: 12px; margin-top: 18px; }
+  .knc-side-main { padding: 18px; }
+  @media (max-width: 900px) {
+    .knc-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<h2>Структура первого web-экрана без блока “сегодня / ближайшие даты”</h2>
+<p class="subtitle">Выберите направление для desktop: пользователь сначала понимает, где он оказался, затем видит годовой календарь.</p>
+
+<div class="knc-grid">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="knc-preview">
+        <div class="knc-pad">
+          <h3 class="knc-title">Кыргыз Элинин Улуттук ай күн календары</h3>
+          <div class="knc-toolbar">
+            <span class="knc-year">2026</span>
+            <span class="knc-pill">Бишкек</span>
+            <span class="knc-pill">КЫР / РУС</span>
+          </div>
+          <div class="knc-legend">
+            <span>○ Ай толгон</span><span>✦ Тогол</span>
+            <span>☾ Рамазан</span><span>● Майрам</span>
+          </div>
+          <div class="knc-months">
+            <div class="knc-month"><h4>Бирдин айы</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+            <div class="knc-month"><h4>Жалган куран</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+            <div class="knc-month"><h4>Чын куран</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+            <div class="knc-month"><h4>Бугу</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+            <div class="knc-month"><h4>Кулжа</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+            <div class="knc-month"><h4>Теке</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. Год сразу</h3>
+      <p>Самый близкий к текущему варианту: короткая шапка, компактная легенда, годовой календарь начинается быстро.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="knc-preview light">
+        <div class="knc-pad">
+          <h3 class="knc-title">Кыргыз Элинин Улуттук ай күн календары</h3>
+          <div class="knc-sub">Ай фазалары, Тогол, Мүчөл, Рамазан жана кыргыз майрамдары бир жылдык календарда.</div>
+          <div class="knc-toolbar">
+            <span class="knc-year">2026</span>
+            <span class="knc-pill">🐎 Жылкы жылы</span>
+            <span class="knc-pill">Бишкек</span>
+          </div>
+          <div class="knc-explain">Бул календарь кыргыздын салттуу жыл сүрүүсүн түшүндүрөт: белгиси бар күндү бассаңыз, анын мааниси ачылат.</div>
+          <div class="knc-legend">
+            <span>○ Ай толгон күн</span><span>✦ Тогол ⓘ</span>
+            <span>☾ Рамазан</span><span>● Мамлекеттик майрам</span>
+          </div>
+          <div class="knc-months">
+            <div class="knc-month"><h4>Бирдин айы</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+            <div class="knc-month"><h4>Жалган куран</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+            <div class="knc-month"><h4>Чын куран</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+            <div class="knc-month"><h4>Бугу</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+            <div class="knc-month"><h4>Кулжа</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+            <div class="knc-month"><h4>Теке</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. Объясняющий вход</h3>
+      <p>Сначала понятно, что это за сайт и как им пользоваться; затем полный год. Лучше для старшего поколения.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="knc-preview">
+        <div class="knc-sidebar-layout">
+          <aside class="knc-side">
+            <h3 class="knc-title">Кыргыз календары</h3>
+            <div class="knc-sub">Ай-күн жыл сүрүүсү</div>
+            <div class="knc-year">2026</div>
+            <div class="knc-side-list">
+              <span>Бишкек</span>
+              <span>КЫР / РУС</span>
+              <span>Күн / Түн</span>
+              <span>Тогол ⓘ</span>
+              <span>Мүчөл ⓘ</span>
+            </div>
+          </aside>
+          <main class="knc-side-main">
+            <div class="knc-explain">Белгиси бар күндү басып, маанисин окуңуз.</div>
+            <div class="knc-months">
+              <div class="knc-month"><h4>Бирдин айы</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+              <div class="knc-month"><h4>Жалган куран</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+              <div class="knc-month"><h4>Чын куран</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+              <div class="knc-month"><h4>Бугу</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+              <div class="knc-month"><h4>Кулжа</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+              <div class="knc-month"><h4>Теке</h4><div class="knc-dots"><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span><span class="knc-dot"></span></div></div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. Боковая панель</h3>
+      <p>Похоже на исследовательский инструмент: управление и справка слева, календарь справа. Сильнее для энтузиастов.</p>
+    </div>
+  </div>
+</div>

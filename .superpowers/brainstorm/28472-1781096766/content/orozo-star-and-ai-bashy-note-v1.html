@@ -1,0 +1,340 @@
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .panel {
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 12px;
+    background: #0a141b;
+    color: #eef4f5;
+    overflow: hidden;
+  }
+  .panel-inner {
+    padding: 20px;
+    background:
+      linear-gradient(135deg, rgba(233,196,106,.035), transparent 30%),
+      linear-gradient(180deg, #0e1a22, #0a141b);
+  }
+  .panel h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+  }
+  .note {
+    margin: 0 0 18px;
+    color: #aebcc1;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .orozo-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .option-card {
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    background: rgba(255,255,255,.035);
+    padding: 13px;
+    cursor: pointer;
+  }
+  .option-card:hover {
+    border-color: #e9c46a;
+  }
+  .option-card h4 {
+    margin: 0 0 10px;
+    font-size: 14px;
+  }
+  .cell {
+    width: 58px;
+    height: 58px;
+    border-radius: 8px;
+    position: relative;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.04);
+  }
+  .num {
+    position: absolute;
+    top: 8px;
+    left: 9px;
+    font: 700 19px/1 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #f4f8f8;
+  }
+  .badge {
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,.08);
+  }
+  .badge svg {
+    width: 17px;
+    height: 17px;
+  }
+  .legend-row {
+    margin-top: 10px;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.035);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .legend-row svg {
+    width: 18px;
+    height: 18px;
+  }
+  .eid { color: #34d399; }
+  .newmoon { color: #8ecae6; }
+  .ramadan { color: #2ec4b6; }
+  .popup {
+    max-width: 440px;
+    border-radius: 16px 16px 0 0;
+    background: #112028;
+    border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 24px 60px rgba(0,0,0,.35);
+    overflow: hidden;
+  }
+  .handle {
+    width: 42px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.32);
+    margin: 12px auto 0;
+  }
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px 12px;
+  }
+  .popup-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+  }
+  .close {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,.08);
+    color: #b6c4c8;
+    font-weight: 800;
+  }
+  .event-card {
+    margin: 0 18px 18px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.09);
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 14px;
+  }
+  .event-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #8ecae6;
+    color: #08131c;
+  }
+  .event-icon svg {
+    width: 27px;
+    height: 27px;
+  }
+  .event-label {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .event-time {
+    color: #e9c46a;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .event-desc {
+    color: #b8c6cb;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .ai-note {
+    grid-column: 1 / -1;
+    margin-top: 14px;
+    padding: 12px 13px;
+    border-radius: 10px;
+    background: rgba(46,196,182,.10);
+    border-left: 4px solid #2ec4b6;
+  }
+  .ai-note-title {
+    display: block;
+    color: #2ec4b6;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .ai-note p {
+    margin: 0;
+    color: #d8eeee;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .month-context {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.025);
+  }
+  .month-title {
+    font: 800 16px/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: .04em;
+    margin-bottom: 12px;
+  }
+  .mini-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 42px);
+    gap: 6px;
+  }
+  .mini-grid .cell {
+    width: 42px;
+    height: 46px;
+  }
+  .mini-grid .num {
+    font-size: 16px;
+    top: 7px;
+    left: 7px;
+  }
+  .mini-grid .badge {
+    width: 20px;
+    height: 20px;
+    right: 5px;
+    bottom: 5px;
+  }
+  .mini-grid .badge svg {
+    width: 14px;
+    height: 14px;
+  }
+  .period {
+    background: rgba(46,196,182,.07);
+    box-shadow: inset 0 -4px 0 rgba(46,196,182,.42);
+    border-color: rgba(46,196,182,.18);
+  }
+  @media (max-width: 1100px) {
+    .split { grid-template-columns: 1fr; }
+    .orozo-options { grid-template-columns: 1fr; }
+  }
+</style>
+
+<h2>Орозо айт со звездочкой + Ай жаңырган күн с примечанием Ай башы</h2>
+<p class="subtitle">Проверяем новую логику: Орозо айт получает маленькую звездочку вместо точки; Ай башы не конкурирует отдельной иконкой в ячейке, а становится примечанием в попапе Ай жаңырган күн.</p>
+
+<div class="split">
+  <section class="panel">
+    <div class="panel-inner">
+      <h3>Орозо айт: полумесяц + маленькая звездочка</h3>
+      <p class="note">Три исполнения одного направления. Главное отличие от Ай башы: знак должен выглядеть как праздничная дата, а не просто начало месяца.</p>
+      <div class="orozo-options">
+        <div class="option-card card" data-choice="eid-star-small" onclick="toggleSelect(this)">
+          <h4>A. Маленькая звезда</h4>
+          <div class="cell eid"><span class="num">22</span><span class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><path d="M18 6.2l.7 1.5 1.6.2-1.2 1.1.3 1.6-1.4-.8-1.4.8.3-1.6-1.2-1.1 1.6-.2z" fill="currentColor" stroke="none"/></svg>
+          </span></div>
+          <div class="legend-row eid">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><path d="M18 6.2l.7 1.5 1.6.2-1.2 1.1.3 1.6-1.4-.8-1.4.8.3-1.6-1.2-1.1 1.6-.2z" fill="currentColor" stroke="none"/></svg>
+            Орозо айт
+          </div>
+        </div>
+
+        <div class="option-card card" data-choice="eid-star-circle" onclick="toggleSelect(this)">
+          <h4>B. Праздничный круг</h4>
+          <div class="cell eid"><span class="num">22</span><span class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M14.8 6.2A6.5 6.5 0 1 0 18 17a5.6 5.6 0 1 1-3.2-10.8z"/><path d="M17.4 6.6l.6 1.2 1.3.2-1 .9.2 1.3-1.1-.6-1.1.6.2-1.3-1-.9 1.3-.2z" fill="currentColor" stroke="none"/></svg>
+          </span></div>
+          <div class="legend-row eid">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M14.8 6.2A6.5 6.5 0 1 0 18 17a5.6 5.6 0 1 1-3.2-10.8z"/><path d="M17.4 6.6l.6 1.2 1.3.2-1 .9.2 1.3-1.1-.6-1.1.6.2-1.3-1-.9 1.3-.2z" fill="currentColor" stroke="none"/></svg>
+            Орозо айт
+          </div>
+        </div>
+
+        <div class="option-card card" data-choice="eid-star-horizon" onclick="toggleSelect(this)">
+          <h4>C. Звезда + горизонт</h4>
+          <div class="cell eid"><span class="num">22</span><span class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><path d="M18 6.2l.7 1.5 1.6.2-1.2 1.1.3 1.6-1.4-.8-1.4.8.3-1.6-1.2-1.1 1.6-.2z" fill="currentColor" stroke="none"/><path d="M7 19h11"/></svg>
+          </span></div>
+          <div class="legend-row eid">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><path d="M18 6.2l.7 1.5 1.6.2-1.2 1.1.3 1.6-1.4-.8-1.4.8.3-1.6-1.2-1.1 1.6-.2z" fill="currentColor" stroke="none"/><path d="M7 19h11"/></svg>
+            Орозо айт
+          </div>
+        </div>
+      </div>
+
+      <div class="month-context">
+        <div class="month-title">В ячейках: Ай башы скрыт, Орозо айт отдельный знак</div>
+        <div class="mini-grid">
+          <div class="cell newmoon"><span class="num">7</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/></svg></span></div>
+          <div class="cell period"><span class="num">8</span></div>
+          <div class="cell period"><span class="num">9</span></div>
+          <div class="cell period"><span class="num">10</span></div>
+          <div class="cell period"><span class="num">11</span></div>
+          <div class="cell period"><span class="num">12</span></div>
+          <div class="cell period"><span class="num">13</span></div>
+          <div class="cell period"><span class="num">14</span></div>
+          <div class="cell period"><span class="num">15</span></div>
+          <div class="cell period"><span class="num">16</span></div>
+          <div class="cell period"><span class="num">17</span></div>
+          <div class="cell period"><span class="num">18</span></div>
+          <div class="cell period"><span class="num">19</span></div>
+          <div class="cell period"><span class="num">20</span></div>
+          <div class="cell period"><span class="num">21</span></div>
+          <div class="cell eid"><span class="num">22</span><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M14.8 6.2A6.5 6.5 0 1 0 18 17a5.6 5.6 0 1 1-3.2-10.8z"/><path d="M17.4 6.6l.6 1.2 1.3.2-1 .9.2 1.3-1.1-.6-1.1.6.2-1.3-1-.9 1.3-.2z" fill="currentColor" stroke="none"/></svg></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-inner">
+      <h3>Ай жаңырган күн: попап с примечанием Ай башы</h3>
+      <p class="note">В ячейке показываем только Ай жаңырган күн. Ай башы не получает отдельный конкурирующий знак, а становится заметным примечанием внутри попапа.</p>
+
+      <div class="popup">
+        <div class="handle"></div>
+        <div class="popup-header">
+          <h4 class="popup-title">Жалган куран айынын 7си</h4>
+          <div class="close">×</div>
+        </div>
+        <div class="event-card">
+          <div class="event-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/></svg>
+          </div>
+          <div>
+            <div class="event-label">Ай жаңырган күн</div>
+            <div class="event-time">01:51</div>
+            <div class="event-desc">Айдын жаңы циклинин башталышы.</div>
+          </div>
+          <div class="ai-note">
+            <span class="ai-note-title">Ай башы</span>
+            <p>Бул күн Рамазан айына даярдык катары белгиленет. Эртеңден тартып Рамазан күндөрү башталат.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,252 @@
+<style>
+  .sheet {
+    display: grid;
+    gap: 18px;
+  }
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .icon-card {
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    background:
+      linear-gradient(135deg, rgba(233,196,106,.035), transparent 30%),
+      #0a141b;
+    color: #eef4f5;
+    padding: 16px;
+    cursor: pointer;
+  }
+  .icon-card:hover {
+    border-color: #e9c46a;
+  }
+  .icon-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .name {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 3px;
+  }
+  .desc {
+    font-size: 12px;
+    color: #aebcc1;
+    line-height: 1.35;
+  }
+  .large-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,.07);
+    flex: 0 0 auto;
+  }
+  .large-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  .samples {
+    display: grid;
+    grid-template-columns: 64px 1fr 64px;
+    gap: 10px;
+    align-items: center;
+  }
+  .cell {
+    width: 58px;
+    height: 58px;
+    border-radius: 8px;
+    position: relative;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.04);
+  }
+  .num {
+    position: absolute;
+    top: 8px;
+    left: 9px;
+    font-family: system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 19px;
+    color: #f4f8f8;
+    line-height: 1;
+  }
+  .badge {
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,.08);
+  }
+  .badge svg {
+    width: 15px;
+    height: 15px;
+  }
+  .legend-row {
+    min-height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.035);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .legend-row svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+  }
+  .popup {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: currentColor;
+  }
+  .popup svg {
+    width: 28px;
+    height: 28px;
+    color: #08131c;
+  }
+  .muchol { color: #57d68d; }
+  .togol { color: #8ecae6; }
+  .moon-new { color: #8ecae6; }
+  .moon-full { color: #e9c46a; }
+  .ramadan { color: #2ec4b6; }
+  .kadyr { color: #d8b4fe; }
+  .eid { color: #34d399; }
+  .kurman { color: #22c55e; }
+  .holiday { color: #ef4444; }
+  .multi { color: #e9c46a; }
+  .system-note {
+    border: 1px solid rgba(233,196,106,.18);
+    background: rgba(233,196,106,.08);
+    color: #f0d68b;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  @media (max-width: 980px) {
+    .icon-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<h2>Полный набор иконок v1</h2>
+<p class="subtitle">Это черновой SVG-набор в выбранном направлении B. Кликни карточки иконок, которые не нравятся или требуют альтернатив. Можно выбрать несколько.</p>
+
+<div class="system-note">
+  Правило ячейки: если в день несколько событий, показываем знак самого приоритетного события и счетчик <strong>+1 / +2</strong>. Приоритет: Мүчөл → Тогол → фазы Луны → особые даты Рамазана → государственные праздники.
+</div>
+
+<div class="icon-grid" data-multiselect>
+  <div class="icon-card option" data-choice="muchol" onclick="toggleSelect(this)">
+    <div class="icon-head">
+      <div><div class="name">Мүчөл</div><div class="desc">Начало года / 12-летний цикл. Самый высокий приоритет.</div></div>
+      <span class="large-icon muchol">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5M5.6 5.6l3.5 3.5M14.9 14.9l3.5 3.5M18.4 5.6l-3.5 3.5M9.1 14.9l-3.5 3.5"/></svg>
+      </span>
+    </div>
+    <div class="samples"><div class="cell"><span class="num">5</span><span class="badge muchol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="3"/><path d="M12 4v4M12 16v4M4 12h4M16 12h4"/></svg></span></div><div class="legend-row muchol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5"/></svg>Мүчөл башы</div><div class="popup muchol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5"/></svg></div></div>
+  </div>
+
+  <div class="icon-card option" data-choice="togol" onclick="toggleSelect(this)">
+    <div class="icon-head">
+      <div><div class="name">Тогол</div><div class="desc">Үркөр / Плеяды и небесное сближение.</div></div>
+      <span class="large-icon togol">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l2.2 6.1L21 12l-6.8 2.9L12 21l-2.2-6.1L3 12l6.8-2.9L12 3z" fill="currentColor" stroke="none"/><circle cx="18" cy="6" r="1.2" fill="currentColor"/><circle cx="6" cy="7" r="1" fill="currentColor"/></svg>
+      </span>
+    </div>
+    <div class="samples"><div class="cell"><span class="num">9</span><span class="badge togol"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.2 6.1L21 12l-6.8 2.9L12 21l-2.2-6.1L3 12l6.8-2.9z"/></svg></span></div><div class="legend-row togol"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.2 6.1L21 12l-6.8 2.9L12 21l-2.2-6.1L3 12l6.8-2.9z"/></svg>Тогол</div><div class="popup togol"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.2 6.1L21 12l-6.8 2.9L12 21l-2.2-6.1L3 12l6.8-2.9z"/></svg></div></div>
+  </div>
+
+  <div class="icon-card option" data-choice="new_moon" onclick="toggleSelect(this)">
+    <div class="icon-head">
+      <div><div class="name">Ай жаңырган күн</div><div class="desc">Новолуние. Тонкий знак темного/нового месяца.</div></div>
+      <span class="large-icon moon-new">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/></svg>
+      </span>
+    </div>
+    <div class="samples"><div class="cell"><span class="num">14</span><span class="badge moon-new"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/></svg></span></div><div class="legend-row moon-new"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/></svg>Ай жаңырган күн</div><div class="popup moon-new"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/></svg></div></div>
+  </div>
+
+  <div class="icon-card option" data-choice="full_moon" onclick="toggleSelect(this)">
+    <div class="icon-head">
+      <div><div class="name">Ай толгон күн</div><div class="desc">Полнолуние. Максимально простой круг.</div></div>
+      <span class="large-icon moon-full">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="7"/></svg>
+      </span>
+    </div>
+    <div class="samples"><div class="cell"><span class="num">15</span><span class="badge moon-full"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="7"/></svg></span></div><div class="legend-row moon-full"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="7"/></svg>Ай толгон күн</div><div class="popup moon-full"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="7"/></svg></div></div>
+  </div>
+
+  <div class="icon-card option" data-choice="ramadan" onclick="toggleSelect(this)">
+    <div class="icon-head">
+      <div><div class="name">Рамазан / Ай башы</div><div class="desc">Общий полумесяц для рамазанского периода и начала.</div></div>
+      <span class="large-icon ramadan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/></svg>
+      </span>
+    </div>
+    <div class="samples"><div class="cell"><span class="num">18</span><span class="badge ramadan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/></svg></span></div><div class="legend-row ramadan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/></svg>Рамазан</div><div class="popup ramadan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/></svg></div></div>
+  </div>
+
+  <div class="icon-card option" data-choice="kadyr" onclick="toggleSelect(this)">
+    <div class="icon-head">
+      <div><div class="name">Кадыр түн</div><div class="desc">Особая ночь. Звезда внутри ночного знака.</div></div>
+      <span class="large-icon kadyr">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><path d="M12 8l1.1 2.2 2.4.3-1.7 1.7.4 2.4L12 13.5 9.8 14.6l.4-2.4-1.7-1.7 2.4-.3z" fill="currentColor" stroke="none"/></svg>
+      </span>
+    </div>
+    <div class="samples"><div class="cell"><span class="num">24</span><span class="badge kadyr"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l1.5 4.5H18l-3.6 2.6 1.4 4.4L12 12.8 8.2 15.5l1.4-4.4L6 8.5h4.5z"/></svg></span></div><div class="legend-row kadyr"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l1.5 4.5H18l-3.6 2.6 1.4 4.4L12 12.8 8.2 15.5l1.4-4.4L6 8.5h4.5z"/></svg>Кадыр түн</div><div class="popup kadyr"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l1.5 4.5H18l-3.6 2.6 1.4 4.4L12 12.8 8.2 15.5l1.4-4.4L6 8.5h4.5z"/></svg></div></div>
+  </div>
+
+  <div class="icon-card option" data-choice="eid" onclick="toggleSelect(this)">
+    <div class="icon-head">
+      <div><div class="name">Орозо айт</div><div class="desc">Праздник завершения Рамазана. Полумесяц + точка.</div></div>
+      <span class="large-icon eid">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.6" fill="currentColor" stroke="none"/></svg>
+      </span>
+    </div>
+    <div class="samples"><div class="cell"><span class="num">30</span><span class="badge eid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/></svg></span></div><div class="legend-row eid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/><circle cx="18" cy="8" r="1.6" fill="currentColor" stroke="none"/></svg>Орозо айт</div><div class="popup eid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15.5 4.5A8 8 0 1 0 19 18a7 7 0 1 1-3.5-13.5z"/></svg></div></div>
+  </div>
+
+  <div class="icon-card option" data-choice="kurman" onclick="toggleSelect(this)">
+    <div class="icon-head">
+      <div><div class="name">Курман айт</div><div class="desc">Отдельный айт. Лаконичный праздничный исламский знак.</div></div>
+      <span class="large-icon kurman">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><path d="M12 5a7 7 0 0 0 0 14"/><path d="M17 7l.8 1.8L20 9l-1.7 1.2.5 2L17 11l-1.8 1.2.5-2L14 9l2.2-.2z" fill="currentColor" stroke="none"/></svg>
+      </span>
+    </div>
+    <div class="samples"><div class="cell"><span class="num">10</span><span class="badge kurman"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><path d="M12 5a7 7 0 0 0 0 14"/></svg></span></div><div class="legend-row kurman"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><path d="M12 5a7 7 0 0 0 0 14"/></svg>Курман айт</div><div class="popup kurman"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><path d="M12 5a7 7 0 0 0 0 14"/></svg></div></div>
+  </div>
+
+  <div class="icon-card option" data-choice="holiday" onclick="toggleSelect(this)">
+    <div class="icon-head">
+      <div><div class="name">Мамлекеттик майрам</div><div class="desc">Государственный праздник. Флаг вместо случайной красной точки.</div></div>
+      <span class="large-icon holiday">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 20V5"/><path d="M7 5h10l-2 4 2 4H7z" fill="currentColor" stroke="none"/></svg>
+      </span>
+    </div>
+    <div class="samples"><div class="cell"><span class="num">1</span><span class="badge holiday"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h10l-2 4 2 4H7z"/><path d="M6 5h1v15H6z"/></svg></span></div><div class="legend-row holiday"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h10l-2 4 2 4H7z"/><path d="M6 5h1v15H6z"/></svg>Мамлекеттик майрам</div><div class="popup holiday"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h10l-2 4 2 4H7z"/><path d="M6 5h1v15H6z"/></svg></div></div>
+  </div>
+
+  <div class="icon-card option" data-choice="multi" onclick="toggleSelect(this)">
+    <div class="icon-head">
+      <div><div class="name">Бир нече окуя</div><div class="desc">Счетчик дополнительных событий: +1, +2.</div></div>
+      <span class="large-icon multi" style="font:800 18px system-ui">+2</span>
+    </div>
+    <div class="samples"><div class="cell"><span class="num">23</span><span class="badge togol" style="right:34px">✦</span><span class="badge multi" style="width:auto;min-width:25px;padding:0 6px;border-radius:999px;font:800 11px system-ui">+2</span></div><div class="legend-row multi"><span style="font:800 14px system-ui">+2</span>Еще 2 события в этот день</div><div class="popup multi" style="font:800 18px system-ui;color:#08131c">+2</div></div>
+  </div>
+</div>
