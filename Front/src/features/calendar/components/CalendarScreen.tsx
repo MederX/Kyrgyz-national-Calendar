@@ -5,6 +5,7 @@ import { MonthCalendarGrid } from './MonthCalendarGrid';
 import { EventDetailSheet } from './EventDetailSheet';
 import { EventLegend } from './EventLegend';
 import { LocationSelector } from './LocationSelector';
+import { YearControl } from './YearControl';
 import type { CalendarEvent, CalendarPeriod } from '../types/calendar.types';
 import styles from './CalendarScreen.module.css';
 
@@ -36,16 +37,32 @@ const KY_DAY_NAMES = [
 ];
 
 const ANIMAL_NAMES_KY = [
-    'Чычкан', 'Уй', 'Барс', 'Коён', 'Улуу', 'Жылан', 'Жылкы', 'Кой', 'Маймыл', 'Тоок', 'Ит', 'Доңуз'
+    'Чычкан', 'Уй', 'Жолборс', 'Коён', 'Балык', 'Жылан', 'Жылкы', 'Кой', 'Маймыл', 'Тоок', 'Ит', 'Доңуз'
 ];
 
 const ANIMAL_NAMES_RU = [
-    'Мышь', 'Корова', 'Барс', 'Заяц', 'Дракон', 'Змея', 'Лошадь', 'Овца', 'Обезьяна', 'Петух', 'Собака', 'Кабан'
+    'Мышь', 'Корова', 'Тигр', 'Заяц', 'Рыба', 'Змея', 'Лошадь', 'Овца', 'Обезьяна', 'Петух', 'Собака', 'Кабан'
+];
+
+const ANIMAL_YEAR_NAMES_RU = [
+    'Год мыши', 'Год коровы', 'Год тигра', 'Год зайца', 'Год рыбы', 'Год змеи',
+    'Год лошади', 'Год овцы', 'Год обезьяны', 'Год петуха', 'Год собаки', 'Год кабана'
 ];
 
 const ANIMAL_EMOJIS = [
-    '🐀', '🐄', '🐯', '🐇', '🐉', '🐍', '🐎', '🐑', '🐒', '🐓', '🐕', '🐗'
+    '🐭', '🐄', '🐅', '🐇', '🐟', '🐍', '🐎', '🐑', '🐒', '🐓', '🐕', '🐗'
 ];
+
+const getKyMonthGenitive = (monthIndex: number) => {
+    const baseMonth = MONTH_NAMES_KY[monthIndex].split('(')[0].trim();
+    return baseMonth.endsWith('айы')
+        ? baseMonth.replace('айы', 'айынын')
+        : `${baseMonth} айынын`;
+};
+
+const formatKyFullDate = (date: Date) => {
+    return `${getKyMonthGenitive(date.getUTCMonth())} ${KY_DAY_NAMES[date.getUTCDate()]}`;
+};
 
 export const CalendarScreen: React.FC = () => {
     const {
@@ -113,13 +130,7 @@ export const CalendarScreen: React.FC = () => {
         const [, m, d] = selectedDateStr.split('-').map(Number);
 
         if (language === 'ky') {
-            let baseMonth = MONTH_NAMES_KY[m - 1].split('(')[0].trim();
-            if (baseMonth.endsWith('айы')) {
-                baseMonth = baseMonth.replace('айы', 'айынын');
-            } else {
-                baseMonth = baseMonth + ' айынын';
-            }
-            return `${baseMonth} ${KY_DAY_NAMES[d]}`;
+            return `${getKyMonthGenitive(m - 1)} ${KY_DAY_NAMES[d]}`;
         }
 
         const monthName = MONTH_NAMES_RU[m - 1];
@@ -127,8 +138,14 @@ export const CalendarScreen: React.FC = () => {
     }, [selectedDateStr, language]);
 
     const animalIndex = (selectedYear - 4) % 12;
-    const animalName = language === 'ky' ? ANIMAL_NAMES_KY[animalIndex] : ANIMAL_NAMES_RU[animalIndex];
     const animalEmoji = ANIMAL_EMOJIS[animalIndex];
+    const animalYearLabel = language === 'ky'
+        ? `${ANIMAL_NAMES_KY[animalIndex]} жылы`
+        : ANIMAL_YEAR_NAMES_RU[animalIndex];
+    const getAnimalLabelForYear = (year: number) => {
+        const index = (year - 4) % 12;
+        return language === 'ky' ? ANIMAL_NAMES_KY[index] : ANIMAL_NAMES_RU[index];
+    };
     const ramadanSummary = useMemo(() => {
         if (periods.length === 0) {
             return null;
@@ -145,11 +162,7 @@ export const CalendarScreen: React.FC = () => {
             const endDate = new Date(`${period.end_date}T00:00:00Z`);
 
             if (language === 'ky') {
-                const startDay = startDate.getUTCDate();
-                const startMonth = MONTH_NAMES_KY[startDate.getUTCMonth()].split('(')[0].trim().toLowerCase();
-                const endDay = endDate.getUTCDate();
-                const endMonth = MONTH_NAMES_KY[endDate.getUTCMonth()].split('(')[0].trim().toLowerCase();
-                return `${startDay}-${startMonth} - ${endDay}-${endMonth}`;
+                return `${formatKyFullDate(startDate)} - ${formatKyFullDate(endDate)}`;
             }
 
             return `${formatter.format(startDate)} - ${formatter.format(endDate)}`;
@@ -207,21 +220,18 @@ export const CalendarScreen: React.FC = () => {
                             {selectedYear}
                         </span>
                         <span style={{ fontSize: '15px', fontWeight: 500, color: 'var(--text-secondary)' }}>
-                            {language === 'ky' ? 'Жыл:' : 'Год:'} {animalEmoji} {animalName}
+                            · {animalYearLabel} <span aria-hidden="true">{animalEmoji}</span>
                         </span>
                     </div>
                 </div>
 
                 <div className={styles.controls}>
-                    <select
-                        className={styles.yearSelect}
+                    <YearControl
                         value={selectedYear}
-                        onChange={(e) => setSelectedYear(parseInt(e.target.value, 10))}
-                    >
-                        {Array.from({ length: 151 }, (_, i) => 1900 + i).map(y => (
-                            <option key={y} value={y}>{y}</option>
-                        ))}
-                    </select>
+                        onChange={setSelectedYear}
+                        language={language}
+                        getAnimalLabel={getAnimalLabelForYear}
+                    />
                     <button
                         className={styles.themeToggle}
                         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -257,7 +267,12 @@ export const CalendarScreen: React.FC = () => {
                 className={styles.locationRow}
                 onClick={() => setShowLocation(true)}
             >
-                <span className={styles.locationIcon}>📍</span>
+                <span className={styles.locationIcon} aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" />
+                        <circle cx="12" cy="9" r="2.5" />
+                    </svg>
+                </span>
                 <span className={styles.locationName}>{location.cityName}</span>
                 <span className={styles.locationChevron}>›</span>
             </button>

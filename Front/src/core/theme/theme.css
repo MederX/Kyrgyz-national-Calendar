@@ -7,9 +7,9 @@
 
 :root {
   /* Default Dark Theme (Nature/Mountains Night) */
-  --bg-primary: #08131C;
+  --bg-primary: #0A141B;
   --bg-surface: #112028;
-  --bg-elevated: #1A2E36;
+  --bg-elevated: #182A33;
   --bg-border: rgba(255, 255, 255, 0.10);
 
   /* Accents */
@@ -30,6 +30,8 @@
   /* Red — State holidays */
   --color-togool: #8ECAE6;
   /* Sky Blue — Togool */
+  --color-muchol: #57D68D;
+  --color-kadyr: #D8B4FE;
 
   /* Legacy aliases for backwards compat */
   --color-new-moon: #8ECAE6;
@@ -49,9 +51,9 @@
 
 [data-theme='light'] {
   /* Light Theme (Old Parchment) */
-  --bg-primary: #F4EBD9;
-  --bg-surface: #EDE0CA;
-  --bg-elevated: #E3D5BA;
+  --bg-primary: #FAF7EF;
+  --bg-surface: #F1EADF;
+  --bg-elevated: #E8DED0;
   --bg-border: rgba(100, 75, 50, 0.14);
 
   --accent-gold: #AF6A31;
@@ -66,6 +68,8 @@
   --color-islamic: #1D736A;
   --color-holiday: #c42b2b;
   --color-togool: #1E6C8E;
+  --color-muchol: #2F8E55;
+  --color-kadyr: #7C4FB0;
 
   /* Legacy */
   --color-new-moon: #4A5D6B;

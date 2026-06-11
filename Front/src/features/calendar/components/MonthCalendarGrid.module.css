@@ -11,9 +11,9 @@
 .header {
     text-align: center;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-secondary);
     text-transform: uppercase;
     padding: 10px 0 12px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.04em;
 }

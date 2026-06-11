@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Animal Year Visual Options</title>
+    <style>
+        :root {
+            --bg: #0a141b;
+            --panel: rgba(17, 32, 40, 0.84);
+            --panel-soft: rgba(255, 255, 255, 0.035);
+            --border: rgba(148, 163, 184, 0.22);
+            --text: #f2f5f1;
+            --muted: #b8c4c6;
+            --gold: #e9c46a;
+            --teal: #2ec4b6;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        main {
+            width: min(1240px, calc(100vw - 48px));
+            margin: 46px auto;
+            display: grid;
+            gap: 24px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 780;
+            letter-spacing: 0;
+        }
+
+        .note {
+            margin: -10px 0 0;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .section {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--panel);
+            padding: 22px;
+            display: grid;
+            gap: 18px;
+        }
+
+        .sectionHead {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 20px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+            padding-bottom: 12px;
+        }
+
+        .sectionTitle {
+            margin: 0;
+            color: var(--gold);
+            font-size: 17px;
+            font-weight: 780;
+        }
+
+        .sectionHint {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .item {
+            min-height: 58px;
+            border: 1px solid rgba(148, 163, 184, 0.14);
+            border-radius: 8px;
+            background: var(--panel-soft);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+        }
+
+        .year {
+            color: var(--gold);
+            font-weight: 820;
+            letter-spacing: 0;
+        }
+
+        .label {
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 650;
+            line-height: 1.2;
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 560;
+            margin-top: 2px;
+        }
+
+        .emojiIcon {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            font-size: 25px;
+            line-height: 1;
+            flex: 0 0 auto;
+        }
+
+        .roundIcon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: var(--gold);
+            background: rgba(233, 196, 106, 0.08);
+            border: 1px solid rgba(233, 196, 106, 0.26);
+            flex: 0 0 auto;
+        }
+
+        .roundIcon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .badgeItem {
+            min-height: 66px;
+            border-color: rgba(233, 196, 106, 0.18);
+            background: linear-gradient(135deg, rgba(233, 196, 106, 0.08), rgba(46, 196, 182, 0.045));
+        }
+
+        .badgeIcon {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            color: var(--gold);
+            background: rgba(10, 20, 27, 0.42);
+            border: 1px solid rgba(233, 196, 106, 0.32);
+            flex: 0 0 auto;
+        }
+
+        .badgeIcon svg {
+            width: 25px;
+            height: 25px;
+        }
+
+        .badgeText {
+            display: grid;
+            gap: 2px;
+        }
+
+        .badgeText .label {
+            font-size: 15px;
+        }
+
+        @media (max-width: 920px) {
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Варианты отображения года животного</h1>
+        <p class="note">Для сравнения показан полный 12-летний цикл от 2020 до 2031. В реальном хедере будет отображаться только выбранный год, например 2026 · Жылкы жылы.</p>
+
+        <section class="section">
+            <div class="sectionHead">
+                <h2 class="sectionTitle">Вариант 1 — вернуть emoji рядом с годом</h2>
+                <span class="sectionHint">самый узнаваемый, но менее цельный по стилю</span>
+            </div>
+            <div class="grid" data-mode="emoji"></div>
+        </section>
+
+        <section class="section">
+            <div class="sectionHead">
+                <h2 class="sectionTitle">Вариант 2 — круглая SVG-иконка рядом с годом</h2>
+                <span class="sectionHint">аккуратнее, ближе к новой системе иконок</span>
+            </div>
+            <div class="grid" data-mode="circle"></div>
+        </section>
+
+        <section class="section">
+            <div class="sectionHead">
+                <h2 class="sectionTitle">Вариант 3 — отдельная плашка года</h2>
+                <span class="sectionHint">крупнее и понятнее, хороший вариант для старшего поколения</span>
+            </div>
+            <div class="grid" data-mode="badge"></div>
+        </section>
+    </main>
+
+    <script>
+        const animals = [
+            { year: 2020, ky: 'Чычкан', ru: 'Мышь', emoji: '🐭', icon: 'mouse' },
+            { year: 2021, ky: 'Уй', ru: 'Корова', emoji: '🐄', icon: 'cow' },
+            { year: 2022, ky: 'Жолборс', ru: 'Тигр', emoji: '🐅', icon: 'bars' },
+            { year: 2023, ky: 'Коён', ru: 'Заяц', emoji: '🐇', icon: 'rabbit' },
+            { year: 2024, ky: 'Балык', ru: 'Рыба', emoji: '🐟', icon: 'dragon' },
+            { year: 2025, ky: 'Жылан', ru: 'Змея', emoji: '🐍', icon: 'snake' },
+            { year: 2026, ky: 'Жылкы', ru: 'Лошадь', emoji: '🐎', icon: 'horse' },
+            { year: 2027, ky: 'Кой', ru: 'Овца', emoji: '🐑', icon: 'sheep' },
+            { year: 2028, ky: 'Маймыл', ru: 'Обезьяна', emoji: '🐒', icon: 'monkey' },
+            { year: 2029, ky: 'Тоок', ru: 'Петух', emoji: '🐓', icon: 'rooster' },
+            { year: 2030, ky: 'Ит', ru: 'Собака', emoji: '🐕', icon: 'dog' },
+            { year: 2031, ky: 'Доңуз', ru: 'Кабан', emoji: '🐗', icon: 'boar' },
+        ];
+
+        function iconSvg(type) {
+            const common = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+            const filled = 'viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"';
+            const paths = {
+                mouse: `<svg ${common}><path d="M7 12c0-3 2-5 5-5s5 2 5 5-2 6-5 6-5-3-5-6z"/><path d="M8 8C6 5 3 6 3 9c0 2 2 3 4 2"/><path d="M16 8c2-3 5-2 5 1 0 2-2 3-4 2"/><path d="M12 18v3"/></svg>`,
+                cow: `<svg ${common}><path d="M5 11c0-3 3-5 7-5s7 2 7 5-3 7-7 7-7-4-7-7z"/><path d="M7 7C5 4 3 5 3 8"/><path d="M17 7c2-3 4-2 4 1"/><path d="M9 13h.1M15 13h.1"/><path d="M10 16h4"/></svg>`,
+                bars: `<svg ${common}><path d="M6 15c1-5 4-8 8-8 3 0 5 2 5 5 0 4-4 7-9 7-2 0-4-1-4-4z"/><path d="M8 9L5 6"/><path d="M14 7l2-3"/><path d="M10 12h.1M15 11h.1"/><path d="M9 16c2 1 5 1 7-1"/></svg>`,
+                rabbit: `<svg ${common}><path d="M7 14c0-3 3-5 6-5 4 0 7 2 7 5s-3 5-7 5-6-2-6-5z"/><path d="M9 9C8 5 9 3 11 3c2 0 2 4 1 6"/><path d="M13 9c1-4 3-6 5-5 1 1 0 4-3 6"/><path d="M7 16H4"/><path d="M12 14h.1"/></svg>`,
+                dragon: `<svg ${common}><path d="M5 15c2-6 7-9 12-7l2-3 1 5c1 4-2 8-7 8-3 0-6-1-8-3z"/><path d="M8 11l-3-2"/><path d="M12 8l-1-4"/><path d="M16 11h.1"/><path d="M9 16c2 2 5 3 8 1"/></svg>`,
+                snake: `<svg ${common}><path d="M6 17c5 3 12 1 12-4 0-3-3-4-6-3-3 1-5 0-5-2 0-3 5-4 9-1"/><path d="M17 7l3-1"/><path d="M17 7l2 2"/><path d="M16 6h.1"/></svg>`,
+                horse: `<svg ${common}><path d="M7 18V9l4-5 5 2 2 5-2 7"/><path d="M11 4v6l-4 3"/><path d="M15 9h.1"/><path d="M8 18h9"/><path d="M10 18v3M15 18v3"/></svg>`,
+                sheep: `<svg ${common}><path d="M5 14c0-3 3-5 7-5s7 2 7 5-3 5-7 5-7-2-7-5z"/><path d="M7 10C5 7 7 5 10 6"/><path d="M17 10c2-3 0-5-3-4"/><path d="M9 19v2M15 19v2"/><path d="M12 13h.1"/></svg>`,
+                monkey: `<svg ${common}><circle cx="12" cy="12" r="6"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><path d="M9 14c2 2 4 2 6 0"/><path d="M9 10h.1M15 10h.1"/><path d="M12 3v3"/></svg>`,
+                rooster: `<svg ${common}><path d="M7 18c0-5 3-8 7-8 3 0 5 2 5 5s-3 5-7 5H7z"/><path d="M13 10c-1-3 1-5 3-5"/><path d="M16 5c1-2 4-1 3 2"/><path d="M18 10l3-1"/><path d="M10 20v2M15 20v2"/></svg>`,
+                dog: `<svg ${common}><path d="M6 12c0-4 3-6 6-6s6 2 6 6-3 6-6 6-6-2-6-6z"/><path d="M8 8L5 5v5"/><path d="M16 8l3-3v5"/><path d="M10 13h.1M14 13h.1"/><path d="M11 16h2"/></svg>`,
+                boar: `<svg ${common}><path d="M5 14c0-4 3-7 8-7 4 0 7 2 7 6 0 5-4 7-8 7-4 0-7-2-7-6z"/><path d="M6 11L3 8"/><path d="M18 12l3-2"/><path d="M9 14h.1M15 14h.1"/><path d="M10 17h4"/></svg>`,
+            };
+            return paths[type] || `<svg ${filled}><circle cx="12" cy="12" r="7"/></svg>`;
+        }
+
+        function renderEmoji(animal) {
+            return `
+                <article class="item">
+                    <span class="emojiIcon">${animal.emoji}</span>
+                    <div>
+                        <span class="year">${animal.year}</span>
+                        <span class="label"> · ${animal.ky} жылы</span>
+                        <div class="sub">${animal.ru}</div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderCircle(animal) {
+            return `
+                <article class="item">
+                    <span class="roundIcon">${iconSvg(animal.icon)}</span>
+                    <div>
+                        <span class="year">${animal.year}</span>
+                        <span class="label"> · ${animal.ky}</span>
+                        <div class="sub">${animal.ky} жылы</div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderBadge(animal) {
+            return `
+                <article class="item badgeItem">
+                    <span class="badgeIcon">${iconSvg(animal.icon)}</span>
+                    <div class="badgeText">
+                        <span class="year">${animal.year}</span>
+                        <span class="label">${animal.ky} жылы</span>
+                        <span class="sub">${animal.ru}</span>
+                    </div>
+                </article>
+            `;
+        }
+
+        document.querySelector('[data-mode="emoji"]').innerHTML = animals.map(renderEmoji).join('');
+        document.querySelector('[data-mode="circle"]').innerHTML = animals.map(renderCircle).join('');
+        document.querySelector('[data-mode="badge"]').innerHTML = animals.map(renderBadge).join('');
+    </script>
+</body>
+</html>

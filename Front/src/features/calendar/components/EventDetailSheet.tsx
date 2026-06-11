@@ -1,5 +1,7 @@
 import React from 'react';
-import type { CalendarEvent, Language, EventType } from '../types/calendar.types';
+import type { CalendarEvent, Language } from '../types/calendar.types';
+import { EventIcon, getEventColorVar } from './EventIcon';
+import { splitAiBashyNote } from '../utils/eventDisplay';
 import styles from './EventDetailSheet.module.css';
 
 interface Props {
@@ -9,50 +11,14 @@ interface Props {
     language: Language;
 }
 
-const ICON_COLORS: Record<string, string> = {
-    new_moon: 'var(--color-new-moon)',
-    full_moon: 'var(--color-full-moon)',
-    togool: 'var(--color-togool)',
-    nooruz: '#10B981',
-    holiday: '#ef4444',
-    eid_al_fitr: 'var(--color-eid)',
-    ramadan: 'var(--color-ramadan)',
-    kadyr_tun: 'var(--accent-gold)',
-    ai_bashi: 'var(--color-ramadan)',
-    kurman_ait: 'var(--color-eid)',
-};
-
-const ICON_SYMBOLS: Record<string, React.ReactNode> = {
-    new_moon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ width: '18px', height: '18px' }}>
-            <circle cx="12" cy="12" r="9" />
-            <path d="M 8 4 Q 12 11 16 4 M 6 6 Q 12 13 18 6 M 8 20 Q 12 13 16 20 M 6 18 Q 12 11 18 18" />
-            <path d="M 4 8 Q 11 12 4 16 M 6 6 Q 13 12 6 18 M 20 8 Q 13 12 20 16 M 18 6 Q 11 12 18 18" />
-        </svg>
-    ),
-    full_moon: '🌕',
-    togool: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '18px', height: '18px' }}>
-            <path d="M12 2L15 10L23 12L15 14L12 22L9 14L1 12L9 10Z" fill="currentColor" stroke="none" />
-            <circle cx="18" cy="6" r="1.5" fill="currentColor" stroke="none" />
-            <circle cx="6" cy="6" r="1.5" fill="currentColor" stroke="none" />
-        </svg>
-    ),
-    nooruz: '🌸',
-    holiday: '🚩',
-    eid_al_fitr: '☪',
-    ramadan: '☾',
-    kadyr_tun: '✨',
-    ai_bashi: '🌙',
-    kurman_ait: '🐑',
-};
-
 export const EventDetailSheet: React.FC<Props> = ({
     events,
     date,
     onClose,
     language,
 }) => {
+    const { visibleEvents, aiBashyNote } = splitAiBashyNote(events);
+
     return (
         <div className={styles.backdrop} onClick={onClose}>
             <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
@@ -65,15 +31,16 @@ export const EventDetailSheet: React.FC<Props> = ({
                 </div>
 
                 <div className={styles.eventList}>
-                    {events.map((ev, i) => (
+                    {visibleEvents.map((ev, i) => (
                         <div key={i} className={styles.eventCard}>
                             <div
                                 className={styles.iconCircle}
-                                style={{ backgroundColor: ICON_COLORS[ev.type] }}
+                                style={{ backgroundColor: getEventColorVar(ev.type) }}
                             >
-                                <span className={styles.iconEmoji}>
-                                    {ICON_SYMBOLS[ev.type]}
-                                </span>
+                                <EventIcon
+                                    type={ev.type}
+                                    className={styles.eventIcon}
+                                />
                             </div>
                             <div className={styles.eventInfo}>
                                 <span className={styles.eventLabel}>
@@ -90,6 +57,20 @@ export const EventDetailSheet: React.FC<Props> = ({
                                         </span>
                                         <p className={styles.tipsText}>
                                             {language === 'ky' ? ev.tips_ky : ev.tips_ru}
+                                        </p>
+                                    </div>
+                                )}
+                                {ev.type === 'new_moon' && aiBashyNote && (
+                                    <div className={styles.aiBashyNote}>
+                                        <span className={styles.aiBashyTitle}>
+                                            {language === 'ky'
+                                                ? aiBashyNote.label_ky
+                                                : aiBashyNote.label_ru}
+                                        </span>
+                                        <p className={styles.aiBashyText}>
+                                            {language === 'ky'
+                                                ? aiBashyNote.description_ky
+                                                : aiBashyNote.description_ru}
                                         </p>
                                     </div>
                                 )}

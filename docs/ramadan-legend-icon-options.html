@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ramadan Legend Icon Options</title>
+    <style>
+        :root {
+            --bg: #0a141b;
+            --panel: rgba(17, 32, 40, 0.82);
+            --border: rgba(148, 163, 184, 0.22);
+            --text: #f2f5f1;
+            --muted: #b8c4c6;
+            --gold: #e9c46a;
+            --ramadan: #2ec4b6;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .wrap {
+            width: min(980px, calc(100vw - 48px));
+            display: grid;
+            gap: 22px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 750;
+            letter-spacing: 0;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--panel);
+            padding: 22px;
+            display: grid;
+            gap: 20px;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            color: var(--gold);
+            font-size: 15px;
+            font-weight: 750;
+        }
+
+        .legendRow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 17px;
+            font-weight: 650;
+        }
+
+        .cellPreview {
+            display: grid;
+            grid-template-columns: repeat(7, 48px);
+            gap: 0;
+            align-items: center;
+        }
+
+        .day {
+            position: relative;
+            height: 56px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid transparent;
+            font-size: 20px;
+            font-weight: 760;
+        }
+
+        .ramadanDay {
+            background: rgba(46, 196, 182, 0.08);
+            border-color: rgba(46, 196, 182, 0.24);
+        }
+
+        .band {
+            position: absolute;
+            left: 4px;
+            right: 4px;
+            bottom: 5px;
+            height: 4px;
+            border-radius: 999px;
+            background: rgba(46, 196, 182, 0.48);
+        }
+
+        .badge {
+            display: inline-grid;
+            place-items: center;
+            color: var(--ramadan);
+            flex: 0 0 auto;
+        }
+
+        .option2 {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: rgba(46, 196, 182, 0.08);
+            border: 1px solid rgba(46, 196, 182, 0.35);
+            position: relative;
+        }
+
+        .option2::after {
+            content: "";
+            position: absolute;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            height: 4px;
+            border-radius: 999px;
+            background: rgba(46, 196, 182, 0.68);
+        }
+
+        .option7 {
+            width: 34px;
+            height: 24px;
+            border-radius: 5px;
+            background:
+                linear-gradient(rgba(46, 196, 182, 0.08), rgba(46, 196, 182, 0.08)),
+                transparent;
+            border: 1px solid rgba(46, 196, 182, 0.26);
+            box-shadow: inset 0 -4px 0 rgba(46, 196, 182, 0.52);
+        }
+
+        .note {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <main class="wrap">
+        <h1>Варианты иконки для “Рамазан күндөрү”</h1>
+        <section class="options">
+            <article class="card">
+                <div class="title">
+                    <span>Вариант 7</span>
+                    <span>заливка ячейки + нижняя линия</span>
+                </div>
+                <div class="legendRow">
+                    <span class="badge option7" aria-hidden="true"></span>
+                    <span>Рамазан күндөрү</span>
+                </div>
+                <div class="cellPreview">
+                    <div class="day">16</div>
+                    <div class="day ramadanDay">17<span class="band"></span></div>
+                    <div class="day ramadanDay">18<span class="band"></span></div>
+                    <div class="day ramadanDay">19<span class="band"></span></div>
+                    <div class="day ramadanDay">20<span class="band"></span></div>
+                    <div class="day ramadanDay">21<span class="band"></span></div>
+                    <div class="day ramadanDay">22<span class="band"></span></div>
+                </div>
+                <p class="note">Иконка прямо повторяет визуальный язык календарной сетки: день Рамазана выглядит как ячейка с мягкой заливкой и нижней линией.</p>
+            </article>
+            <article class="card">
+                <div class="title">
+                    <span>Вариант 2</span>
+                    <span>мини-календарная ячейка</span>
+                </div>
+                <div class="legendRow">
+                    <span class="badge option2" aria-hidden="true"></span>
+                    <span>Рамазан күндөрү</span>
+                </div>
+                <div class="cellPreview">
+                    <div class="day">16</div>
+                    <div class="day ramadanDay">17<span class="band"></span></div>
+                    <div class="day ramadanDay">18<span class="band"></span></div>
+                    <div class="day ramadanDay">19<span class="band"></span></div>
+                    <div class="day ramadanDay">20<span class="band"></span></div>
+                    <div class="day ramadanDay">21<span class="band"></span></div>
+                    <div class="day ramadanDay">22<span class="band"></span></div>
+                </div>
+                <p class="note">Иконка компактнее и больше похожа на отдельный знак. Она аккуратная, но чуть менее явно показывает, что Рамазан отмечается протяженным периодом.</p>
+            </article>
+        </section>
+    </main>
+</body>
+</html>
