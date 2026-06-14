@@ -33,10 +33,11 @@ export const DayCell: React.FC<Props> = ({
     const primaryEvent = selectPrimaryCalendarEvent(events);
     const additionalEventCount = getAdditionalEventCount(events);
     const hasEvents = primaryEvent !== null || isInRamadan;
+    const isInteractive = hasEvents || isToday;
     const isHoliday = events.some(e => e.type === 'holiday');
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (!hasEvents) return;
+        if (!isInteractive) return;
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
             onClick();
@@ -45,12 +46,12 @@ export const DayCell: React.FC<Props> = ({
 
     return (
         <div
-            className={`${styles.cell} ${styles.active} ${hasEvents ? styles.hasEvents : ''} ${isHoliday ? styles.holiday : ''} ${isInRamadan ? styles.ramadan : ''} ${ramadanContinuesLeft ? styles.ramadanContinuesLeft : ''} ${ramadanContinuesRight ? styles.ramadanContinuesRight : ''}`}
-            onClick={hasEvents ? onClick : undefined}
+            className={`${styles.cell} ${styles.active} ${isInteractive ? styles.hasEvents : ''} ${isHoliday ? styles.holiday : ''} ${isInRamadan ? styles.ramadan : ''} ${ramadanContinuesLeft ? styles.ramadanContinuesLeft : ''} ${ramadanContinuesRight ? styles.ramadanContinuesRight : ''}`}
+            onClick={isInteractive ? onClick : undefined}
             onKeyDown={handleKeyDown}
-            role={hasEvents ? 'button' : undefined}
-            tabIndex={hasEvents ? 0 : undefined}
-            aria-label={hasEvents ? `Open events for day ${day}` : undefined}
+            role={isInteractive ? 'button' : undefined}
+            tabIndex={isInteractive ? 0 : undefined}
+            aria-label={isInteractive ? `Open day details for day ${day}` : undefined}
         >
             {isInRamadan && (
                 <span

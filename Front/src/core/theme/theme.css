@@ -50,32 +50,32 @@
 }
 
 [data-theme='light'] {
-  /* Light Theme (Old Parchment) */
-  --bg-primary: #FAF7EF;
-  --bg-surface: #F1EADF;
-  --bg-elevated: #E8DED0;
-  --bg-border: rgba(100, 75, 50, 0.14);
+  /* Light Theme (Clean Warm Daylight) */
+  --bg-primary: #F6F1E7;
+  --bg-surface: #FFFCF6;
+  --bg-elevated: #ECE3D4;
+  --bg-border: rgba(95, 74, 52, 0.13);
 
-  --accent-gold: #AF6A31;
-  --accent-gold-light: #D58943;
+  --accent-gold: #A65F24;
+  --accent-gold-light: #C77732;
 
-  --text-primary: #1E1A17;
-  --text-secondary: #5A4C45;
-  --text-muted: #8C7B72;
+  --text-primary: #201A15;
+  --text-secondary: #5B5047;
+  --text-muted: #82766C;
 
   /* Role-based (light) */
-  --color-moon: #C97A18;
-  --color-islamic: #1D736A;
-  --color-holiday: #c42b2b;
-  --color-togool: #1E6C8E;
-  --color-muchol: #2F8E55;
-  --color-kadyr: #7C4FB0;
+  --color-moon: #B36B18;
+  --color-islamic: #0A847A;
+  --color-holiday: #B92E2E;
+  --color-togool: #236A87;
+  --color-muchol: #287D4F;
+  --color-kadyr: #7550A6;
 
   /* Legacy */
-  --color-new-moon: #4A5D6B;
-  --color-full-moon: #E4A620;
-  --color-ramadan: #1D736A;
-  --color-eid: #1D736A;
+  --color-new-moon: #236A87;
+  --color-full-moon: #B36B18;
+  --color-ramadan: #0A847A;
+  --color-eid: #0A847A;
 }
 
 *,

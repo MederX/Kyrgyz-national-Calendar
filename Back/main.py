@@ -172,7 +172,7 @@ async def get_calendar_events(req: CalendarRequest) -> CalendarResponse:
             ))
 
     # 4. Ramadan period + Eid al-Fitr
-    ramadan_periods = calculate_ramadan_periods(req.year)
+    ramadan_periods = calculate_ramadan_periods(req.year, tz_name=req.tz_name)
     for period in ramadan_periods:
         start_date = period["start_date"]
         end_date = period["end_date"]

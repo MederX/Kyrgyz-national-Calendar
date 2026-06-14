@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Info Panel Typography Options</title>
+    <style>
+        :root {
+            --bg: #0a141b;
+            --surface: rgba(17, 32, 40, 0.88);
+            --elevated: #182a33;
+            --border: rgba(148, 163, 184, 0.22);
+            --text: #f2f5f1;
+            --muted: #bdc9ca;
+            --gold: #e9c46a;
+            --teal: #2ec4b6;
+            --red: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 50% 20%, rgba(46, 196, 182, 0.07), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        main {
+            width: min(1260px, calc(100vw - 48px));
+            margin: 42px auto;
+            display: grid;
+            gap: 22px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 780;
+            letter-spacing: 0;
+        }
+
+        .intro {
+            margin: -8px 0 0;
+            max-width: 920px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.55;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            align-items: start;
+        }
+
+        .option {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            padding: 18px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .optionHead {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+            padding-bottom: 12px;
+        }
+
+        .optionTitle {
+            margin: 0;
+            color: var(--gold);
+            font-size: 17px;
+            font-weight: 780;
+        }
+
+        .optionNote {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.35;
+            text-align: right;
+        }
+
+        .ramadanBar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.18), rgba(16, 185, 129, 0.12));
+            border: 1px solid rgba(45, 212, 191, 0.22);
+        }
+
+        .ramadanLabel {
+            color: var(--teal);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .legendBlock {
+            display: grid;
+            gap: 9px;
+        }
+
+        .legendTitle {
+            color: var(--gold);
+            font-family: Georgia, serif;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+            padding-bottom: 5px;
+        }
+
+        .legendItem {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+            display: inline-grid;
+            place-items: center;
+            flex: 0 0 auto;
+        }
+
+        .moon {
+            color: #8bd3ff;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .flag {
+            color: var(--red);
+        }
+
+        .period {
+            width: 26px;
+            height: 22px;
+            border-radius: 5px;
+            background: rgba(46, 196, 182, 0.07);
+            box-shadow: inset 0 -4px 0 rgba(46, 196, 182, 0.42);
+            border: 1px solid rgba(46, 196, 182, 0.18);
+            flex: 0 0 auto;
+        }
+
+        .sheet {
+            border-radius: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 14px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .sheetHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--elevated);
+            color: var(--muted);
+        }
+
+        .eventCard {
+            display: flex;
+            gap: 13px;
+            padding: 14px;
+            border-radius: 8px;
+            background: var(--elevated);
+        }
+
+        .eventIcon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+            color: #08131c;
+            background: var(--teal);
+        }
+
+        .eventInfo {
+            display: grid;
+            gap: 5px;
+        }
+
+        .eventTitle {
+            color: var(--text);
+            font-weight: 850;
+            line-height: 1.25;
+        }
+
+        .eventTime {
+            color: var(--gold);
+            font-weight: 820;
+        }
+
+        .eventDesc {
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .tip {
+            margin-top: 7px;
+            padding: 11px 12px;
+            border-left: 3px solid var(--gold);
+            border-radius: 6px;
+            background: rgba(233, 196, 106, 0.1);
+        }
+
+        .tipTitle {
+            display: block;
+            color: var(--gold);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 5px;
+        }
+
+        .tipText {
+            margin: 0;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
+        .a .ramadanLabel { font-size: 12px; }
+        .a .ramadanText { font-size: 14px; line-height: 1.45; }
+        .a .legendTitle { font-size: 16px; }
+        .a .legendItem { font-size: 14px; }
+        .a .dateTitle { font-size: 18px; font-weight: 760; }
+        .a .eventTitle { font-size: 17px; }
+        .a .eventTime { font-size: 14px; }
+        .a .eventDesc { font-size: 14px; }
+        .a .tipTitle { font-size: 12px; }
+        .a .tipText { font-size: 13px; }
+
+        .b .ramadanLabel { font-size: 13px; }
+        .b .ramadanText { font-size: 16px; line-height: 1.5; }
+        .b .legendTitle { font-size: 17px; }
+        .b .legendItem { font-size: 16px; }
+        .b .dateTitle { font-size: 20px; font-weight: 780; }
+        .b .eventTitle { font-size: 19px; }
+        .b .eventTime { font-size: 15px; }
+        .b .eventDesc { font-size: 16px; }
+        .b .tipTitle { font-size: 13px; }
+        .b .tipText { font-size: 15px; }
+
+        .c .ramadanLabel { font-size: 14px; }
+        .c .ramadanText { font-size: 18px; line-height: 1.55; }
+        .c .legendTitle { font-size: 18px; }
+        .c .legendItem { font-size: 17px; }
+        .c .dateTitle { font-size: 22px; font-weight: 800; }
+        .c .eventTitle { font-size: 21px; }
+        .c .eventTime { font-size: 16px; }
+        .c .eventDesc { font-size: 18px; }
+        .c .tipTitle { font-size: 14px; }
+        .c .tipText { font-size: 16px; }
+
+        @media (max-width: 1100px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Варианты размера текста в информационных панелях</h1>
+        <p class="intro">
+            Макет показывает один и тот же набор элементов: верхнюю панель Рамазана, легенду и попап события. Главный критерий — читабельность для старшего поколения без ощущения, что интерфейс стал грубым.
+        </p>
+
+        <section class="options">
+            <article class="option a">
+                <div class="optionHead">
+                    <h2 class="optionTitle">A — текущий мягкий</h2>
+                    <span class="optionNote">близко к нынешнему<br />самый компактный</span>
+                </div>
+                <div class="ramadanBar">
+                    <span class="ramadanLabel">Рамазан:</span>
+                    <span class="ramadanText">Жалган куран айынын он сегизи - Чын куран айынын он тогузу</span>
+                </div>
+                <div class="legend">
+                    <div class="legendBlock">
+                        <div class="legendTitle">Астрономия</div>
+                        <div class="legendItem"><span class="icon moon">☾</span>Ай жаңырган күн</div>
+                        <div class="legendItem"><span class="dot"></span>Ай толгон күн</div>
+                    </div>
+                    <div class="legendBlock">
+                        <div class="legendTitle">Ислам дини</div>
+                        <div class="legendItem"><span class="period"></span>Рамазан айы</div>
+                        <div class="legendItem"><span class="icon flag">⚑</span>Орозо айт</div>
+                    </div>
+                </div>
+                <div class="sheet">
+                    <div class="sheetHeader">
+                        <span class="dateTitle">Жалган куран айынын он жетиси</span>
+                        <span class="close">×</span>
+                    </div>
+                    <div class="eventCard">
+                        <span class="eventIcon">☾</span>
+                        <div class="eventInfo">
+                            <span class="eventTitle">Ай жаңырган күн</span>
+                            <span class="eventTime">17:01</span>
+                            <span class="eventDesc">Айдын жаңы циклинин башталышы</span>
+                            <div class="tip">
+                                <span class="tipTitle">Күндүн кеңеши:</span>
+                                <p class="tipText">Жаңы пландарды баштоого жана ниет кылууга эң жакшы убакыт.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="option b">
+                <div class="optionHead">
+                    <h2 class="optionTitle">B — читабельный</h2>
+                    <span class="optionNote">мой рекомендуемый<br />баланс размера и плотности</span>
+                </div>
+                <div class="ramadanBar">
+                    <span class="ramadanLabel">Рамазан:</span>
+                    <span class="ramadanText">Жалган куран айынын он сегизи - Чын куран айынын он тогузу</span>
+                </div>
+                <div class="legend">
+                    <div class="legendBlock">
+                        <div class="legendTitle">Астрономия</div>
+                        <div class="legendItem"><span class="icon moon">☾</span>Ай жаңырган күн</div>
+                        <div class="legendItem"><span class="dot"></span>Ай толгон күн</div>
+                    </div>
+                    <div class="legendBlock">
+                        <div class="legendTitle">Ислам дини</div>
+                        <div class="legendItem"><span class="period"></span>Рамазан айы</div>
+                        <div class="legendItem"><span class="icon flag">⚑</span>Орозо айт</div>
+                    </div>
+                </div>
+                <div class="sheet">
+                    <div class="sheetHeader">
+                        <span class="dateTitle">Жалган куран айынын он жетиси</span>
+                        <span class="close">×</span>
+                    </div>
+                    <div class="eventCard">
+                        <span class="eventIcon">☾</span>
+                        <div class="eventInfo">
+                            <span class="eventTitle">Ай жаңырган күн</span>
+                            <span class="eventTime">17:01</span>
+                            <span class="eventDesc">Айдын жаңы циклинин башталышы</span>
+                            <div class="tip">
+                                <span class="tipTitle">Күндүн кеңеши:</span>
+                                <p class="tipText">Жаңы пландарды баштоого жана ниет кылууга эң жакшы убакыт.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="option c">
+                <div class="optionHead">
+                    <h2 class="optionTitle">C — крупный</h2>
+                    <span class="optionNote">максимум читабельности<br />панели станут выше</span>
+                </div>
+                <div class="ramadanBar">
+                    <span class="ramadanLabel">Рамазан:</span>
+                    <span class="ramadanText">Жалган куран айынын он сегизи - Чын куран айынын он тогузу</span>
+                </div>
+                <div class="legend">
+                    <div class="legendBlock">
+                        <div class="legendTitle">Астрономия</div>
+                        <div class="legendItem"><span class="icon moon">☾</span>Ай жаңырган күн</div>
+                        <div class="legendItem"><span class="dot"></span>Ай толгон күн</div>
+                    </div>
+                    <div class="legendBlock">
+                        <div class="legendTitle">Ислам дини</div>
+                        <div class="legendItem"><span class="period"></span>Рамазан айы</div>
+                        <div class="legendItem"><span class="icon flag">⚑</span>Орозо айт</div>
+                    </div>
+                </div>
+                <div class="sheet">
+                    <div class="sheetHeader">
+                        <span class="dateTitle">Жалган куран айынын он жетиси</span>
+                        <span class="close">×</span>
+                    </div>
+                    <div class="eventCard">
+                        <span class="eventIcon">☾</span>
+                        <div class="eventInfo">
+                            <span class="eventTitle">Ай жаңырган күн</span>
+                            <span class="eventTime">17:01</span>
+                            <span class="eventDesc">Айдын жаңы циклинин башталышы</span>
+                            <div class="tip">
+                                <span class="tipTitle">Күндүн кеңеши:</span>
+                                <p class="tipText">Жаңы пландарды баштоого жана ниет кылууга эң жакшы убакыт.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

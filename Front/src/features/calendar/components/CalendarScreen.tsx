@@ -29,6 +29,11 @@ const MONTH_NAMES_RU = [
     'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
 ];
 
+const MONTH_NAMES_RU_GENITIVE = [
+    'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+    'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
+];
+
 const KY_DAY_NAMES = [
     '', 'бири', 'экиси', 'үчү', 'төртү', 'беши', 'алтысы', 'жетиси', 'сегизи', 'тогузу', 'ону',
     'он бири', 'он экиси', 'он үчү', 'он төртү', 'он беши', 'он алтысы', 'он жетиси', 'он сегизи', 'он тогузу', 'жыйырмасы',
@@ -62,6 +67,13 @@ const getKyMonthGenitive = (monthIndex: number) => {
 
 const formatKyFullDate = (date: Date) => {
     return `${getKyMonthGenitive(date.getUTCMonth())} ${KY_DAY_NAMES[date.getUTCDate()]}`;
+};
+
+const formatLocalDateString = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 };
 
 export const CalendarScreen: React.FC = () => {
@@ -98,6 +110,7 @@ export const CalendarScreen: React.FC = () => {
 
     const events = data?.events ?? [];
     const periods = data?.periods ?? [];
+    const todayDateStr = useMemo(() => formatLocalDateString(new Date()), []);
 
     const handleDayClick = (year: number, month: number, day: number) => {
         const mm = String(month).padStart(2, '0');
@@ -133,9 +146,13 @@ export const CalendarScreen: React.FC = () => {
             return `${getKyMonthGenitive(m - 1)} ${KY_DAY_NAMES[d]}`;
         }
 
-        const monthName = MONTH_NAMES_RU[m - 1];
-        return `${d} ${monthName.toLowerCase()}`;
+        return `${d} ${MONTH_NAMES_RU_GENITIVE[m - 1]}`;
     }, [selectedDateStr, language]);
+
+    const isSelectedEmptyToday = selectedDateStr === todayDateStr && selectedDayEvents.length === 0;
+    const selectedSheetTitle = isSelectedEmptyToday
+        ? `${language === 'ky' ? 'Бүгүнкү күн' : 'Сегодняшняя дата'}: ${selectedDateLabel}`
+        : selectedDateLabel;
 
     const animalIndex = (selectedYear - 4) % 12;
     const animalEmoji = ANIMAL_EMOJIS[animalIndex];
@@ -333,10 +350,10 @@ export const CalendarScreen: React.FC = () => {
                 />
             )}
 
-            {selectedDateStr !== null && selectedDayEvents.length > 0 && (
+            {selectedDateStr !== null && (selectedDayEvents.length > 0 || isSelectedEmptyToday) && (
                 <EventDetailSheet
                     events={selectedDayEvents}
-                    date={selectedDateLabel}
+                    date={selectedSheetTitle}
                     onClose={() => setSelectedDateStr(null)}
                     language={language}
                 />

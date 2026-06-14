@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Light Background Options</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #f5f7f4;
+            color: #1d2524;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        main {
+            width: min(1280px, calc(100vw - 48px));
+            margin: 42px auto;
+            display: grid;
+            gap: 22px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 780;
+            letter-spacing: 0;
+        }
+
+        .intro {
+            margin: -8px 0 0;
+            max-width: 940px;
+            color: #52605f;
+            font-size: 15px;
+            line-height: 1.55;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .option {
+            border-radius: 10px;
+            border: 1px solid rgba(51, 65, 85, 0.18);
+            overflow: hidden;
+            min-height: 520px;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            box-shadow: 0 14px 40px rgba(15, 23, 42, 0.10);
+        }
+
+        .optionHead {
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.14);
+            background: rgba(255, 255, 255, 0.62);
+            backdrop-filter: blur(8px);
+        }
+
+        .optionTitle {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .tag {
+            color: #5b6663;
+            font-size: 13px;
+            line-height: 1.35;
+            text-align: right;
+        }
+
+        .screen {
+            padding: 22px;
+            display: grid;
+            gap: 18px;
+            align-content: start;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen::after {
+            content: "";
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            left: 50%;
+            top: 48%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 34px solid currentColor;
+            opacity: 0.025;
+            pointer-events: none;
+        }
+
+        .topline {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand {
+            font-family: Georgia, serif;
+            font-size: 25px;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .year {
+            margin-top: 8px;
+            font-size: 15px;
+        }
+
+        .year strong {
+            font-family: Georgia, serif;
+            font-size: 28px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            min-width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(51, 65, 85, 0.18);
+            background: rgba(255, 255, 255, 0.54);
+            font-weight: 800;
+        }
+
+        .ramadanBar {
+            position: relative;
+            z-index: 1;
+            padding: 12px 14px;
+            border-radius: 9px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            font-size: 15px;
+            line-height: 1.45;
+        }
+
+        .ramadanBar strong {
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-size: 13px;
+        }
+
+        .legend {
+            position: relative;
+            z-index: 1;
+            border-radius: 10px;
+            padding: 16px 18px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .legendTitle {
+            font-family: Georgia, serif;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid currentColor;
+        }
+
+        .legendItem {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 14px;
+            line-height: 1.35;
+            margin: 8px 0;
+        }
+
+        .months {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .monthTitle {
+            font-size: 15px;
+            font-weight: 850;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.02em;
+        }
+
+        .week {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0;
+            font-size: 11px;
+            font-weight: 800;
+            opacity: 0.72;
+            margin-bottom: 4px;
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0;
+        }
+
+        .day {
+            min-height: 46px;
+            position: relative;
+            padding: 7px;
+            border-radius: 7px;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .event {
+            border: 1px solid rgba(51, 65, 85, 0.16);
+        }
+
+        .eventIcon {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            width: 21px;
+            height: 21px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 13px;
+        }
+
+        .ramadan {
+            border-radius: 0;
+        }
+
+        .ramadan::after {
+            content: "";
+            position: absolute;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            height: 4px;
+            border-radius: 999px;
+        }
+
+        .swatch {
+            width: 22px;
+            height: 18px;
+            border-radius: 4px;
+            display: inline-block;
+            box-shadow: inset 0 -4px 0 currentColor;
+            flex: 0 0 auto;
+        }
+
+        .moonIcon { color: #236a87; }
+        .fullIcon { color: #b36b18; }
+        .eidIcon { color: #12766f; }
+        .holidayIcon { color: #bf2e2e; }
+
+        .a .screen {
+            background: #f8faf7;
+            color: #17211f;
+        }
+        .a .optionTitle { color: #17211f; }
+        .a .year strong,
+        .a .legendTitle,
+        .a .ramadanBar strong { color: #9b5a24; }
+        .a .ramadanBar {
+            background: rgba(18, 118, 111, 0.09);
+            border: 1px solid rgba(18, 118, 111, 0.22);
+        }
+        .a .legend {
+            background: rgba(255, 255, 255, 0.62);
+            border: 1px solid rgba(51, 65, 85, 0.13);
+        }
+        .a .event { background: rgba(255, 255, 255, 0.52); }
+        .a .eventIcon { background: rgba(255, 255, 255, 0.8); }
+        .a .ramadan {
+            background: rgba(18, 118, 111, 0.11);
+            border: 1px solid rgba(18, 118, 111, 0.24);
+        }
+        .a .ramadan::after { background: rgba(18, 118, 111, 0.56); }
+        .a .swatch { background: rgba(18, 118, 111, 0.10); color: rgba(18, 118, 111, 0.58); border: 1px solid rgba(18, 118, 111, 0.24); }
+
+        .b .screen {
+            background: #f6f1e7;
+            color: #201a15;
+        }
+        .b .optionTitle { color: #201a15; }
+        .b .year strong,
+        .b .legendTitle,
+        .b .ramadanBar strong { color: #a65f24; }
+        .b .ramadanBar {
+            background: rgba(10, 132, 122, 0.11);
+            border: 1px solid rgba(10, 132, 122, 0.28);
+        }
+        .b .legend {
+            background: rgba(255, 252, 246, 0.70);
+            border: 1px solid rgba(95, 74, 52, 0.13);
+        }
+        .b .event { background: rgba(255, 252, 246, 0.72); }
+        .b .eventIcon { background: rgba(255, 252, 246, 0.88); }
+        .b .ramadan {
+            background: rgba(10, 132, 122, 0.13);
+            border: 1px solid rgba(10, 132, 122, 0.30);
+        }
+        .b .ramadan::after { background: rgba(10, 132, 122, 0.66); }
+        .b .swatch { background: rgba(10, 132, 122, 0.12); color: rgba(10, 132, 122, 0.68); border: 1px solid rgba(10, 132, 122, 0.28); }
+
+        .c .screen {
+            background: #eef4f2;
+            color: #152421;
+        }
+        .c .optionTitle { color: #152421; }
+        .c .year strong,
+        .c .legendTitle,
+        .c .ramadanBar strong { color: #916223; }
+        .c .ramadanBar {
+            background: rgba(20, 117, 109, 0.12);
+            border: 1px solid rgba(20, 117, 109, 0.30);
+        }
+        .c .legend {
+            background: rgba(255, 255, 255, 0.62);
+            border: 1px solid rgba(39, 72, 66, 0.14);
+        }
+        .c .event { background: rgba(255, 255, 255, 0.62); }
+        .c .eventIcon { background: rgba(255, 255, 255, 0.86); }
+        .c .ramadan {
+            background: rgba(20, 117, 109, 0.15);
+            border: 1px solid rgba(20, 117, 109, 0.32);
+        }
+        .c .ramadan::after { background: rgba(20, 117, 109, 0.70); }
+        .c .swatch { background: rgba(20, 117, 109, 0.14); color: rgba(20, 117, 109, 0.70); border: 1px solid rgba(20, 117, 109, 0.30); }
+
+        .d .screen {
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.42), rgba(255,255,255,0.12)),
+                #edf0e8;
+            color: #17201b;
+        }
+        .d .optionTitle { color: #17201b; }
+        .d .year strong,
+        .d .legendTitle,
+        .d .ramadanBar strong { color: #8a5a20; }
+        .d .ramadanBar {
+            background: rgba(0, 121, 112, 0.12);
+            border: 1px solid rgba(0, 121, 112, 0.30);
+        }
+        .d .legend {
+            background: rgba(250, 252, 247, 0.70);
+            border: 1px solid rgba(50, 70, 52, 0.15);
+        }
+        .d .event { background: rgba(250, 252, 247, 0.70); }
+        .d .eventIcon { background: rgba(250, 252, 247, 0.90); }
+        .d .ramadan {
+            background: rgba(0, 121, 112, 0.16);
+            border: 1px solid rgba(0, 121, 112, 0.34);
+        }
+        .d .ramadan::after { background: rgba(0, 121, 112, 0.72); }
+        .d .swatch { background: rgba(0, 121, 112, 0.15); color: rgba(0, 121, 112, 0.72); border: 1px solid rgba(0, 121, 112, 0.32); }
+
+        @media (max-width: 1050px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Варианты дневного фона</h1>
+        <p class="intro">
+            В каждом варианте показан одинаковый фрагмент интерфейса: верхняя панель Рамазана, легенда и первые месяцы календаря. Смотри прежде всего на то, насколько заметны примечательные даты и Рамазан-период.
+        </p>
+
+        <section class="grid">
+            <article class="option a">
+                <div class="optionHead">
+                    <h2 class="optionTitle">A — чистый теплый белый</h2>
+                    <span class="tag">самый легкий<br>меньше “матовости”</span>
+                </div>
+                <div class="screen">
+                    <div class="topline">
+                        <div>
+                            <div class="brand">Кыргыз Элинин Улуттук ай күн календары</div>
+                            <div class="year"><strong>2026</strong> · Жылкы жылы 🐎</div>
+                        </div>
+                        <div class="controls"><span class="btn">‹</span><span class="btn">2026</span><span class="btn">›</span></div>
+                    </div>
+                    <div class="ramadanBar"><strong>Рамазан:</strong><span>Жалган куран айынын он сегизи - Чын куран айынын он тогузу</span></div>
+                    <div class="legend">
+                        <div><div class="legendTitle">Астрономия</div><div class="legendItem"><span class="moonIcon">☾</span>Ай жаңырган күн</div><div class="legendItem"><span class="fullIcon">●</span>Ай толгон күн</div></div>
+                        <div><div class="legendTitle">Ислам дини</div><div class="legendItem"><span class="swatch"></span>Рамазан айы</div><div class="legendItem"><span class="eidIcon">☾</span>Орозо айт</div></div>
+                        <div><div class="legendTitle">Мамлекет & Салт</div><div class="legendItem"><span>♧</span>Мүчөл башы</div><div class="legendItem"><span class="holidayIcon">⚑</span>Мамлекеттик майрамдар</div></div>
+                    </div>
+                    <div class="months"></div>
+                </div>
+            </article>
+
+            <article class="option b">
+                <div class="optionHead">
+                    <h2 class="optionTitle">B — современный теплый</h2>
+                    <span class="tag">близко к нынешнему<br>но чище и контрастнее</span>
+                </div>
+                <div class="screen">
+                    <div class="topline">
+                        <div>
+                            <div class="brand">Кыргыз Элинин Улуттук ай күн календары</div>
+                            <div class="year"><strong>2026</strong> · Жылкы жылы 🐎</div>
+                        </div>
+                        <div class="controls"><span class="btn">‹</span><span class="btn">2026</span><span class="btn">›</span></div>
+                    </div>
+                    <div class="ramadanBar"><strong>Рамазан:</strong><span>Жалган куран айынын он сегизи - Чын куран айынын он тогузу</span></div>
+                    <div class="legend">
+                        <div><div class="legendTitle">Астрономия</div><div class="legendItem"><span class="moonIcon">☾</span>Ай жаңырган күн</div><div class="legendItem"><span class="fullIcon">●</span>Ай толгон күн</div></div>
+                        <div><div class="legendTitle">Ислам дини</div><div class="legendItem"><span class="swatch"></span>Рамазан айы</div><div class="legendItem"><span class="eidIcon">☾</span>Орозо айт</div></div>
+                        <div><div class="legendTitle">Мамлекет & Салт</div><div class="legendItem"><span>♧</span>Мүчөл башы</div><div class="legendItem"><span class="holidayIcon">⚑</span>Мамлекеттик майрамдар</div></div>
+                    </div>
+                    <div class="months"></div>
+                </div>
+            </article>
+
+            <article class="option c">
+                <div class="optionHead">
+                    <h2 class="optionTitle">C — светлый шалфей</h2>
+                    <span class="tag">холоднее и спокойнее<br>Рамазан заметнее</span>
+                </div>
+                <div class="screen">
+                    <div class="topline">
+                        <div>
+                            <div class="brand">Кыргыз Элинин Улуттук ай күн календары</div>
+                            <div class="year"><strong>2026</strong> · Жылкы жылы 🐎</div>
+                        </div>
+                        <div class="controls"><span class="btn">‹</span><span class="btn">2026</span><span class="btn">›</span></div>
+                    </div>
+                    <div class="ramadanBar"><strong>Рамазан:</strong><span>Жалган куран айынын он сегизи - Чын куран айынын он тогузу</span></div>
+                    <div class="legend">
+                        <div><div class="legendTitle">Астрономия</div><div class="legendItem"><span class="moonIcon">☾</span>Ай жаңырган күн</div><div class="legendItem"><span class="fullIcon">●</span>Ай толгон күн</div></div>
+                        <div><div class="legendTitle">Ислам дини</div><div class="legendItem"><span class="swatch"></span>Рамазан айы</div><div class="legendItem"><span class="eidIcon">☾</span>Орозо айт</div></div>
+                        <div><div class="legendTitle">Мамлекет & Салт</div><div class="legendItem"><span>♧</span>Мүчөл башы</div><div class="legendItem"><span class="holidayIcon">⚑</span>Мамлекеттик майрамдар</div></div>
+                    </div>
+                    <div class="months"></div>
+                </div>
+            </article>
+
+            <article class="option d">
+                <div class="optionHead">
+                    <h2 class="optionTitle">D — мягкий зеленовато-серый</h2>
+                    <span class="tag">самый рабочий<br>меньше декоративности</span>
+                </div>
+                <div class="screen">
+                    <div class="topline">
+                        <div>
+                            <div class="brand">Кыргыз Элинин Улуттук ай күн календары</div>
+                            <div class="year"><strong>2026</strong> · Жылкы жылы 🐎</div>
+                        </div>
+                        <div class="controls"><span class="btn">‹</span><span class="btn">2026</span><span class="btn">›</span></div>
+                    </div>
+                    <div class="ramadanBar"><strong>Рамазан:</strong><span>Жалган куран айынын он сегизи - Чын куран айынын он тогузу</span></div>
+                    <div class="legend">
+                        <div><div class="legendTitle">Астрономия</div><div class="legendItem"><span class="moonIcon">☾</span>Ай жаңырган күн</div><div class="legendItem"><span class="fullIcon">●</span>Ай толгон күн</div></div>
+                        <div><div class="legendTitle">Ислам дини</div><div class="legendItem"><span class="swatch"></span>Рамазан айы</div><div class="legendItem"><span class="eidIcon">☾</span>Орозо айт</div></div>
+                        <div><div class="legendTitle">Мамлекет & Салт</div><div class="legendItem"><span>♧</span>Мүчөл башы</div><div class="legendItem"><span class="holidayIcon">⚑</span>Мамлекеттик майрамдар</div></div>
+                    </div>
+                    <div class="months"></div>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <script>
+        const monthMarkup = `
+            <div class="month">
+                <div class="monthTitle">Жалган куран</div>
+                <div class="week"><span>ДҮЙ</span><span>ШЕЙ</span><span>ШАР</span><span>БЕЙ</span><span>ЖУМ</span><span>ИШЕ</span><span>ЖЕК</span></div>
+                <div class="days">
+                    <div class="day">2</div><div class="day">3</div><div class="day">4</div><div class="day">5</div><div class="day">6</div><div class="day">7</div><div class="day">8</div>
+                    <div class="day">9</div><div class="day">10</div><div class="day">11</div><div class="day">12</div><div class="day">13</div><div class="day">14</div><div class="day">15</div>
+                    <div class="day">16</div><div class="day event">17<span class="eventIcon eidIcon">♧</span></div><div class="day ramadan">18</div><div class="day ramadan">19</div><div class="day ramadan">20</div><div class="day ramadan">21</div><div class="day ramadan">22</div>
+                    <div class="day event holidayIcon">23<span class="eventIcon">⚑</span></div><div class="day event">24<span class="eventIcon moonIcon">✦</span></div><div class="day ramadan">25</div><div class="day ramadan">26</div><div class="day ramadan">27</div><div class="day ramadan">28</div><div class="day"></div>
+                </div>
+            </div>
+            <div class="month">
+                <div class="monthTitle">Чын куран</div>
+                <div class="week"><span>ДҮЙ</span><span>ШЕЙ</span><span>ШАР</span><span>БЕЙ</span><span>ЖУМ</span><span>ИШЕ</span><span>ЖЕК</span></div>
+                <div class="days">
+                    <div class="day">2</div><div class="day event">3<span class="eventIcon fullIcon">●</span></div><div class="day ramadan">4</div><div class="day ramadan">5</div><div class="day ramadan">6</div><div class="day ramadan">7</div><div class="day event holidayIcon">8<span class="eventIcon">⚑</span></div>
+                    <div class="day ramadan">9</div><div class="day ramadan">10</div><div class="day ramadan">11</div><div class="day ramadan">12</div><div class="day ramadan">13</div><div class="day ramadan">14</div><div class="day ramadan">15</div>
+                    <div class="day event">16<span class="eventIcon">★</span></div><div class="day">17</div><div class="day">18</div><div class="day">19</div><div class="day event holidayIcon">20<span class="eventIcon">⚑</span></div><div class="day holidayIcon">21</div><div class="day">22</div>
+                </div>
+            </div>
+            <div class="month">
+                <div class="monthTitle">Бугу</div>
+                <div class="week"><span>ДҮЙ</span><span>ШЕЙ</span><span>ШАР</span><span>БЕЙ</span><span>ЖУМ</span><span>ИШЕ</span><span>ЖЕК</span></div>
+                <div class="days">
+                    <div class="day">1</div><div class="day event">2<span class="eventIcon moonIcon">☾</span></div><div class="day">3</div><div class="day">4</div><div class="day">5</div><div class="day">6</div><div class="day">7</div>
+                    <div class="day">8</div><div class="day">9</div><div class="day">10</div><div class="day event">11<span class="eventIcon">✦</span></div><div class="day">12</div><div class="day">13</div><div class="day">14</div>
+                    <div class="day">15</div><div class="day">16</div><div class="day event holidayIcon">17<span class="eventIcon">⚑</span></div><div class="day">18</div><div class="day">19</div><div class="day">20</div><div class="day">21</div>
+                </div>
+            </div>
+        `;
+
+        document.querySelectorAll('.months').forEach((months) => {
+            months.innerHTML = monthMarkup;
+        });
+    </script>
+</body>
+</html>

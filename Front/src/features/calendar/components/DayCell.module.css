@@ -105,6 +105,29 @@
     background: rgba(13, 148, 136, 0.24);
 }
 
+[data-theme='light'] .hasEvents {
+    background: rgba(255, 252, 246, 0.72);
+    border-color: rgba(95, 74, 52, 0.14);
+}
+
+[data-theme='light'] .hasEvents:hover,
+[data-theme='light'] .hasEvents:focus-visible {
+    background: rgba(255, 252, 246, 0.94);
+}
+
+[data-theme='light'] .ramadan {
+    background: rgba(10, 132, 122, 0.13);
+    border-color: rgba(10, 132, 122, 0.30);
+}
+
+[data-theme='light'] .ramadanBand {
+    background: rgba(10, 132, 122, 0.66);
+}
+
+[data-theme='light'] .ramadan:hover .ramadanBand {
+    background: rgba(10, 132, 122, 0.76);
+}
+
 .primaryMarker {
     position: absolute;
     right: 6px;
@@ -116,6 +139,10 @@
     place-items: center;
     background: rgba(255, 255, 255, 0.08);
     z-index: 2;
+}
+
+[data-theme='light'] .primaryMarker {
+    background: rgba(255, 252, 246, 0.88);
 }
 
 .primaryMarkerWithCount {
@@ -146,4 +173,9 @@
     line-height: 1;
     z-index: 3;
     box-shadow: none;
+}
+
+[data-theme='light'] .additionalCount {
+    background: rgba(166, 95, 36, 0.14);
+    border-color: rgba(166, 95, 36, 0.32);
 }

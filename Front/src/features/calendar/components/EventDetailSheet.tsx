@@ -30,12 +30,14 @@ export const EventDetailSheet: React.FC<Props> = ({
                     </button>
                 </div>
 
-                <div className={styles.eventList}>
-                    {visibleEvents.map((ev, i) => (
+                {visibleEvents.length > 0 && (
+                    <div className={styles.eventList}>
+                        {visibleEvents.map((ev, i) => (
                         <div key={i} className={styles.eventCard}>
                             <div
                                 className={styles.iconCircle}
-                                style={{ backgroundColor: getEventColorVar(ev.type) }}
+                                data-event-type={ev.type}
+                                style={{ '--popup-event-color': getEventColorVar(ev.type) } as React.CSSProperties}
                             >
                                 <EventIcon
                                     type={ev.type}
@@ -76,8 +78,9 @@ export const EventDetailSheet: React.FC<Props> = ({
                                 )}
                             </div>
                         </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

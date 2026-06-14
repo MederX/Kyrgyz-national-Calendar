@@ -3,7 +3,7 @@ Astronomical calculations for the Kyrgyz Root Calendar.
 
 - Togoshuu (Pleiades / Moon conjunction) via ecliptic longitude comparison
 - Moon phases (new moon, full moon) via skyfield.almanac
-- Ramadan periods via tabular Islamic calendar conversion
+- Ramadan periods via tabular Islamic calendar conversion aligned to local new moon
 """
 
 import math
@@ -169,10 +169,30 @@ def islamic_to_gregorian(year: int, month: int, day: int) -> date:
     return _julian_day_to_gregorian(_islamic_to_julian_day(year, month, day))
 
 
-def calculate_ramadan_periods(year: int) -> list[dict]:
+def _add_months(year: int, month: int, offset: int) -> tuple[int, int]:
+    month_index = (year * 12) + (month - 1) + offset
+    return month_index // 12, (month_index % 12) + 1
+
+
+def _nearest_new_moon_date(target_date: date, tz_name: str) -> date:
+    new_moon_dates: set[date] = set()
+
+    for offset in (-1, 0, 1):
+        phase_year, phase_month = _add_months(target_date.year, target_date.month, offset)
+        for phase in calculate_moon_phases(phase_year, phase_month, tz_name):
+            if phase["phase"] == "new_moon":
+                new_moon_dates.add(phase["datetime"].date())
+
+    if not new_moon_dates:
+        return target_date
+
+    return min(new_moon_dates, key=lambda new_moon_date: abs((new_moon_date - target_date).days))
+
+
+def calculate_ramadan_periods(year: int, tz_name: str = "Asia/Bishkek") -> list[dict]:
     """
-    Approximate Ramadan using the tabular Islamic calendar and return all
-    periods overlapping the Gregorian year.
+    Approximate Ramadan from the tabular Islamic calendar, then align Ай башы
+    to the nearest local astronomical new moon for the requested timezone.
     """
     approx_islamic_year = ((year - 622) * 33) // 32
     year_start = date(year, 1, 1)
@@ -180,9 +200,21 @@ def calculate_ramadan_periods(year: int) -> list[dict]:
     periods: list[dict] = []
 
     for islamic_year in range(approx_islamic_year - 2, approx_islamic_year + 3):
-        ramadan_start = islamic_to_gregorian(islamic_year, 9, 1)
-        eid_al_fitr = islamic_to_gregorian(islamic_year, 10, 1)
+        tabular_ramadan_start = islamic_to_gregorian(islamic_year, 9, 1)
+        tabular_eid_al_fitr = islamic_to_gregorian(islamic_year, 10, 1)
+        tabular_ai_bashi = tabular_ramadan_start - timedelta(days=1)
+        tabular_ramadan_end = tabular_eid_al_fitr - timedelta(days=1)
+
+        if tabular_ramadan_end < year_start - timedelta(days=3) or tabular_ramadan_start > year_end + timedelta(days=3):
+            continue
+
+        ai_bashi = _nearest_new_moon_date(tabular_ai_bashi, tz_name)
+        ramadan_shift = ai_bashi - tabular_ai_bashi
+
+        ramadan_start = tabular_ramadan_start + ramadan_shift
+        eid_al_fitr = tabular_eid_al_fitr + ramadan_shift
         ramadan_end = eid_al_fitr - timedelta(days=1)
+        kurman_ait = islamic_to_gregorian(islamic_year, 12, 10) + ramadan_shift
 
         if ramadan_end < year_start or ramadan_start > year_end:
             continue
@@ -193,8 +225,8 @@ def calculate_ramadan_periods(year: int) -> list[dict]:
             "end_date": min(ramadan_end, year_end),
             "eid_al_fitr": eid_al_fitr,
             "kadyr_tun": ramadan_start + timedelta(days=26),
-            "ai_bashi": ramadan_start - timedelta(days=1),
-            "kurman_ait": islamic_to_gregorian(islamic_year, 12, 10),
+            "ai_bashi": ai_bashi,
+            "kurman_ait": kurman_ait,
         })
 
     periods.sort(key=lambda item: item["start_date"])
