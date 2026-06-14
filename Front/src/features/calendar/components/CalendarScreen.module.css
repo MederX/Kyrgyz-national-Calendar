@@ -223,6 +223,77 @@
     padding: 8px 0 16px;
 }
 
+.calendarSection {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-top: 6px;
+}
+
+.calendarSection + .calendarSection {
+    margin-top: 18px;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 0 12px;
+    border-bottom: 1px solid var(--bg-border);
+}
+
+.sectionIcon {
+    width: 42px;
+    height: 42px;
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    font-size: 25px;
+    line-height: 1;
+    border: 1px solid var(--section-accent-border);
+    background: var(--section-accent-bg);
+    color: var(--section-accent);
+}
+
+.sectionTitle {
+    margin: 0;
+    font-family: var(--font-family-serif);
+    font-size: 30px;
+    line-height: 1.05;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.sectionSubtitle {
+    margin: 6px 0 0;
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--text-secondary);
+}
+
+.lunarSection {
+    --section-accent: var(--color-new-moon);
+    --section-accent-bg: rgba(142, 202, 230, 0.12);
+    --section-accent-border: rgba(142, 202, 230, 0.28);
+}
+
+.solarSection {
+    --section-accent: var(--accent-gold);
+    --section-accent-bg: rgba(233, 196, 106, 0.13);
+    --section-accent-border: rgba(233, 196, 106, 0.30);
+}
+
+[data-theme='light'] .lunarSection {
+    --section-accent-bg: rgba(35, 106, 135, 0.10);
+    --section-accent-border: rgba(35, 106, 135, 0.24);
+}
+
+[data-theme='light'] .solarSection {
+    --section-accent-bg: rgba(166, 95, 36, 0.12);
+    --section-accent-border: rgba(166, 95, 36, 0.26);
+}
+
 /* ── Yearly Grid showing 12 Calendars ── */
 .yearGrid {
     display: grid;

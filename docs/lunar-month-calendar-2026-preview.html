@@ -1,0 +1,1178 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Кыргыз календарь · Лунный месяц 2026</title>
+    <style>
+        :root {
+            --bg-primary: #0a141b;
+            --bg-surface: #112028;
+            --bg-elevated: #182a33;
+            --bg-border: rgba(255, 255, 255, 0.10);
+            --accent-gold: #e9c46a;
+            --accent-gold-light: #f4a261;
+            --text-primary: #eaeaea;
+            --text-secondary: #93a3ab;
+            --text-muted: #56686f;
+            --color-new-moon: #8ecae6;
+            --color-full-moon: #e9c46a;
+            --color-ramadan: #2ec4b6;
+            --color-holiday: #ef4444;
+            --color-togool: #8ecae6;
+            --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-family-serif: Georgia, "Times New Roman", serif;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f6f1e7;
+            --bg-surface: #fffcf6;
+            --bg-elevated: #ece3d4;
+            --bg-border: rgba(95, 74, 52, 0.13);
+            --accent-gold: #a65f24;
+            --accent-gold-light: #c77732;
+            --text-primary: #201a15;
+            --text-secondary: #5b5047;
+            --text-muted: #82766c;
+            --color-new-moon: #236a87;
+            --color-full-moon: #b36b18;
+            --color-ramadan: #0a847a;
+            --color-holiday: #b92e2e;
+            --color-togool: #236a87;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        [data-theme="light"] body::before {
+            opacity: 0.006;
+        }
+
+        button,
+        select {
+            font-family: inherit;
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+            max-width: 1440px;
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 32px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .watermark {
+            position: fixed;
+            top: 55%;
+            left: 50%;
+            width: 75vh;
+            height: 75vh;
+            min-width: 500px;
+            min-height: 500px;
+            transform: translate(-50%, -50%);
+            color: var(--text-primary);
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        [data-theme="light"] .watermark {
+            opacity: 0.018;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 12px 0 24px;
+            border-bottom: 1px solid var(--bg-border);
+        }
+
+        .title {
+            margin: 0;
+            font-family: var(--font-family-serif);
+            font-size: 36px;
+            line-height: 1.1;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .yearLine {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .yearNumber {
+            font-family: var(--font-family-serif);
+            font-size: 32px;
+            line-height: 1;
+            font-weight: 800;
+            color: var(--accent-gold);
+        }
+
+        .animalYear {
+            color: var(--text-secondary);
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .yearButton,
+        .themeToggle,
+        .langToggle {
+            min-height: 40px;
+            border: 1px solid var(--bg-border);
+            color: var(--text-primary);
+            background: var(--bg-surface);
+            cursor: pointer;
+        }
+
+        .yearButton {
+            min-width: 112px;
+            padding: 0 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .themeToggle {
+            width: 40px;
+            border-radius: 50%;
+            font-size: 19px;
+        }
+
+        .langToggle {
+            padding: 0 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .infoBar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.18), rgba(16, 185, 129, 0.12));
+            border: 1px solid rgba(45, 212, 191, 0.2);
+        }
+
+        [data-theme="light"] .infoBar {
+            background: rgba(10, 132, 122, 0.11);
+            border-color: rgba(10, 132, 122, 0.28);
+        }
+
+        .infoLabel {
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            color: var(--color-ramadan);
+            text-transform: uppercase;
+        }
+
+        .infoValue {
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .locationRow {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="light"] .locationRow {
+            background: rgba(255, 252, 246, 0.70);
+            border-color: rgba(95, 74, 52, 0.13);
+        }
+
+        .locationIcon {
+            color: var(--accent-gold);
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 44px;
+            padding: 30px 34px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid var(--bg-border);
+        }
+
+        [data-theme="light"] .legend {
+            background: rgba(255, 252, 246, 0.70);
+        }
+
+        .legendBlock {
+            min-width: 210px;
+        }
+
+        .legendTitle {
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--bg-border);
+            color: var(--text-primary);
+            font-size: 21px;
+            line-height: 1.15;
+            font-weight: 800;
+        }
+
+        .legendItem {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 32px;
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.35;
+        }
+
+        .legendIcon {
+            width: 30px;
+            height: 30px;
+            display: inline-grid;
+            place-items: center;
+            color: var(--color-new-moon);
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .legendIcon.full {
+            color: var(--color-full-moon);
+        }
+
+        .legendIcon.ramadan {
+            width: 32px;
+            height: 27px;
+            border-radius: 6px;
+            background: rgba(46, 196, 182, 0.22);
+            border: 1px solid rgba(46, 196, 182, 0.4);
+        }
+
+        [data-theme="light"] .legendIcon.ramadan {
+            background: rgba(10, 132, 122, 0.16);
+            border-color: rgba(10, 132, 122, 0.32);
+        }
+
+        .legendIcon.holiday {
+            color: var(--color-holiday);
+        }
+
+        .calendarSection {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding-top: 6px;
+        }
+
+        .calendarSection + .calendarSection {
+            margin-top: 18px;
+        }
+
+        .sectionHeader {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--bg-border);
+        }
+
+        .sectionIcon {
+            width: 42px;
+            height: 42px;
+            display: inline-grid;
+            place-items: center;
+            flex: 0 0 auto;
+            border-radius: 50%;
+            font-size: 25px;
+            line-height: 1;
+            color: var(--section-accent);
+            background: var(--section-accent-bg);
+            border: 1px solid var(--section-accent-border);
+        }
+
+        .sectionTitle {
+            margin: 0;
+            color: var(--text-primary);
+            font-family: var(--font-family-serif);
+            font-size: 30px;
+            line-height: 1.05;
+            font-weight: 700;
+        }
+
+        .sectionSubtitle {
+            margin: 6px 0 0;
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.45;
+        }
+
+        .lunarSection {
+            --section-accent: var(--color-new-moon);
+            --section-accent-bg: rgba(142, 202, 230, 0.12);
+            --section-accent-border: rgba(142, 202, 230, 0.28);
+        }
+
+        .solarSection {
+            --section-accent: var(--accent-gold);
+            --section-accent-bg: rgba(233, 196, 106, 0.13);
+            --section-accent-border: rgba(233, 196, 106, 0.30);
+        }
+
+        [data-theme="light"] .lunarSection {
+            --section-accent-bg: rgba(35, 106, 135, 0.10);
+            --section-accent-border: rgba(35, 106, 135, 0.24);
+        }
+
+        [data-theme="light"] .solarSection {
+            --section-accent-bg: rgba(166, 95, 36, 0.12);
+            --section-accent-border: rgba(166, 95, 36, 0.26);
+        }
+
+        .legendIcon.ld {
+            height: 24px;
+            border-radius: 999px;
+            color: var(--color-new-moon);
+            background: rgba(142, 202, 230, 0.13);
+            border: 1px solid rgba(142, 202, 230, 0.26);
+            font-size: 11px;
+            line-height: 1;
+        }
+
+        [data-theme="light"] .legendIcon.ld {
+            background: rgba(35, 106, 135, 0.12);
+            border-color: rgba(35, 106, 135, 0.25);
+        }
+
+        .lunarView {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding: 22px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid var(--bg-border);
+        }
+
+        [data-theme="light"] .lunarView {
+            background: rgba(255, 252, 246, 0.78);
+        }
+
+        .lunarView::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            background:
+                radial-gradient(circle at 18% 20%, rgba(233, 196, 106, 0.18), transparent 34%),
+                linear-gradient(135deg, rgba(166, 95, 36, 0.14), rgba(46, 196, 182, 0.07));
+        }
+
+        .lunarView.isArsar::before {
+            opacity: 1;
+        }
+
+        .lunarHeader,
+        .arsarNotice,
+        .sectionsGrid {
+            position: relative;
+            z-index: 1;
+        }
+
+        .lunarHeader {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .eyebrow {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--accent-gold);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .lunarTitle {
+            margin: 0;
+            color: var(--text-primary);
+            font-family: var(--font-family-serif);
+            font-size: 30px;
+            line-height: 1;
+            font-weight: 700;
+        }
+
+        .lunarPeriod {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 8px 0 0;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.45;
+        }
+
+        .daysCount {
+            display: inline-flex;
+            align-items: center;
+            min-height: 24px;
+            padding: 2px 9px;
+            border-radius: 999px;
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--bg-border);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        [data-theme="light"] .daysCount {
+            background: rgba(166, 95, 36, 0.09);
+        }
+
+        .selectorLabel {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            min-width: 230px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .monthSelect {
+            min-height: 42px;
+            padding: 0 38px 0 13px;
+            border-radius: 8px;
+            border: 1px solid var(--bg-border);
+            color: var(--text-primary);
+            background: var(--bg-surface);
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .arsarNotice {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            width: fit-content;
+            max-width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: var(--text-primary);
+            background: rgba(233, 196, 106, 0.16);
+            border: 1px solid rgba(233, 196, 106, 0.32);
+            font-size: 15px;
+            line-height: 1.45;
+        }
+
+        .isArsar .arsarNotice {
+            display: flex;
+        }
+
+        [data-theme="light"] .arsarNotice {
+            background: rgba(166, 95, 36, 0.14);
+            border-color: rgba(166, 95, 36, 0.28);
+        }
+
+        .arsarNotice strong {
+            color: var(--accent-gold);
+        }
+
+        .sectionsGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 18px;
+        }
+
+        .monthPanel {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .gregorianTitle {
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .calendarGrid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(42px, 1fr));
+            gap: 4px;
+        }
+
+        .dayHeader {
+            min-height: 30px;
+            display: grid;
+            place-items: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .dayCell {
+            position: relative;
+            min-height: 68px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        [data-theme="light"] .dayCell {
+            background: rgba(255, 252, 246, 0.58);
+        }
+
+        .dayCell.inRange {
+            background: rgba(142, 202, 230, 0.11);
+            border-color: rgba(142, 202, 230, 0.22);
+        }
+
+        [data-theme="light"] .dayCell.inRange {
+            background: rgba(35, 106, 135, 0.10);
+            border-color: rgba(35, 106, 135, 0.24);
+        }
+
+        .isArsar .dayCell.inRange {
+            background: rgba(233, 196, 106, 0.13);
+            border-color: rgba(233, 196, 106, 0.28);
+        }
+
+        [data-theme="light"] .isArsar .dayCell.inRange {
+            background: rgba(166, 95, 36, 0.12);
+            border-color: rgba(166, 95, 36, 0.24);
+        }
+
+        .dayCell.outRange {
+            opacity: 0.38;
+        }
+
+        .dayCell.today {
+            border-color: var(--accent-gold);
+            box-shadow: inset 0 0 0 1px rgba(233, 196, 106, 0.42);
+        }
+
+        .gregorianDay {
+            position: absolute;
+            top: 9px;
+            left: 10px;
+            color: var(--text-primary);
+            font-size: 24px;
+            line-height: 1;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .lunarDay {
+            position: absolute;
+            right: 8px;
+            bottom: 7px;
+            min-width: 54px;
+            height: 24px;
+            display: inline-grid;
+            place-items: center;
+            padding: 0 7px;
+            border-radius: 999px;
+            color: var(--color-new-moon);
+            background: rgba(142, 202, 230, 0.13);
+            border: 1px solid rgba(142, 202, 230, 0.26);
+            font-size: 11px;
+            line-height: 1;
+            font-weight: 800;
+            white-space: nowrap;
+            font-variant-numeric: tabular-nums;
+        }
+
+        [data-theme="light"] .lunarDay {
+            background: rgba(35, 106, 135, 0.12);
+            border-color: rgba(35, 106, 135, 0.25);
+        }
+
+        .isArsar .lunarDay {
+            color: var(--accent-gold);
+            background: rgba(233, 196, 106, 0.15);
+            border-color: rgba(233, 196, 106, 0.30);
+        }
+
+        .miniYearGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+        }
+
+        .miniMonth {
+            min-height: 84px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--bg-border);
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        [data-theme="light"] .miniMonth {
+            background: rgba(255, 252, 246, 0.58);
+        }
+
+        .miniMonthTitle {
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .miniMonthText {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 760px) {
+            .page {
+                padding: 20px 12px;
+            }
+
+            .title {
+                font-size: 30px;
+            }
+
+            .legend {
+                padding: 22px 18px;
+            }
+
+            .lunarView {
+                padding: 18px 14px;
+            }
+
+            .sectionsGrid {
+                grid-template-columns: 1fr;
+            }
+
+            .calendarGrid {
+                grid-template-columns: repeat(7, minmax(36px, 1fr));
+                gap: 3px;
+            }
+
+            .dayCell {
+                min-height: 60px;
+            }
+
+            .gregorianDay {
+                font-size: 21px;
+            }
+
+            .lunarDay {
+                right: 6px;
+                bottom: 6px;
+                min-width: 44px;
+                max-width: calc(100% - 12px);
+                height: 20px;
+                padding: 0 5px;
+                font-size: 10px;
+                overflow: hidden;
+                text-overflow: clip;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark" aria-hidden="true">
+        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3">
+            <circle cx="60" cy="60" r="46"></circle>
+            <circle cx="60" cy="60" r="23"></circle>
+            <path d="M60 14v92M14 60h92"></path>
+            <path d="M28 28c20 17 44 17 64 0M28 92c20-17 44-17 64 0"></path>
+            <path d="M28 28c17 20 17 44 0 64M92 28c-17 20-17 44 0 64"></path>
+        </svg>
+    </div>
+
+    <main class="page">
+        <header class="header">
+            <div>
+                <h1 class="title" data-i18n="title">Кыргыз Элинин Улуттук ай күн календары</h1>
+                <div class="yearLine">
+                    <span class="yearNumber">2026</span>
+                    <span class="animalYear" data-i18n="animal">· Жылкы жылы 🐎</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="yearButton">2026</button>
+                <button class="themeToggle" id="themeToggle" title="Сменить тему">☀️</button>
+                <button class="langToggle" id="langToggle">РУС</button>
+            </div>
+        </header>
+
+        <section class="infoBar">
+            <span class="infoLabel">Рамазан:</span>
+            <span class="infoValue" data-i18n="ramadan">Жалган куран айынын он тогузу - Чын куран айынын он сегизи</span>
+        </section>
+
+        <section class="locationRow">
+            <span class="locationIcon">⌖</span>
+            <strong>Бишкек</strong>
+            <span style="color: var(--text-secondary)">Asia/Bishkek</span>
+        </section>
+
+        <section class="legend">
+            <div class="legendBlock">
+                <div class="legendTitle" data-i18n="legendAstronomy">Астрономия</div>
+                <div class="legendItem"><span class="legendIcon">☾</span><span data-i18n="newMoon">Ай жаңырган күн</span></div>
+                <div class="legendItem"><span class="legendIcon full">●</span><span data-i18n="fullMoon">Ай толгон күн</span></div>
+                <div class="legendItem" id="lunarDayLegend" style="display:none"><span class="legendIcon ld">ЛД</span><span data-i18n="lunarDayLegend">лунный день</span></div>
+            </div>
+            <div class="legendBlock">
+                <div class="legendTitle" data-i18n="legendIslam">Ислам дини</div>
+                <div class="legendItem"><span class="legendIcon ramadan"></span><span data-i18n="ramadanLegend">Рамазан айы</span></div>
+                <div class="legendItem"><span class="legendIcon">☾✦</span><span data-i18n="eid">Орозо айт</span></div>
+            </div>
+            <div class="legendBlock">
+                <div class="legendTitle" data-i18n="legendState">Мамлекет & Салт</div>
+                <div class="legendItem"><span class="legendIcon holiday">⚑</span><span data-i18n="holiday">Майрам күндөрү</span></div>
+                <div class="legendItem"><span class="legendIcon">✶</span><span data-i18n="togool">Тогол</span></div>
+            </div>
+        </section>
+
+        <section class="calendarSection solarSection">
+            <div class="sectionHeader">
+                <div class="sectionIcon" aria-hidden="true">☀</div>
+                <div>
+                    <h2 class="sectionTitle" data-i18n="solarCalendarTitle">Күн календары</h2>
+                    <p class="sectionSubtitle" data-i18n="solarCalendarSubtitle">Кадимки жылдык календарь: Бирдин айы - Үчтүн айы</p>
+                </div>
+            </div>
+            <section class="miniYearGrid" id="miniYearGrid" aria-label="Лунные месяцы 2026"></section>
+        </section>
+
+        <section class="calendarSection lunarSection">
+            <div class="sectionHeader">
+                <div class="sectionIcon" aria-hidden="true">☾</div>
+                <div>
+                    <h2 class="sectionTitle" data-i18n="lunarCalendarTitle">Ай календары</h2>
+                    <p class="sectionSubtitle" data-i18n="lunarCalendarSubtitle">Ай жаңыргандан ай жаңырганга чейинки күндөр</p>
+                </div>
+            </div>
+
+            <section class="lunarView" id="lunarView">
+                <div class="lunarHeader">
+                    <div>
+                        <span class="eyebrow" data-i18n="lunarEyebrow">Тандалган ай</span>
+                        <h2 class="lunarTitle" id="lunarTitle">Бирдин айы</h2>
+                        <p class="lunarPeriod">
+                            <span id="lunarPeriod">20-12-2025 - 18-01-2026</span>
+                            <span class="daysCount" id="daysCount">30 күн</span>
+                        </p>
+                    </div>
+
+                    <label class="selectorLabel">
+                        <span data-i18n="selectLabel">Айды тандоо</span>
+                        <select class="monthSelect" id="monthSelect"></select>
+                    </label>
+                </div>
+
+                <div class="arsarNotice">
+                    <strong>Арсар ай</strong>
+                    <span data-i18n="arsarText">мезгил менен ай аталыштарын кайра теңдөө үчүн колдонулган кошумча ай</span>
+                </div>
+
+                <div class="sectionsGrid" id="sectionsGrid"></div>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const DAY_MS = 24 * 60 * 60 * 1000;
+        let language = 'ky';
+
+        const NEW_MOON_DATES_2026 = [
+            '2025-12-20',
+            '2026-01-19',
+            '2026-02-17',
+            '2026-03-19',
+            '2026-04-17',
+            '2026-05-17',
+            '2026-06-15',
+            '2026-07-14',
+            '2026-08-12',
+            '2026-09-11',
+            '2026-10-10',
+            '2026-11-09',
+            '2026-12-09',
+            '2027-01-08',
+            '2027-02-06'
+        ];
+
+        const KYRGYZ_LUNAR_MONTHS = [
+            { name: 'Бирдин айы', seasonMonth: 1 },
+            { name: 'Жалган куран', seasonMonth: 2 },
+            { name: 'Чын куран', seasonMonth: 3 },
+            { name: 'Бугу', seasonMonth: 4 },
+            { name: 'Кулжа', seasonMonth: 5 },
+            { name: 'Теке', seasonMonth: 6 },
+            { name: 'Баш оона', seasonMonth: 7 },
+            { name: 'Аяк оона', seasonMonth: 8 },
+            { name: 'Тогуздун айы', seasonMonth: 9 },
+            { name: 'Жетинин айы', seasonMonth: 10 },
+            { name: 'Бештин айы', seasonMonth: 11 },
+            { name: 'Үчтүн айы', seasonMonth: 12 }
+        ];
+
+        const TEXT = {
+            ky: {
+                title: 'Кыргыз Элинин Улуттук ай күн календары',
+                animal: '· Жылкы жылы 🐎',
+                ramadan: 'Жалган куран айынын он тогузу - Чын куран айынын он сегизи',
+                legendAstronomy: 'Астрономия',
+                legendIslam: 'Ислам дини',
+                legendState: 'Мамлекет & Салт',
+                newMoon: 'Ай жаңырган күн',
+                fullMoon: 'Ай толгон күн',
+                ramadanLegend: 'Рамазан айы',
+                eid: 'Орозо айт',
+                holiday: 'Майрам күндөрү',
+                togool: 'Тогол',
+                lunarDayLegend: 'лунный день',
+                lunarCalendarTitle: 'Ай календары',
+                lunarCalendarSubtitle: 'Ай жаңыргандан ай жаңырганга чейинки күндөр',
+                solarCalendarTitle: 'Күн календары',
+                solarCalendarSubtitle: 'Кадимки жылдык календарь: Бирдин айы - Үчтүн айы',
+                lunarEyebrow: 'Тандалган ай',
+                selectLabel: 'Айды тандоо',
+                arsarText: 'мезгил менен ай аталыштарын кайра теңдөө үчүн колдонулган кошумча ай',
+                days: 'күн',
+                lunarSuffix: '-күн',
+                dayHeaders: ['Дүй', 'Шей', 'Шар', 'Бей', 'Жум', 'Ише', 'Жек'],
+                gregorianMonths: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+            },
+            ru: {
+                title: 'Кыргызский национальный календарь',
+                animal: '· Год лошади 🐎',
+                ramadan: '19 февраля - 18 марта',
+                legendAstronomy: 'Астрономия',
+                legendIslam: 'Ислам',
+                legendState: 'Государство & Традиции',
+                newMoon: 'Новолуние',
+                fullMoon: 'Полнолуние',
+                ramadanLegend: 'Месяц Рамазан',
+                eid: 'Орозо айт',
+                holiday: 'Праздничные дни',
+                togool: 'Тогол',
+                lunarDayLegend: 'лунный день',
+                lunarCalendarTitle: 'Лунный календарь',
+                lunarCalendarSubtitle: 'Дни от новолуния до новолуния',
+                solarCalendarTitle: 'Солнечный календарь',
+                solarCalendarSubtitle: 'Обычный годовой календарь: январь - декабрь',
+                lunarEyebrow: 'Выбранный месяц',
+                selectLabel: 'Выбор месяца',
+                arsarText: 'високосный буферный месяц: выравнивает лунный цикл с сезонными названиями',
+                days: 'дней',
+                lunarSuffix: '-ЛД',
+                dayHeaders: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+                gregorianMonths: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+            }
+        };
+
+        function parseIsoDate(value) {
+            const [year, month, day] = value.split('-').map(Number);
+            return new Date(Date.UTC(year, month - 1, day));
+        }
+
+        function toIsoDate(date) {
+            return date.toISOString().slice(0, 10);
+        }
+
+        function formatDisplayDate(isoDate) {
+            const [year, month, day] = isoDate.split('-');
+            return `${day}-${month}-${year}`;
+        }
+
+        function addDays(date, days) {
+            return new Date(date.getTime() + days * DAY_MS);
+        }
+
+        function compareDates(left, right) {
+            return left.getTime() - right.getTime();
+        }
+
+        function daysInclusive(start, end) {
+            return Math.floor((end.getTime() - start.getTime()) / DAY_MS) + 1;
+        }
+
+        function overlapDays(startA, endA, startB, endB) {
+            const start = compareDates(startA, startB) > 0 ? startA : startB;
+            const end = compareDates(endA, endB) < 0 ? endA : endB;
+            return compareDates(start, end) > 0 ? 0 : daysInclusive(start, end);
+        }
+
+        function gregorianMonthRange(year, monthNumber) {
+            const start = new Date(Date.UTC(year, monthNumber - 1, 1));
+            const end = addDays(new Date(Date.UTC(year, monthNumber, 1)), -1);
+            return { start, end };
+        }
+
+        function getLunarYearStructure(targetYear, newMoonDates) {
+            const newMoons = newMoonDates.map(parseIsoDate).sort(compareDates);
+            const january = gregorianMonthRange(targetYear, 1);
+            let startIndex = 0;
+            let bestOverlap = -1;
+
+            newMoons.forEach((start, index) => {
+                if (!newMoons[index + 1]) return;
+                const inWindow = start >= new Date(Date.UTC(targetYear - 1, 11, 20)) && start <= new Date(Date.UTC(targetYear, 0, 31));
+                if (!inWindow) return;
+                const end = addDays(newMoons[index + 1], -1);
+                const overlap = overlapDays(start, end, january.start, january.end);
+                if (overlap > bestOverlap) {
+                    bestOverlap = overlap;
+                    startIndex = index;
+                }
+            });
+
+            const months = [];
+            let newMoonIndex = startIndex;
+            let monthNameIndex = 0;
+            let hasArsar = false;
+
+            while (monthNameIndex < KYRGYZ_LUNAR_MONTHS.length) {
+                const start = newMoons[newMoonIndex];
+                const nextStart = newMoons[newMoonIndex + 1];
+                const end = addDays(nextStart, -1);
+                const month = KYRGYZ_LUNAR_MONTHS[monthNameIndex];
+                const season = gregorianMonthRange(targetYear, month.seasonMonth);
+                const seasonOverlapDays = overlapDays(start, end, season.start, season.end);
+                const previousRegular = months.slice().reverse().find((item) => !item.isArsar);
+                const shouldInsertArsar = !hasArsar && monthNameIndex > 0 && seasonOverlapDays < 10;
+
+                if (shouldInsertArsar) {
+                    const arsarOf = previousRegular ? previousRegular.baseName : KYRGYZ_LUNAR_MONTHS[monthNameIndex - 1].name;
+                    months.push({
+                        name: 'АРСАР АЙ',
+                        baseName: null,
+                        startDate: toIsoDate(start),
+                        endDate: toIsoDate(end),
+                        days: daysInclusive(start, end),
+                        isArsar: true,
+                        arsarOf,
+                        overlapDays: seasonOverlapDays
+                    });
+                    hasArsar = true;
+                    newMoonIndex += 1;
+                    continue;
+                }
+
+                months.push({
+                    name: month.name,
+                    baseName: month.name,
+                    startDate: toIsoDate(start),
+                    endDate: toIsoDate(end),
+                    days: daysInclusive(start, end),
+                    isArsar: false,
+                    arsarOf: null,
+                    seasonMonth: month.seasonMonth,
+                    overlapDays: seasonOverlapDays
+                });
+
+                monthNameIndex += 1;
+                newMoonIndex += 1;
+            }
+
+            return months;
+        }
+
+        const lunarMonths = getLunarYearStructure(2026, NEW_MOON_DATES_2026);
+        let selectedIndex = 0;
+
+        function getMonthSections(month) {
+            const startDate = parseIsoDate(month.startDate);
+            const endDate = parseIsoDate(month.endDate);
+            const text = TEXT[language];
+            const today = new Date();
+            const todayIso = toIsoDate(new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())));
+            const sections = [];
+            let cursor = new Date(Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), 1));
+            const lastMonth = new Date(Date.UTC(endDate.getUTCFullYear(), endDate.getUTCMonth(), 1));
+
+            while (cursor <= lastMonth) {
+                const year = cursor.getUTCFullYear();
+                const monthIndex = cursor.getUTCMonth();
+                const monthStart = new Date(Date.UTC(year, monthIndex, 1));
+                const monthEnd = addDays(new Date(Date.UTC(year, monthIndex + 1, 1)), -1);
+                const firstDayOffset = (monthStart.getUTCDay() + 6) % 7;
+                const cells = [];
+
+                for (let i = 0; i < firstDayOffset; i += 1) {
+                    cells.push({ empty: true, key: `empty-${year}-${monthIndex}-${i}` });
+                }
+
+                for (let day = 1; day <= monthEnd.getUTCDate(); day += 1) {
+                    const date = new Date(Date.UTC(year, monthIndex, day));
+                    const isoDate = toIsoDate(date);
+                    const inRange = date >= startDate && date <= endDate;
+                    cells.push({
+                        key: isoDate,
+                        gregorianDay: day,
+                        lunarDay: inRange ? Math.floor((date - startDate) / DAY_MS) + 1 : null,
+                        inRange,
+                        isToday: isoDate === todayIso
+                    });
+                }
+
+                sections.push({
+                    title: `${text.gregorianMonths[monthIndex]} ${year}`,
+                    cells
+                });
+
+                cursor = new Date(Date.UTC(year, monthIndex + 1, 1));
+            }
+
+            return sections;
+        }
+
+        function renderMonthSelect() {
+            const select = document.getElementById('monthSelect');
+            select.innerHTML = lunarMonths.map((month, index) => (
+                `<option value="${index}">${month.name}</option>`
+            )).join('');
+            select.value = String(selectedIndex);
+        }
+
+        function renderLunarView() {
+            const month = lunarMonths[selectedIndex];
+            const text = TEXT[language];
+            const view = document.getElementById('lunarView');
+            const grid = document.getElementById('sectionsGrid');
+
+            view.classList.toggle('isArsar', Boolean(month.isArsar));
+            document.getElementById('lunarTitle').textContent = month.name;
+            document.getElementById('lunarPeriod').textContent = `${formatDisplayDate(month.startDate)} - ${formatDisplayDate(month.endDate)}`;
+            document.getElementById('daysCount').textContent = `${month.days} ${text.days}`;
+
+            grid.innerHTML = getMonthSections(month).map((section) => `
+                <div class="monthPanel">
+                    <div class="gregorianTitle">${section.title}</div>
+                    <div class="calendarGrid">
+                        ${text.dayHeaders.map((header) => `<div class="dayHeader">${header}</div>`).join('')}
+                        ${section.cells.map((cell) => {
+                            if (cell.empty) return `<div class="dayCell outRange"></div>`;
+                            const lunarLabel = language === 'ky' ? `${cell.lunarDay}${text.lunarSuffix}` : `${cell.lunarDay}${text.lunarSuffix}`;
+                            return `
+                                <div class="dayCell ${cell.inRange ? 'inRange' : 'outRange'} ${cell.isToday ? 'today' : ''}">
+                                    <span class="gregorianDay">${cell.gregorianDay}</span>
+                                    ${cell.inRange ? `<span class="lunarDay">${lunarLabel}</span>` : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMiniYearGrid() {
+            const container = document.getElementById('miniYearGrid');
+            container.innerHTML = lunarMonths.map((month, index) => `
+                <button class="miniMonth" data-index="${index}" style="text-align:left; cursor:pointer; color:inherit;">
+                    <div class="miniMonthTitle">${month.name}</div>
+                    <div class="miniMonthText">${month.startDate} - ${month.endDate}<br>${month.days} ${TEXT[language].days}${month.isArsar ? ' · Арсар ай' : ''}</div>
+                </button>
+            `).join('');
+
+            container.querySelectorAll('.miniMonth').forEach((button) => {
+                button.addEventListener('click', () => {
+                    selectedIndex = Number(button.dataset.index);
+                    renderAll();
+                    document.getElementById('lunarView').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        }
+
+        function renderLanguage() {
+            const text = TEXT[language];
+            document.querySelectorAll('[data-i18n]').forEach((node) => {
+                const key = node.dataset.i18n;
+                node.textContent = text[key];
+            });
+            document.getElementById('langToggle').textContent = language === 'ky' ? 'РУС' : 'КЫР';
+            document.getElementById('lunarDayLegend').style.display = language === 'ru' ? 'flex' : 'none';
+        }
+
+        function renderAll() {
+            renderLanguage();
+            renderMonthSelect();
+            renderLunarView();
+            renderMiniYearGrid();
+        }
+
+        document.getElementById('monthSelect').addEventListener('change', (event) => {
+            selectedIndex = Number(event.target.value);
+            renderAll();
+        });
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const root = document.documentElement;
+            const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+            root.dataset.theme = nextTheme;
+            document.getElementById('themeToggle').textContent = nextTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        document.getElementById('langToggle').addEventListener('click', () => {
+            language = language === 'ky' ? 'ru' : 'ky';
+            renderAll();
+        });
+
+        renderAll();
+    </script>
+</body>
+</html>

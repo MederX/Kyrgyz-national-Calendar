@@ -5,15 +5,18 @@ Endpoint: POST /api/calendar/events
 Returns new-moon, full-moon, and togool events for a given month + location.
 """
 
+from datetime import date, timedelta
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from models import CalendarRequest, CalendarResponse, CalendarEvent, CalendarPeriod
+from models import CalendarRequest, CalendarResponse, CalendarEvent, CalendarPeriod, LunarMonth
 from calculator import (
     calculate_togoshuu,
     calculate_moon_phases,
     calculate_nooruz,
     calculate_ramadan_periods,
+    calculate_lunar_year_months,
 )
 
 app = FastAPI(title="Кыргыз Тамыр Календары API")
@@ -108,6 +111,20 @@ ANIMALS_RU = ['Мышь', 'Корова', 'Тигр', 'Заяц', 'Рыба', '�
 def get_animal(year: int):
     return ANIMALS_KY[(year - 4) % 12], ANIMALS_RU[(year - 4) % 12]
 
+
+def _lunar_month_intersects_requested_month(lunar_month: dict, year: int, month: int | None) -> bool:
+    if month is None:
+        return True
+
+    month_start = f"{year}-{month:02d}-01"
+    if month == 12:
+        month_end = f"{year}-12-31"
+    else:
+        month_end_date = date(year, month + 1, 1) - timedelta(days=1)
+        month_end = month_end_date.isoformat()
+
+    return lunar_month["start_date"] <= month_end and lunar_month["end_date"] >= month_start
+
 # ── Endpoint ──────────────────────────────────────────────────────────────
 
 @app.post("/api/calendar/events", response_model=CalendarResponse)
@@ -117,6 +134,11 @@ async def get_calendar_events(req: CalendarRequest) -> CalendarResponse:
     """
     events: list[CalendarEvent] = []
     periods: list[CalendarPeriod] = []
+    lunar_months = [
+        LunarMonth(**lunar_month)
+        for lunar_month in calculate_lunar_year_months(req.year, tz_name=req.tz_name)
+        if _lunar_month_intersects_requested_month(lunar_month, req.year, req.month)
+    ]
 
     # 1. Moon phases (new moon + full moon) for the requested month or year
     moon_phases = calculate_moon_phases(
@@ -249,4 +271,5 @@ async def get_calendar_events(req: CalendarRequest) -> CalendarResponse:
         month=req.month,
         events=events,
         periods=periods,
+        lunar_months=lunar_months,
     )

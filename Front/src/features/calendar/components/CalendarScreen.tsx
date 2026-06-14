@@ -6,6 +6,7 @@ import { EventDetailSheet } from './EventDetailSheet';
 import { EventLegend } from './EventLegend';
 import { LocationSelector } from './LocationSelector';
 import { YearControl } from './YearControl';
+import { LunarMonthCalendarView } from './LunarMonthCalendarView';
 import type { CalendarEvent, CalendarPeriod } from '../types/calendar.types';
 import styles from './CalendarScreen.module.css';
 
@@ -110,6 +111,7 @@ export const CalendarScreen: React.FC = () => {
 
     const events = data?.events ?? [];
     const periods = data?.periods ?? [];
+    const lunarMonths = data?.lunar_months ?? [];
     const todayDateStr = useMemo(() => formatLocalDateString(new Date()), []);
 
     const handleDayClick = (year: number, month: number, day: number) => {
@@ -298,48 +300,86 @@ export const CalendarScreen: React.FC = () => {
                 <EventLegend language={language} />
             </div>
 
-            <div className={styles.yearGrid}>
-                {isLoading ? (
-                    Array.from({ length: 12 }).map((_, i) => (
-                        <div key={i} className={`${styles.monthCard} skeleton`} style={{ height: '280px' }} />
-                    ))
-                ) : isError ? (
-                    <div className={styles.errorState}>
-                        <span>
+            <section className={`${styles.calendarSection} ${styles.solarSection}`}>
+                <div className={styles.sectionHeader}>
+                    <div className={styles.sectionIcon} aria-hidden="true">☀</div>
+                    <div>
+                        <h2 className={styles.sectionTitle}>
+                            {language === 'ky' ? 'Күн календары' : 'Солнечный календарь'}
+                        </h2>
+                        <p className={styles.sectionSubtitle}>
                             {language === 'ky'
-                                ? '⚠️ Маалымат жүктөөдө ката кетти'
-                                : '⚠️ Ошибка загрузки данных'}
-                        </span>
+                                ? 'Кадимки жылдык календарь: Бирдин айы - Үчтүн айы'
+                                : 'Обычный годовой календарь: январь - декабрь'}
+                        </p>
                     </div>
-                ) : (
-                    MONTH_NAMES_KY.map((monthNameKy, monthIndex) => {
-                        const mLabel = language === 'ky' ? monthNameKy : MONTH_NAMES_RU[monthIndex];
-                        const monthDate = new Date(selectedYear, monthIndex);
+                </div>
 
-                        return (
-                            <div key={monthIndex} className={styles.monthCard}>
-                                <div className={styles.monthHeaderRow}>
-                                    <div className={styles.monthHeader}>{mLabel}</div>
-                                    {monthRamadanLabels[monthIndex] && (
-                                        <span className={styles.monthPeriodBadge}>
-                                            {language === 'ky' ? 'Рамазан' : 'Рамазан'} {monthRamadanLabels[monthIndex]}
-                                        </span>
-                                    )}
+                <div className={styles.yearGrid}>
+                    {isLoading ? (
+                        Array.from({ length: 12 }).map((_, i) => (
+                            <div key={i} className={`${styles.monthCard} skeleton`} style={{ height: '280px' }} />
+                        ))
+                    ) : isError ? (
+                        <div className={styles.errorState}>
+                            <span>
+                                {language === 'ky'
+                                    ? '⚠️ Маалымат жүктөөдө ката кетти'
+                                    : '⚠️ Ошибка загрузки данных'}
+                            </span>
+                        </div>
+                    ) : (
+                        MONTH_NAMES_KY.map((monthNameKy, monthIndex) => {
+                            const mLabel = language === 'ky' ? monthNameKy : MONTH_NAMES_RU[monthIndex];
+                            const monthDate = new Date(selectedYear, monthIndex);
+
+                            return (
+                                <div key={monthIndex} className={styles.monthCard}>
+                                    <div className={styles.monthHeaderRow}>
+                                        <div className={styles.monthHeader}>{mLabel}</div>
+                                        {monthRamadanLabels[monthIndex] && (
+                                            <span className={styles.monthPeriodBadge}>
+                                                {language === 'ky' ? 'Рамазан' : 'Рамазан'} {monthRamadanLabels[monthIndex]}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className={styles.gridWrapper}>
+                                        <MonthCalendarGrid
+                                            events={events}
+                                            periods={periods}
+                                            selectedMonth={monthDate}
+                                            language={language}
+                                            onDayClick={(day) => handleDayClick(selectedYear, monthIndex + 1, day)}
+                                        />
+                                    </div>
                                 </div>
-                                <div className={styles.gridWrapper}>
-                                    <MonthCalendarGrid
-                                        events={events}
-                                        periods={periods}
-                                        selectedMonth={monthDate}
-                                        language={language}
-                                        onDayClick={(day) => handleDayClick(selectedYear, monthIndex + 1, day)}
-                                    />
-                                </div>
-                            </div>
-                        );
-                    })
-                )}
-            </div>
+                            );
+                        })
+                    )}
+                </div>
+            </section>
+
+            {!isLoading && !isError && lunarMonths.length > 0 && (
+                <section className={`${styles.calendarSection} ${styles.lunarSection}`}>
+                    <div className={styles.sectionHeader}>
+                        <div className={styles.sectionIcon} aria-hidden="true">☾</div>
+                        <div>
+                            <h2 className={styles.sectionTitle}>
+                                {language === 'ky' ? 'Ай календары' : 'Лунный календарь'}
+                            </h2>
+                            <p className={styles.sectionSubtitle}>
+                                {language === 'ky'
+                                    ? 'Ай жаңыргандан ай жаңырганга чейинки күндөр'
+                                    : 'Дни от новолуния до новолуния'}
+                            </p>
+                        </div>
+                    </div>
+                    <LunarMonthCalendarView
+                        months={lunarMonths}
+                        language={language}
+                    />
+                </section>
+            )}
 
             {showLocation && (
                 <LocationSelector

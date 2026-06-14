@@ -1,0 +1,304 @@
+.wrapper {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 22px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--bg-border);
+}
+
+[data-theme='light'] .wrapper {
+    background: rgba(255, 252, 246, 0.78);
+}
+
+.wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background:
+        radial-gradient(circle at 18% 20%, rgba(233, 196, 106, 0.18), transparent 34%),
+        linear-gradient(135deg, rgba(166, 95, 36, 0.14), rgba(46, 196, 182, 0.07));
+}
+
+.arsar::before {
+    opacity: 1;
+}
+
+.header,
+.arsarNotice,
+.sectionsGrid {
+    position: relative;
+    z-index: 1;
+}
+
+.header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.titleBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+}
+
+.title {
+    font-family: var(--font-family-serif);
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.period {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--text-secondary);
+}
+
+.daysCount {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--bg-border);
+}
+
+[data-theme='light'] .daysCount {
+    background: rgba(166, 95, 36, 0.09);
+}
+
+.selectorLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 220px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.monthSelect {
+    min-height: 42px;
+    padding: 0 38px 0 13px;
+    border-radius: 8px;
+    border: 1px solid var(--bg-border);
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.arsarNotice {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: fit-content;
+    max-width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: var(--text-primary);
+    background: rgba(233, 196, 106, 0.16);
+    border: 1px solid rgba(233, 196, 106, 0.32);
+    font-size: 15px;
+    line-height: 1.45;
+}
+
+[data-theme='light'] .arsarNotice {
+    background: rgba(166, 95, 36, 0.14);
+    border-color: rgba(166, 95, 36, 0.28);
+}
+
+.arsarNotice strong {
+    color: var(--accent-gold);
+}
+
+[data-theme='light'] .arsarNotice strong {
+    color: var(--accent-gold);
+}
+
+.sectionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+    gap: 18px;
+}
+
+.monthPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.gregorianTitle {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(70px, 1fr));
+    gap: 4px;
+}
+
+.dayHeader {
+    min-height: 30px;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.dayCell {
+    position: relative;
+    min-height: 76px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+[data-theme='light'] .dayCell {
+    background: rgba(255, 252, 246, 0.58);
+}
+
+.inRange {
+    background: rgba(142, 202, 230, 0.11);
+    border-color: rgba(142, 202, 230, 0.22);
+}
+
+[data-theme='light'] .inRange {
+    background: rgba(35, 106, 135, 0.10);
+    border-color: rgba(35, 106, 135, 0.24);
+}
+
+.outOfRange {
+    opacity: 0.38;
+}
+
+.today {
+    border-color: var(--accent-gold);
+    box-shadow: inset 0 0 0 1px rgba(233, 196, 106, 0.42);
+}
+
+[data-theme='light'] .today {
+    box-shadow: inset 0 0 0 1px rgba(166, 95, 36, 0.36);
+}
+
+.gregorianDay {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.lunarDay {
+    position: absolute;
+    right: 8px;
+    bottom: 7px;
+    min-width: 54px;
+    height: 24px;
+    display: inline-grid;
+    place-items: center;
+    padding: 0 7px;
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 800;
+    white-space: nowrap;
+    color: var(--color-new-moon);
+    background: rgba(142, 202, 230, 0.13);
+    border: 1px solid rgba(142, 202, 230, 0.26);
+    font-variant-numeric: tabular-nums;
+}
+
+[data-theme='light'] .lunarDay {
+    color: var(--color-new-moon);
+    background: rgba(35, 106, 135, 0.12);
+    border-color: rgba(35, 106, 135, 0.25);
+}
+
+.arsar .inRange {
+    background: rgba(233, 196, 106, 0.13);
+    border-color: rgba(233, 196, 106, 0.28);
+}
+
+[data-theme='light'] .arsar .inRange {
+    background: rgba(166, 95, 36, 0.12);
+    border-color: rgba(166, 95, 36, 0.24);
+}
+
+.arsar .lunarDay {
+    color: var(--accent-gold);
+    background: rgba(233, 196, 106, 0.15);
+    border-color: rgba(233, 196, 106, 0.30);
+}
+
+@media (max-width: 760px) {
+    .wrapper {
+        padding: 18px 14px;
+    }
+
+    .sectionsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .grid {
+        grid-template-columns: repeat(7, minmax(36px, 1fr));
+        gap: 3px;
+    }
+
+    .dayCell {
+        min-height: 60px;
+    }
+
+    .gregorianDay {
+        font-size: 21px;
+    }
+
+    .lunarDay {
+        right: 6px;
+        bottom: 6px;
+        min-width: 44px;
+        max-width: calc(100% - 12px);
+        height: 20px;
+        padding: 0 5px;
+        font-size: 10px;
+        overflow: hidden;
+        text-overflow: clip;
+    }
+}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { Language } from '../types/calendar.types';
 import { TogoolInfoModal } from './TogoolInfoModal';
 import { MucholInfoModal } from './MucholInfoModal';
+import { ArsarInfoModal } from './ArsarInfoModal';
 import { EventIcon, getEventColorVar } from './EventIcon';
 import type { EventType } from '../types/calendar.types';
 import styles from './EventLegend.module.css';
@@ -10,7 +11,7 @@ interface Props {
     language: Language;
 }
 
-type LegendItemType = EventType | 'ramadan_period';
+type LegendItemType = EventType | 'ramadan_period' | 'lunar_day_note' | 'arsar_info';
 
 interface LegendItem {
     type: LegendItemType;
@@ -23,10 +24,19 @@ interface LegendItem {
 export const EventLegend: React.FC<Props> = ({ language }) => {
     const [showTogoolInfo, setShowTogoolInfo] = useState(false);
     const [showMucholInfo, setShowMucholInfo] = useState(false);
+    const [showArsarInfo, setShowArsarInfo] = useState(false);
 
     const renderLegendIcon = (type: LegendItemType) => {
         if (type === 'ramadan_period') {
             return <span className={styles.periodSwatch} />;
+        }
+
+        if (type === 'lunar_day_note') {
+            return <span className={styles.abbrevSlot}>ЛД</span>;
+        }
+
+        if (type === 'arsar_info') {
+            return <span className={styles.abbrevSlot}>АА</span>;
         }
 
         return (
@@ -46,6 +56,10 @@ export const EventLegend: React.FC<Props> = ({ language }) => {
                 { type: 'new_moon', label_ky: 'Ай жаңырган күн', label_ru: 'Новолуние' },
                 { type: 'full_moon', label_ky: 'Ай толгон күн', label_ru: 'Полнолуние' },
                 { type: 'togool', label_ky: 'Тогол', label_ru: 'Тогол', isInteractive: true, onClick: () => setShowTogoolInfo(true) },
+                { type: 'arsar_info', label_ky: 'Арсар ай', label_ru: 'Арсар ай', isInteractive: true, onClick: () => setShowArsarInfo(true) },
+                ...(language === 'ru'
+                    ? [{ type: 'lunar_day_note' as const, label_ky: 'ай күнү', label_ru: 'лунный день' }]
+                    : []),
             ]
         },
         {
@@ -91,6 +105,7 @@ export const EventLegend: React.FC<Props> = ({ language }) => {
 
             {showTogoolInfo && <TogoolInfoModal language={language} onClose={() => setShowTogoolInfo(false)} />}
             {showMucholInfo && <MucholInfoModal language={language} onClose={() => setShowMucholInfo(false)} />}
+            {showArsarInfo && <ArsarInfoModal language={language} onClose={() => setShowArsarInfo(false)} />}
         </div>
     );
 };
