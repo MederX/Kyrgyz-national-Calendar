@@ -16,6 +16,16 @@ const GREGORIAN_MONTHS = {
     ],
 };
 
+const KYRGYZ_MONTH_NAMES_REQUIRING_AYY_SUFFIX = new Set([
+    'Жалган куран',
+    'Чын куран',
+    'Бугу',
+    'Кулжа',
+    'Теке',
+    'Баш оона',
+    'Аяк оона',
+]);
+
 export function parseIsoDate(value) {
     const [year, month, day] = value.split('-').map(Number);
     return new Date(Date.UTC(year, month - 1, day));
@@ -28,6 +38,11 @@ export function toIsoDate(date) {
 export function formatDisplayDate(isoDate) {
     const [year, month, day] = isoDate.split('-');
     return `${day}-${month}-${year}`;
+}
+
+function formatDisplayDateWithDots(isoDate) {
+    const [year, month, day] = isoDate.split('-');
+    return `${day}.${month}.${year}`;
 }
 
 function addDays(date, days) {
@@ -71,6 +86,12 @@ export function isLunarMonthArsar(month) {
     return Boolean(month.is_arsar ?? month.isArsar);
 }
 
+export function formatKyrgyzEndingLunarMonthName(monthName) {
+    return KYRGYZ_MONTH_NAMES_REQUIRING_AYY_SUFFIX.has(monthName)
+        ? `${monthName} айы`
+        : monthName;
+}
+
 export function getLunarMonthDays(month) {
     const start = parseIsoDate(getLunarMonthStartDate(month));
     const end = parseIsoDate(getLunarMonthEndDate(month));
@@ -88,6 +109,28 @@ export function findLunarMonthIndexByDate(months, isoDate = getTodayIsoDate()) {
         getLunarMonthStartDate(month) <= isoDate &&
         getLunarMonthEndDate(month) >= isoDate
     ));
+}
+
+export function findLunarTransitionForNewMoon(months, isoDate) {
+    const startingMonthIndex = months.findIndex((month) => getLunarMonthStartDate(month) === isoDate);
+
+    if (startingMonthIndex <= 0) {
+        return null;
+    }
+
+    const endingMonth = months[startingMonthIndex - 1];
+    const startingMonth = months[startingMonthIndex];
+    const visibleUntilDate = startingMonth.next_new_moon_datetime
+        ? startingMonth.next_new_moon_datetime.slice(0, 10)
+        : toIsoDate(addDays(parseIsoDate(getLunarMonthEndDate(startingMonth)), 1));
+
+    return {
+        endingMonthName: endingMonth.name,
+        endingMonthDisplayNameKy: formatKyrgyzEndingLunarMonthName(endingMonth.name),
+        startingMonthName: startingMonth.name,
+        visibleUntilDate,
+        visibleUntilDisplayDate: formatDisplayDateWithDots(visibleUntilDate),
+    };
 }
 
 export function buildLunarMonthSections(month, language = 'ky', todayIso = getTodayIsoDate()) {

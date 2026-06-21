@@ -3,6 +3,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    width: 220px;
+    max-width: 100%;
 }
 
 .stepButton,
@@ -25,6 +27,8 @@
 }
 
 .yearButton {
+    flex: 1 1 auto;
+    min-width: 0;
     gap: 10px;
     padding: 0 14px;
     color: var(--accent-gold);
@@ -49,9 +53,9 @@
 
 .dropdown {
     position: absolute;
+    left: 0;
     right: 0;
     top: calc(100% + 8px);
-    width: 220px;
     max-height: 320px;
     overflow-y: auto;
     z-index: 20;

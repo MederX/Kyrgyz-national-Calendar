@@ -183,6 +183,44 @@
     margin: 0;
 }
 
+.lunarTransitionBox {
+    margin-top: 10px;
+    padding: 11px 12px;
+    background: rgba(94, 174, 212, 0.10);
+    border-left: 3px solid var(--color-new-moon);
+    border-radius: var(--radius-sm);
+}
+
+.lunarTransitionTitle {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--color-new-moon);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+.lunarTransitionText {
+    font-size: 15px;
+    color: var(--text-primary);
+    line-height: 1.55;
+    margin: 0;
+}
+
+.lunarMonthEnding,
+.lunarMonthStarting {
+    font-weight: 900;
+}
+
+.lunarMonthEnding {
+    color: var(--color-full-moon);
+}
+
+.lunarMonthStarting {
+    color: var(--color-new-moon);
+}
+
 .aiBashyNote {
     margin-top: 12px;
     padding: 12px 13px;

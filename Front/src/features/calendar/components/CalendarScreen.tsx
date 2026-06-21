@@ -396,6 +396,7 @@ export const CalendarScreen: React.FC = () => {
                     date={selectedSheetTitle}
                     onClose={() => setSelectedDateStr(null)}
                     language={language}
+                    lunarMonths={lunarMonths}
                 />
             )}
         </div>

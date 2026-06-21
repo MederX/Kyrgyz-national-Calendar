@@ -1,7 +1,8 @@
 import React from 'react';
-import type { CalendarEvent, Language } from '../types/calendar.types';
+import type { CalendarEvent, Language, LunarMonth } from '../types/calendar.types';
 import { EventIcon, getEventColorVar } from './EventIcon';
 import { splitAiBashyNote } from '../utils/eventDisplay';
+import { findLunarTransitionForNewMoon } from '../utils/lunarMonthGrid';
 import styles from './EventDetailSheet.module.css';
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
     date: string;
     onClose: () => void;
     language: Language;
+    lunarMonths?: LunarMonth[];
 }
 
 export const EventDetailSheet: React.FC<Props> = ({
@@ -16,6 +18,7 @@ export const EventDetailSheet: React.FC<Props> = ({
     date,
     onClose,
     language,
+    lunarMonths = [],
 }) => {
     const { visibleEvents, aiBashyNote } = splitAiBashyNote(events);
 
@@ -62,6 +65,49 @@ export const EventDetailSheet: React.FC<Props> = ({
                                         </p>
                                     </div>
                                 )}
+                                {ev.type === 'new_moon' && (() => {
+                                    const transition = findLunarTransitionForNewMoon(lunarMonths, ev.date);
+
+                                    if (!transition) {
+                                        return null;
+                                    }
+
+                                    return (
+                                        <div className={styles.lunarTransitionBox}>
+                                            <span className={styles.lunarTransitionTitle}>
+                                                {language === 'ky' ? 'Ай календары:' : 'Лунный календарь:'}
+                                            </span>
+                                            <p className={styles.lunarTransitionText}>
+                                                {language === 'ky' ? (
+                                                    <>
+                                                        Бул күнү{' '}
+                                                        <strong className={styles.lunarMonthEnding}>
+                                                            {transition.endingMonthDisplayNameKy}
+                                                        </strong>{' '}
+                                                        аяктап{' '}
+                                                        <strong className={styles.lunarMonthStarting}>
+                                                            {transition.startingMonthName}
+                                                        </strong>{' '}
+                                                        аттуу ай башталат. Ал асманда{' '}
+                                                        {transition.visibleUntilDisplayDate} чейин болот.
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        В этот день заканчивается месяц{' '}
+                                                        <strong className={styles.lunarMonthEnding}>
+                                                            {transition.endingMonthName}
+                                                        </strong>{' '}
+                                                        и начинается месяц{' '}
+                                                        <strong className={styles.lunarMonthStarting}>
+                                                            {transition.startingMonthName}
+                                                        </strong>. Он будет на небе до{' '}
+                                                        {transition.visibleUntilDisplayDate}.
+                                                    </>
+                                                )}
+                                            </p>
+                                        </div>
+                                    );
+                                })()}
                                 {ev.type === 'new_moon' && aiBashyNote && (
                                     <div className={styles.aiBashyNote}>
                                         <span className={styles.aiBashyTitle}>

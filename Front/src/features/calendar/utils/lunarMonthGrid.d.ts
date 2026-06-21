@@ -25,9 +25,24 @@ export function getTodayIsoDate(): string;
 export function getLunarMonthStartDate(month: LunarMonth): string;
 export function getLunarMonthEndDate(month: LunarMonth): string;
 export function isLunarMonthArsar(month: LunarMonth): boolean;
+export function formatKyrgyzEndingLunarMonthName(monthName: string): string;
 export function getLunarMonthDays(month: LunarMonth): number;
 export function formatLunarDayLabel(lunarDay: number, language?: Language): string;
 export function findLunarMonthIndexByDate(months: LunarMonth[], isoDate?: string): number;
+
+export interface LunarMonthTransition {
+    endingMonthName: string;
+    endingMonthDisplayNameKy: string;
+    startingMonthName: string;
+    visibleUntilDate: string;
+    visibleUntilDisplayDate: string;
+}
+
+export function findLunarTransitionForNewMoon(
+    months: LunarMonth[],
+    isoDate: string
+): LunarMonthTransition | null;
+
 export function buildLunarMonthSections(
     month: LunarMonth,
     language?: Language,

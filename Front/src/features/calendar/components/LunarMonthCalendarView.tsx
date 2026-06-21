@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { Language, LunarMonth } from '../types/calendar.types';
 import {
     buildLunarMonthSections,
@@ -37,12 +37,51 @@ export const LunarMonthCalendarView: React.FC<Props> = ({
 
     const safeInitialIndex = getDefaultIndex();
     const [selectedIndex, setSelectedIndex] = useState(safeInitialIndex);
+    const [monthDropdownOpen, setMonthDropdownOpen] = useState(false);
+    const monthSelectorRef = useRef<HTMLDivElement | null>(null);
+    const selectedMonthOptionRef = useRef<HTMLButtonElement | null>(null);
     const selectedMonth = months[selectedIndex] ?? null;
     const monthsSignature = months.map((month) => `${month.name}:${getLunarMonthStartDate(month)}:${getLunarMonthEndDate(month)}`).join('|');
 
     useEffect(() => {
         setSelectedIndex(getDefaultIndex());
+        setMonthDropdownOpen(false);
     }, [monthsSignature, initialMonthIndex]);
+
+    useEffect(() => {
+        if (!monthDropdownOpen) return;
+
+        const selectedOption = selectedMonthOptionRef.current;
+        window.requestAnimationFrame(() => {
+            selectedOption?.scrollIntoView({ block: 'center' });
+        });
+
+        const handlePointerDown = (event: PointerEvent) => {
+            const target = event.target;
+
+            if (
+                target instanceof Node &&
+                monthSelectorRef.current &&
+                !monthSelectorRef.current.contains(target)
+            ) {
+                setMonthDropdownOpen(false);
+            }
+        };
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setMonthDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('pointerdown', handlePointerDown);
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('pointerdown', handlePointerDown);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [monthDropdownOpen, selectedIndex]);
 
     const sections = useMemo(() => {
         if (!selectedMonth) {
@@ -52,13 +91,14 @@ export const LunarMonthCalendarView: React.FC<Props> = ({
         return buildLunarMonthSections(selectedMonth, language);
     }, [selectedMonth, language]);
 
-    const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const nextIndex = Number(event.target.value);
-        const nextMonth = months[nextIndex];
+    const setSelectedMonthIndex = (nextIndex: number) => {
+        const safeIndex = Math.min(Math.max(nextIndex, 0), months.length - 1);
+        const nextMonth = months[safeIndex];
 
-        setSelectedIndex(nextIndex);
+        setSelectedIndex(safeIndex);
+        setMonthDropdownOpen(false);
         if (nextMonth) {
-            onMonthChange?.(nextMonth, nextIndex);
+            onMonthChange?.(nextMonth, safeIndex);
         }
     };
 
@@ -88,20 +128,67 @@ export const LunarMonthCalendarView: React.FC<Props> = ({
                     </p>
                 </div>
 
-                <label className={styles.selectorLabel}>
+                <div className={styles.selectorLabel} ref={monthSelectorRef}>
                     <span>{language === 'ky' ? 'Айды тандоо' : 'Выбор месяца'}</span>
-                    <select
-                        className={styles.monthSelect}
-                        value={selectedIndex}
-                        onChange={handleMonthChange}
-                    >
-                        {months.map((month, index) => (
-                            <option key={`${month.name}-${getLunarMonthStartDate(month)}`} value={index}>
-                                {month.name}
-                            </option>
-                        ))}
-                    </select>
-                </label>
+                    <div className={styles.monthControl}>
+                        {selectedIndex > 0 && (
+                            <button
+                                type="button"
+                                className={styles.monthStepButton}
+                                onClick={() => setSelectedMonthIndex(selectedIndex - 1)}
+                                aria-label={language === 'ky' ? 'Мурунку ай' : 'Предыдущий месяц'}
+                            >
+                                ‹
+                            </button>
+                        )}
+                        <button
+                            type="button"
+                            className={styles.monthSelectButton}
+                            onClick={() => setMonthDropdownOpen((current) => !current)}
+                            aria-expanded={monthDropdownOpen}
+                            aria-haspopup="listbox"
+                        >
+                            <span className={styles.monthSelectName}>{selectedMonth.name}</span>
+                            <span className={styles.monthChevron} aria-hidden="true">▾</span>
+                        </button>
+                        {selectedIndex < months.length - 1 && (
+                            <button
+                                type="button"
+                                className={styles.monthStepButton}
+                                onClick={() => setSelectedMonthIndex(selectedIndex + 1)}
+                                aria-label={language === 'ky' ? 'Кийинки ай' : 'Следующий месяц'}
+                            >
+                                ›
+                            </button>
+                        )}
+                    </div>
+                    {monthDropdownOpen && (
+                        <div className={styles.monthDropdown} role="listbox">
+                            {months.map((month, index) => {
+                                const optionStartDate = getLunarMonthStartDate(month);
+                                const optionEndDate = getLunarMonthEndDate(month);
+                                const isSelected = index === selectedIndex;
+
+                                return (
+                                    <button
+                                        key={`${month.name}-${optionStartDate}`}
+                                        ref={isSelected ? selectedMonthOptionRef : undefined}
+                                        type="button"
+                                        className={`${styles.monthOption} ${isSelected ? styles.monthOptionActive : ''}`}
+                                        onClick={() => setSelectedMonthIndex(index)}
+                                        role="option"
+                                        aria-selected={isSelected}
+                                    >
+                                        <span className={styles.monthOptionName}>{month.name}</span>
+                                        <span className={styles.monthOptionDates}>
+                                            {formatDisplayDate(optionStartDate)} - {formatDisplayDate(optionEndDate)}
+                                        </span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
             </div>
 
             {isArsar && (
