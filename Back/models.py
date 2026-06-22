@@ -40,6 +40,7 @@ class LunarMonth(BaseModel):
     sequence: int
     name: str
     base_name: str | None = None
+    previous_month_name: str | None = None
     start_date: str
     end_date: str
     start_datetime: str

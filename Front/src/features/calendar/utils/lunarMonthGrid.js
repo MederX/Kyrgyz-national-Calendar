@@ -26,6 +26,21 @@ const KYRGYZ_MONTH_NAMES_REQUIRING_AYY_SUFFIX = new Set([
     'Аяк оона',
 ]);
 
+const KYRGYZ_LUNAR_MONTH_SEQUENCE = [
+    'Бирдин айы',
+    'Жалган куран',
+    'Чын куран',
+    'Бугу',
+    'Кулжа',
+    'Теке',
+    'Баш оона',
+    'Аяк оона',
+    'Тогуздун айы',
+    'Жетинин айы',
+    'Бештин айы',
+    'Үчтүн айы',
+];
+
 export function parseIsoDate(value) {
     const [year, month, day] = value.split('-').map(Number);
     return new Date(Date.UTC(year, month - 1, day));
@@ -92,6 +107,26 @@ export function formatKyrgyzEndingLunarMonthName(monthName) {
         : monthName;
 }
 
+function getPreviousRegularLunarMonthName(monthName) {
+    const monthIndex = KYRGYZ_LUNAR_MONTH_SEQUENCE.indexOf(monthName);
+    if (monthIndex === -1) {
+        return null;
+    }
+
+    return KYRGYZ_LUNAR_MONTH_SEQUENCE[
+        (monthIndex + KYRGYZ_LUNAR_MONTH_SEQUENCE.length - 1) % KYRGYZ_LUNAR_MONTH_SEQUENCE.length
+    ];
+}
+
+function getNextRegularLunarMonthName(monthName) {
+    const monthIndex = KYRGYZ_LUNAR_MONTH_SEQUENCE.indexOf(monthName);
+    if (monthIndex === -1) {
+        return null;
+    }
+
+    return KYRGYZ_LUNAR_MONTH_SEQUENCE[(monthIndex + 1) % KYRGYZ_LUNAR_MONTH_SEQUENCE.length];
+}
+
 export function getLunarMonthDays(month) {
     const start = parseIsoDate(getLunarMonthStartDate(month));
     const end = parseIsoDate(getLunarMonthEndDate(month));
@@ -114,8 +149,56 @@ export function findLunarMonthIndexByDate(months, isoDate = getTodayIsoDate()) {
 export function findLunarTransitionForNewMoon(months, isoDate) {
     const startingMonthIndex = months.findIndex((month) => getLunarMonthStartDate(month) === isoDate);
 
-    if (startingMonthIndex <= 0) {
-        return null;
+    if (startingMonthIndex === 0) {
+        const startingMonth = months[startingMonthIndex];
+        const endingMonthName = startingMonth.previous_month_name
+            ?? getPreviousRegularLunarMonthName(startingMonth.name);
+
+        if (!endingMonthName) {
+            return null;
+        }
+
+        const visibleUntilDate = startingMonth.next_new_moon_datetime
+            ? startingMonth.next_new_moon_datetime.slice(0, 10)
+            : toIsoDate(addDays(parseIsoDate(getLunarMonthEndDate(startingMonth)), 1));
+
+        return {
+            endingMonthName,
+            endingMonthDisplayNameKy: formatKyrgyzEndingLunarMonthName(endingMonthName),
+            startingMonthName: startingMonth.name,
+            visibleUntilDate,
+            visibleUntilDisplayDate: formatDisplayDateWithDots(visibleUntilDate),
+        };
+    }
+
+    if (startingMonthIndex < 0) {
+        const endingMonth = months.at(-1);
+
+        if (!endingMonth) {
+            return null;
+        }
+
+        const nextNewMoonDate = endingMonth.next_new_moon_datetime
+            ? endingMonth.next_new_moon_datetime.slice(0, 10)
+            : toIsoDate(addDays(parseIsoDate(getLunarMonthEndDate(endingMonth)), 1));
+
+        if (nextNewMoonDate !== isoDate) {
+            return null;
+        }
+
+        const startingMonthName = getNextRegularLunarMonthName(endingMonth.name);
+
+        if (!startingMonthName) {
+            return null;
+        }
+
+        return {
+            endingMonthName: endingMonth.name,
+            endingMonthDisplayNameKy: formatKyrgyzEndingLunarMonthName(endingMonth.name),
+            startingMonthName,
+            visibleUntilDate: null,
+            visibleUntilDisplayDate: null,
+        };
     }
 
     const endingMonth = months[startingMonthIndex - 1];

@@ -89,6 +89,64 @@ test('describes the lunar month transition for a new moon date', () => {
     });
 });
 
+test('describes a new lunar year transition when Birdin is the first returned month', () => {
+    const months = [
+        {
+            name: 'Бирдин айы',
+            start_date: '2027-01-08',
+            end_date: '2027-02-05',
+            next_new_moon_datetime: '2027-02-06T09:57:00+06:00',
+        },
+    ];
+
+    assert.deepEqual(findLunarTransitionForNewMoon(months, '2027-01-08'), {
+        endingMonthName: 'Үчтүн айы',
+        endingMonthDisplayNameKy: 'Үчтүн айы',
+        startingMonthName: 'Бирдин айы',
+        visibleUntilDate: '2027-02-06',
+        visibleUntilDisplayDate: '06.02.2027',
+    });
+});
+
+test('uses backend previous month context when first Birdin follows Arsar', () => {
+    const months = [
+        {
+            name: 'Бирдин айы',
+            previous_month_name: 'АРСАР АЙ',
+            start_date: '2016-01-10',
+            end_date: '2016-02-07',
+            next_new_moon_datetime: '2016-02-08T20:38:00+06:00',
+        },
+    ];
+
+    assert.deepEqual(findLunarTransitionForNewMoon(months, '2016-01-10'), {
+        endingMonthName: 'АРСАР АЙ',
+        endingMonthDisplayNameKy: 'АРСАР АЙ',
+        startingMonthName: 'Бирдин айы',
+        visibleUntilDate: '2016-02-08',
+        visibleUntilDisplayDate: '08.02.2016',
+    });
+});
+
+test('describes a next lunar year transition immediately after the last returned month', () => {
+    const months = [
+        {
+            name: 'Үчтүн айы',
+            start_date: '2031-11-15',
+            end_date: '2031-12-13',
+            next_new_moon_datetime: '2031-12-14T21:07:00+06:00',
+        },
+    ];
+
+    assert.deepEqual(findLunarTransitionForNewMoon(months, '2031-12-14'), {
+        endingMonthName: 'Үчтүн айы',
+        endingMonthDisplayNameKy: 'Үчтүн айы',
+        startingMonthName: 'Бирдин айы',
+        visibleUntilDate: null,
+        visibleUntilDisplayDate: null,
+    });
+});
+
 test('describes the transition into Arsar month without special-casing the label', () => {
     const months = [
         { name: 'Тогуздун айы', start_date: '2026-08-12', end_date: '2026-09-10' },

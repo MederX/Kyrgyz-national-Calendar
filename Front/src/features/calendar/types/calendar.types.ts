@@ -53,6 +53,7 @@ export interface LunarMonth {
     sequence: number;
     name: string;
     base_name: string | null;
+    previous_month_name?: string | null;
     start_date: string;
     end_date: string;
     start_datetime: string;

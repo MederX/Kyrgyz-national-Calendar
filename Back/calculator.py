@@ -118,6 +118,18 @@ def _find_initial_birdin_index(new_moons: list[datetime], anchor_year: int) -> i
     return best_index
 
 
+def _should_insert_muchol_alignment_arsar(
+    current_name: str,
+    next_start: datetime,
+    tz_name: str,
+) -> bool:
+    if current_name != "Жалган куран":
+        return False
+
+    muchol_start_date = calculate_nooruz(next_start.year, tz_name=tz_name).date()
+    return next_start.date() == muchol_start_date
+
+
 @lru_cache(maxsize=16)
 def calculate_lunar_month_timeline(tz_name: str = "Asia/Bishkek") -> tuple[dict, ...]:
     """
@@ -143,8 +155,14 @@ def calculate_lunar_month_timeline(tz_name: str = "Asia/Bishkek") -> tuple[dict,
         current_name = KYRGYZ_LUNAR_MONTH_NAMES[name_index % len(KYRGYZ_LUNAR_MONTH_NAMES)]
         expected_month = (name_index % len(KYRGYZ_LUNAR_MONTH_NAMES)) + 1
         overlap_days = _count_days_in_month(start_day, end_day, expected_month)
+        should_insert_regular_arsar = overlap_days < ARSAR_OVERLAP_THRESHOLD_DAYS and start > cooldown_until
+        should_insert_muchol_alignment_arsar = _should_insert_muchol_alignment_arsar(
+            current_name=current_name,
+            next_start=next_start,
+            tz_name=tz_name,
+        ) and not should_insert_regular_arsar
 
-        if overlap_days < ARSAR_OVERLAP_THRESHOLD_DAYS and start > cooldown_until:
+        if should_insert_regular_arsar or should_insert_muchol_alignment_arsar:
             arsar_of = KYRGYZ_LUNAR_MONTH_NAMES[(name_index - 1) % len(KYRGYZ_LUNAR_MONTH_NAMES)]
             timeline.append({
                 "name": "АРСАР АЙ",
@@ -157,7 +175,7 @@ def calculate_lunar_month_timeline(tz_name: str = "Asia/Bishkek") -> tuple[dict,
                 "days": (end_day - start_day).days + 1,
                 "is_arsar": True,
                 "arsar_of": arsar_of,
-                "status": "КРИТИЧЕСКИЙ БУФЕР",
+                "status": "МҮЧӨЛ КОРРЕКЦИЯСЫ" if should_insert_muchol_alignment_arsar else "КРИТИЧЕСКИЙ БУФЕР",
                 "season_month": None,
                 "overlap_days": overlap_days,
             })
@@ -193,12 +211,18 @@ def _january_overlap_days(month: dict, target_year: int) -> int:
     )
 
 
-def _serialize_lunar_month(month: dict, lunar_year: int, sequence: int) -> dict:
+def _serialize_lunar_month(
+    month: dict,
+    lunar_year: int,
+    sequence: int,
+    previous_month_name: str | None = None,
+) -> dict:
     return {
         "lunar_year": lunar_year,
         "sequence": sequence,
         "name": month["name"],
         "base_name": month["base_name"],
+        "previous_month_name": previous_month_name,
         "start_date": month["start_date_obj"].isoformat(),
         "end_date": month["end_date_obj"].isoformat(),
         "start_datetime": month["start"].isoformat(),
@@ -249,7 +273,14 @@ def calculate_lunar_year_months(year: int, tz_name: str = "Asia/Bishkek") -> lis
         current_index += 1
 
     return [
-        _serialize_lunar_month(month, lunar_year=year, sequence=sequence)
+        _serialize_lunar_month(
+            month,
+            lunar_year=year,
+            sequence=sequence,
+            previous_month_name=timeline[start_index + sequence - 2]["name"]
+            if start_index + sequence - 2 >= 0
+            else None,
+        )
         for sequence, month in enumerate(lunar_year_months, start=1)
     ]
 
@@ -334,6 +365,7 @@ def calculate_moon_phases(
     return results
 
 
+@lru_cache(maxsize=256)
 def calculate_nooruz(year: int, tz_name: str = "Asia/Bishkek") -> datetime:
     """
     Calculate the Lunar New Year (Мүчөл жылы башталышы).

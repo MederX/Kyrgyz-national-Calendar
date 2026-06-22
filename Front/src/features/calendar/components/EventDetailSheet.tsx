@@ -88,8 +88,12 @@ export const EventDetailSheet: React.FC<Props> = ({
                                                         <strong className={styles.lunarMonthStarting}>
                                                             {transition.startingMonthName}
                                                         </strong>{' '}
-                                                        аттуу ай башталат. Ал асманда{' '}
-                                                        {transition.visibleUntilDisplayDate} чейин болот.
+                                                        аттуу ай башталат.
+                                                        {transition.visibleUntilDisplayDate && (
+                                                            <>
+                                                                {' '}Ал асманда {transition.visibleUntilDisplayDate} чейин болот.
+                                                            </>
+                                                        )}
                                                     </>
                                                 ) : (
                                                     <>
@@ -100,8 +104,12 @@ export const EventDetailSheet: React.FC<Props> = ({
                                                         и начинается месяц{' '}
                                                         <strong className={styles.lunarMonthStarting}>
                                                             {transition.startingMonthName}
-                                                        </strong>. Он будет на небе до{' '}
-                                                        {transition.visibleUntilDisplayDate}.
+                                                        </strong>.
+                                                        {transition.visibleUntilDisplayDate && (
+                                                            <>
+                                                                {' '}Он будет на небе до {transition.visibleUntilDisplayDate}.
+                                                            </>
+                                                        )}
                                                     </>
                                                 )}
                                             </p>

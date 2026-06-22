@@ -34,8 +34,8 @@ export interface LunarMonthTransition {
     endingMonthName: string;
     endingMonthDisplayNameKy: string;
     startingMonthName: string;
-    visibleUntilDate: string;
-    visibleUntilDisplayDate: string;
+    visibleUntilDate: string | null;
+    visibleUntilDisplayDate: string | null;
 }
 
 export function findLunarTransitionForNewMoon(

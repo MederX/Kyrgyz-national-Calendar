@@ -1,6 +1,6 @@
 # Project Memory: Kyrgyz National Calendar
 
-Last updated: 2026-06-17, Asia/Bishkek.
+Last updated: 2026-06-22, Asia/Bishkek.
 
 This file is a compact handoff for the next Codex/session. Start here before
 reading the whole repository or long chat history.
@@ -81,6 +81,15 @@ Important behavior:
   the regular month name index.
 - `Арсар ай` is detected when the lunar month overlaps its expected seasonal
   Gregorian month by less than 10 days, with a 300-day cooldown.
+- `АРСАР АЙ` can appear in two important positions:
+  - between `Бирдин айы` and `Жалган куран`, usually to align `Мүчөл башы`
+    with the start of `Жалган куран`;
+  - between `Үчтүн айы` and the next `Бирдин айы`, for example in 1985,
+    2004, 2015, and 2034.
+- `calculate_lunar_year_months()` serializes `previous_month_name` for each
+  `lunar_months` item. This is required by the frontend to describe new-moon
+  transitions correctly when the previous month is outside the selected year's
+  returned lunar package.
 
 Recent critical fix:
 - Problem: `calculate_lunar_year_months()` returned empty arrays for 1900-1914.
@@ -90,6 +99,29 @@ Recent critical fix:
   new-moon list by maximum overlap with January 1900.
 - Verified result: all years 1900-2050 return non-empty lunar years.
   Distribution after the fix: 96 years with 12 months, 55 years with 13 months.
+
+Recent boundary fixes:
+- January new-moon popups in years where `Бирдин айы` is the first returned
+  lunar month must still show the `Ай календары:` transition text.
+- December new-moon popups that start the next lunar year immediately after the
+  selected package's last month must still show the transition text.
+- If the previous month was `АРСАР АЙ`, the popup must say:
+  `Бул күнү АРСАР АЙ аяктап Бирдин айы аттуу ай башталат.`
+  not `Үчтүн айы`.
+- Concrete regression case: for 2016, `Бирдин айы` starts on `2016-01-10` and
+  must carry `previous_month_name = "АРСАР АЙ"` because 2015 ended with
+  `АРСАР АЙ` from `2015-12-11` to `2016-01-09`.
+
+Test strategy note:
+- `test_arsar_corrects_years_where_muchol_would_start_chyn_kuran()` currently
+  contains a hardcoded list of years for the current 1900-2050/de421.bsp
+  window. Treat this as a range-specific regression fixture, not a scalable
+  invariant.
+- If the project switches to a larger `.bsp` and extends the supported period,
+  prefer invariant tests over hardcoded year lists: regular month order remains
+  stable, `АРСАР АЙ` does not advance the regular month index, `Мүчөл башы`
+  aligns with `Жалган куран`, cooldown is respected, and transition context is
+  correct across year boundaries.
 
 Relevant tests:
 - `Back/test_lunar_year_structure.py`
@@ -123,6 +155,14 @@ UI model:
 - Legend label is `Рамазан айы` / `Месяц Рамазан`.
 - `Орозо айт` icon choice: crescent with a small star.
 - `Курман айт` icon choice: user selected variant C from prior visual options.
+- New-moon detail popups show an `Ай календары:` / `Лунный календарь:` block
+  when a new lunar month starts. The frontend helper is
+  `Front/src/features/calendar/utils/lunarMonthGrid.js`.
+- That helper must handle three boundary cases:
+  - normal transition inside the returned `lunar_months` array;
+  - first returned month, using backend `previous_month_name` if present;
+  - new moon immediately after the last returned month, where the exact
+    `visibleUntilDisplayDate` for the next month may be unknown.
 
 ## 6. Event Icons And Date Cells
 
@@ -243,12 +283,30 @@ behavior lives in `Back/` and `Front/src/features/calendar/`.
 
 ## 12. Current Git/Workspace Note
 
-At the time this memory file was created, `git status --short` showed only:
+At the time this memory file was refreshed on 2026-06-22, `git status --short`
+showed:
+- `M Back/calculator.py`
+- `M Back/models.py`
+- `M Back/test_lunar_year_structure.py`
+- `M Front/src/features/calendar/components/EventDetailSheet.tsx`
+- `M Front/src/features/calendar/types/calendar.types.ts`
+- `M Front/src/features/calendar/utils/lunarMonthGrid.d.ts`
+- `M Front/src/features/calendar/utils/lunarMonthGrid.js`
+- `M Front/src/features/calendar/utils/lunarMonthGrid.test.mjs`
+- `M PROJECT_MEMORY.md`
 - `M problems.txt`
 - `M samples/clean_backend_calendar.py`
 
-Those were not modified while creating this memory. Treat them as user/context
-changes unless the user asks to edit them.
+Meaningful current changes:
+- Backend lunar month payload now includes `previous_month_name`.
+- Frontend new-moon transition text now handles first-month and end-of-package
+  boundaries, including `АРСАР АЙ -> Бирдин айы`.
+- Regression tests were added for these boundary cases.
+
+Pre-existing/context changes:
+- `problems.txt` and `samples/clean_backend_calendar.py` appear to have mostly
+  CRLF line-ending churn. Treat them as user/context changes unless explicitly
+  asked to normalize or edit them.
 
 ## 13. Good Next-Session Start Procedure
 
@@ -278,4 +336,3 @@ npm run build
 
 5. For UX/UI work, do not jump straight to code for ambiguous visuals. The user
 prefers: propose variants, visualize, choose, then implement.
-
