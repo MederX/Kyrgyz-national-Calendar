@@ -26,6 +26,7 @@ Back/uvicorn.log
 .vscode/
 .agents/
 .codex/
+.codex
 .omx/
 .superpowers/
 .env
