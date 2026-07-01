@@ -1,15 +1,38 @@
 .venv/
+venv/
+env/
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
+*.pyd
 *.log
+.pytest_cache/
+.mypy_cache/
 
 Front/node_modules/
 Front/dist/
 Front/dev-dist/
+Front/.vite/
+Front/coverage/
 
 Back/__pycache__/
+Back/.venv/
+Back/venv/
+Back/.pytest_cache/
+Back/.mypy_cache/
 Back/uvicorn.log
+
+.idea/
+.vscode/
+.agents/
+.codex/
+.omx/
+.superpowers/
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.sqlite3
 
 out.json
 *.bsp
