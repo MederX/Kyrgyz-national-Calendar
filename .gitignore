@@ -28,7 +28,7 @@ Back/uvicorn.log
 .codex/
 .codex
 .omx/
-.superpowers/
+.superpowers\
 .env
 .env.*
 .DS_Store
