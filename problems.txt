@@ -1,0 +1,119 @@
+(.venv) a_zhumaev@bsk-w100125-03:~/my_Projects_2/Kyrgyz-national-Calendar/Front$ npm audit
+# npm audit report
+
+esbuild  <=0.24.2
+Severity: moderate
+esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99
+fix available via `npm audit fix --force`
+Will install vite@8.0.10, which is a breaking change
+node_modules/esbuild
+  vite  <=6.4.1
+  Depends on vulnerable versions of esbuild
+  node_modules/vite
+
+serialize-javascript  <=7.0.4
+Severity: high
+Serialize JavaScript is Vulnerable to RCE via RegExp.flags and Date.prototype.toISOString() - https://github.com/advisories/GHSA-5c6j-r48x-rmvq
+Serialize JavaScript has CPU Exhaustion Denial of Service via crafted array-like objects - https://github.com/advisories/GHSA-qj8w-gfj5-8c6v
+fix available via `npm audit fix --force`
+Will install vite-plugin-pwa@0.19.8, which is a breaking change
+node_modules/serialize-javascript
+  @rollup/plugin-terser  0.2.0 - 0.4.4
+  Depends on vulnerable versions of serialize-javascript
+  node_modules/@rollup/plugin-terser
+    workbox-build  >=7.1.0
+    Depends on vulnerable versions of @rollup/plugin-terser
+    node_modules/workbox-build
+      vite-plugin-pwa  >=0.20.0
+      Depends on vulnerable versions of workbox-build
+      node_modules/vite-plugin-pwa
+
+
+6 vulnerabilities (2 moderate, 4 high)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+(.venv) a_zhumaev@bsk-w100125-03:~/my_Projects_2/Kyrgyz-national-Calendar/Front$ npm audit fix --force
+npm warn using --force Recommended protections disabled.
+npm warn audit Updating vite to 8.0.10, which is a SemVer major change.
+npm warn audit Updating vite-plugin-pwa to 0.19.8, which is a SemVer major change.
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: kyrgyz-calendar-frontend@1.0.0
+npm warn Found: vite@5.4.21
+npm warn node_modules/vite
+npm warn   peer vite@"^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0" from @vitejs/plugin-react@4.7.0
+npm warn   node_modules/@vitejs/plugin-react
+npm warn     dev @vitejs/plugin-react@"^4.3.0" from the root project
+npm warn   2 more (vite-plugin-pwa, the root project)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer vite@"^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0" from @vitejs/plugin-react@4.7.0
+npm warn node_modules/@vitejs/plugin-react
+npm warn   dev @vitejs/plugin-react@"^4.3.0" from the root project
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: vite-plugin-pwa@0.19.8
+npm warn Found: vite@8.0.10
+npm warn node_modules/vite
+npm warn   dev vite@"8.0.10" from the root project
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer vite@"^3.1.0 || ^4.0.0 || ^5.0.0" from vite-plugin-pwa@0.19.8
+npm warn node_modules/vite-plugin-pwa
+npm warn   dev vite-plugin-pwa@"0.19.8" from the root project
+npm warn
+npm warn Conflicting peer dependency: vite@5.4.21
+npm warn node_modules/vite
+npm warn   peer vite@"^3.1.0 || ^4.0.0 || ^5.0.0" from vite-plugin-pwa@0.19.8
+npm warn   node_modules/vite-plugin-pwa
+npm warn     dev vite-plugin-pwa@"0.19.8" from the root project
+
+added 25 packages, removed 5 packages, changed 2 packages, and audited 398 packages in 9s
+
+110 packages are looking for funding
+  run `npm fund` for details
+
+# npm audit report
+
+serialize-javascript  <=7.0.4
+Severity: high
+Serialize JavaScript is Vulnerable to RCE via RegExp.flags and Date.prototype.toISOString() - https://github.com/advisories/GHSA-5c6j-r48x-rmvq
+Serialize JavaScript has CPU Exhaustion Denial of Service via crafted array-like objects - https://github.com/advisories/GHSA-qj8w-gfj5-8c6v
+fix available via `npm audit fix`
+node_modules/serialize-javascript
+  @rollup/plugin-terser  0.2.0 - 0.4.4
+  Depends on vulnerable versions of serialize-javascript
+  node_modules/@rollup/plugin-terser
+    workbox-build  >=7.1.0
+    Depends on vulnerable versions of @rollup/plugin-terser
+    node_modules/workbox-build
+
+3 high severity vulnerabilities
+
+To address all issues, run:
+  npm audit fix
+(.venv) a_zhumaev@bsk-w100125-03:~/my_Projects_2/Kyrgyz-national-Calendar/Front$ npm audit fix 
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error
+npm error While resolving: @vitejs/plugin-react@4.7.0
+npm error Found: vite@8.0.10
+npm error node_modules/vite
+npm error   dev vite@"^8.0.10" from the root project
+npm error
+npm error Could not resolve dependency:
+npm error peer vite@"^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0" from @vitejs/plugin-react@4.7.0
+npm error node_modules/@vitejs/plugin-react
+npm error   dev @vitejs/plugin-react@"^4.3.0" from the root project
+npm error
+npm error Conflicting peer dependency: vite@7.3.2
+npm error node_modules/vite
+npm error   peer vite@"^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0" from @vitejs/plugin-react@4.7.0
+npm error   node_modules/@vitejs/plugin-react
+npm error     dev @vitejs/plugin-react@"^4.3.0" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry this command with --force or --legacy-peer-deps to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error /home/a_zhumaev/.npm/_logs/2026-04-28T12_25_01_292Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /home/a_zhumaev/.npm/_logs/2026-04-28T12_25_01_292Z-debug-0.log

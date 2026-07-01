@@ -35,8 +35,28 @@ class CalendarPeriod(BaseModel):
     description_ru: str
 
 
+class LunarMonth(BaseModel):
+    lunar_year: int
+    sequence: int
+    name: str
+    base_name: str | None = None
+    previous_month_name: str | None = None
+    start_date: str
+    end_date: str
+    start_datetime: str
+    end_datetime: str
+    next_new_moon_datetime: str
+    days: int
+    is_arsar: bool
+    arsar_of: str | None = None
+    status: str
+    season_month: int | None = None
+    overlap_days: int
+
+
 class CalendarResponse(BaseModel):
     year: int
     month: int | None = None
     events: list[CalendarEvent]
     periods: list[CalendarPeriod]
+    lunar_months: list[LunarMonth] = Field(default_factory=list)

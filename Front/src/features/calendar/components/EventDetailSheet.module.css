@@ -35,7 +35,7 @@
 }
 
 .dateTitle {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--text-primary);
 }
@@ -80,11 +80,58 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    background: var(--popup-event-color);
+    color: #08131C;
 }
 
-.iconEmoji {
-    font-size: 20px;
-    line-height: 1;
+.eventIcon {
+    width: 27px;
+    height: 27px;
+    color: currentColor;
+}
+
+[data-theme='light'] .iconCircle {
+    background: color-mix(in srgb, var(--popup-event-color) 18%, #FFFFFF);
+    border: 1px solid color-mix(in srgb, var(--popup-event-color) 34%, #FFFFFF);
+    color: var(--popup-event-color);
+    box-shadow: 0 2px 8px rgba(95, 74, 52, 0.08);
+}
+
+[data-theme='light'] .iconCircle[data-event-type='new_moon'] {
+    --popup-event-color: #5EAED4;
+}
+
+[data-theme='light'] .iconCircle[data-event-type='full_moon'] {
+    --popup-event-color: #D99A28;
+    background: rgba(217, 154, 40, 0.20);
+    border-color: rgba(217, 154, 40, 0.42);
+}
+
+[data-theme='light'] .iconCircle[data-event-type='full_moon'] .eventIcon {
+    filter: drop-shadow(0 0 0.7px #8A5A20) drop-shadow(0 0 0.7px #8A5A20);
+}
+
+[data-theme='light'] .iconCircle[data-event-type='togool'] {
+    --popup-event-color: #5EAED4;
+}
+
+[data-theme='light'] .iconCircle[data-event-type='nooruz'] {
+    --popup-event-color: #2FBA73;
+}
+
+[data-theme='light'] .iconCircle[data-event-type='ramadan'],
+[data-theme='light'] .iconCircle[data-event-type='ai_bashi'],
+[data-theme='light'] .iconCircle[data-event-type='eid_al_fitr'],
+[data-theme='light'] .iconCircle[data-event-type='kurman_ait'] {
+    --popup-event-color: #16B8AA;
+}
+
+[data-theme='light'] .iconCircle[data-event-type='kadyr_tun'] {
+    --popup-event-color: #B388F3;
+}
+
+[data-theme='light'] .iconCircle[data-event-type='holiday'] {
+    --popup-event-color: #EF4444;
 }
 
 .eventInfo {
@@ -94,21 +141,21 @@
 }
 
 .eventLabel {
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 19px;
+    font-weight: 800;
     color: var(--text-primary);
 }
 
 .eventTime {
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 800;
     color: var(--accent-gold);
 }
 
 .eventDesc {
-    font-size: 13px;
+    font-size: 16px;
     color: var(--text-secondary);
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .tipsBox {
@@ -121,7 +168,7 @@
 
 .tipsTitle {
     display: block;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--accent-gold);
     text-transform: uppercase;
@@ -130,8 +177,71 @@
 }
 
 .tipsText {
-    font-size: 13px;
+    font-size: 15px;
     color: var(--text-primary);
     line-height: 1.5;
     margin: 0;
+}
+
+.lunarTransitionBox {
+    margin-top: 10px;
+    padding: 11px 12px;
+    background: rgba(94, 174, 212, 0.10);
+    border-left: 3px solid var(--color-new-moon);
+    border-radius: var(--radius-sm);
+}
+
+.lunarTransitionTitle {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--color-new-moon);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+.lunarTransitionText {
+    font-size: 15px;
+    color: var(--text-primary);
+    line-height: 1.55;
+    margin: 0;
+}
+
+.lunarMonthEnding,
+.lunarMonthStarting {
+    font-weight: 900;
+}
+
+.lunarMonthEnding {
+    color: var(--color-full-moon);
+}
+
+.lunarMonthStarting {
+    color: var(--color-new-moon);
+}
+
+.aiBashyNote {
+    margin-top: 12px;
+    padding: 12px 13px;
+    border-radius: var(--radius-md);
+    background: rgba(46, 196, 182, 0.10);
+    border-left: 4px solid var(--color-islamic);
+}
+
+.aiBashyTitle {
+    display: block;
+    color: var(--color-islamic);
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.aiBashyText {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 16px;
+    line-height: 1.5;
 }

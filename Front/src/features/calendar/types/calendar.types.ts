@@ -19,6 +19,7 @@ export interface CalendarResponse {
     month: number | null;
     events: CalendarEvent[];
     periods: CalendarPeriod[];
+    lunar_months: LunarMonth[];
 }
 
 export interface CalendarRequest {
@@ -45,4 +46,23 @@ export interface CalendarPeriod {
     label_ru: string;
     description_ky: string;
     description_ru: string;
+}
+
+export interface LunarMonth {
+    lunar_year: number;
+    sequence: number;
+    name: string;
+    base_name: string | null;
+    previous_month_name?: string | null;
+    start_date: string;
+    end_date: string;
+    start_datetime: string;
+    end_datetime: string;
+    next_new_moon_datetime: string;
+    days: number;
+    is_arsar: boolean;
+    arsar_of: string | null;
+    status: string;
+    season_month: number | null;
+    overlap_days: number;
 }

@@ -1,0 +1,439 @@
+.wrapper {
+    position: relative;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 22px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--bg-border);
+}
+
+[data-theme='light'] .wrapper {
+    background: rgba(255, 252, 246, 0.78);
+}
+
+.wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background:
+        radial-gradient(circle at 18% 20%, rgba(233, 196, 106, 0.18), transparent 34%),
+        linear-gradient(135deg, rgba(166, 95, 36, 0.14), rgba(46, 196, 182, 0.07));
+}
+
+.arsar::before {
+    opacity: 1;
+}
+
+.header,
+.arsarNotice,
+.sectionsGrid {
+    position: relative;
+    z-index: 1;
+}
+
+.header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    z-index: 4;
+}
+
+.titleBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+}
+
+.title {
+    font-family: var(--font-family-serif);
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.period {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--text-secondary);
+}
+
+.daysCount {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--bg-border);
+}
+
+[data-theme='light'] .daysCount {
+    background: rgba(166, 95, 36, 0.09);
+}
+
+.selectorLabel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    width: min(340px, 100%);
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.monthControl {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.monthStepButton,
+.monthSelectButton {
+    min-height: 42px;
+    border-radius: 8px;
+    border: 1px solid var(--bg-border);
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.monthStepButton {
+    width: 42px;
+    font-size: 23px;
+    font-weight: 900;
+}
+
+.monthSelectButton {
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 13px;
+    text-align: left;
+}
+
+.monthStepButton:hover:not(:disabled),
+.monthStepButton:focus-visible:not(:disabled),
+.monthSelectButton:hover,
+.monthSelectButton:focus-visible {
+    background: var(--bg-elevated);
+    border-color: rgba(233, 196, 106, 0.35);
+    outline: 2px solid rgba(233, 196, 106, 0.35);
+    outline-offset: 2px;
+}
+
+.monthSelectName {
+    min-width: 0;
+    color: var(--accent-gold);
+    font-size: 17px;
+    font-weight: 900;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.monthChevron {
+    flex-shrink: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.monthDropdown {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 8px);
+    max-height: 320px;
+    overflow-y: auto;
+    z-index: 25;
+    border: 1px solid var(--bg-border);
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+    padding: 6px;
+}
+
+.monthOption {
+    width: 100%;
+    min-height: 46px;
+    border-radius: var(--radius-sm);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    padding: 7px 10px;
+    color: var(--text-primary);
+    text-align: left;
+}
+
+.monthOption:hover,
+.monthOption:focus-visible,
+.monthOptionActive {
+    background: rgba(233, 196, 106, 0.12);
+    color: var(--accent-gold);
+    outline: none;
+}
+
+.monthOptionName {
+    min-width: 0;
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.monthOptionDates {
+    min-width: 0;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+[data-theme='light'] .monthDropdown {
+    background: var(--bg-surface);
+}
+
+[data-theme='light'] .monthOption:hover,
+[data-theme='light'] .monthOption:focus-visible,
+[data-theme='light'] .monthOptionActive {
+    background: rgba(166, 95, 36, 0.13);
+}
+
+.arsarNotice {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: fit-content;
+    max-width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: var(--text-primary);
+    background: rgba(233, 196, 106, 0.16);
+    border: 1px solid rgba(233, 196, 106, 0.32);
+    font-size: 15px;
+    line-height: 1.45;
+}
+
+[data-theme='light'] .arsarNotice {
+    background: rgba(166, 95, 36, 0.14);
+    border-color: rgba(166, 95, 36, 0.28);
+}
+
+.arsarNotice strong {
+    color: var(--accent-gold);
+}
+
+[data-theme='light'] .arsarNotice strong {
+    color: var(--accent-gold);
+}
+
+.sectionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+    gap: 18px;
+}
+
+.monthPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.gregorianTitle {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(70px, 1fr));
+    gap: 4px;
+}
+
+.dayHeader {
+    min-height: 30px;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.dayCell {
+    position: relative;
+    min-height: 76px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+[data-theme='light'] .dayCell {
+    background: rgba(255, 252, 246, 0.58);
+}
+
+.inRange {
+    background: rgba(142, 202, 230, 0.11);
+    border-color: rgba(142, 202, 230, 0.22);
+}
+
+[data-theme='light'] .inRange {
+    background: rgba(35, 106, 135, 0.10);
+    border-color: rgba(35, 106, 135, 0.24);
+}
+
+.outOfRange {
+    opacity: 0.38;
+}
+
+.today {
+    background: rgba(214, 220, 102, 0.13);
+    border-color: rgba(233, 196, 106, 0.68);
+    box-shadow:
+        inset 0 0 0 2px rgba(233, 196, 106, 0.46),
+        0 0 0 2px rgba(233, 196, 106, 0.15);
+}
+
+.today .gregorianDay {
+    color: var(--accent-gold);
+}
+
+[data-theme='light'] .today {
+    background: rgba(166, 95, 36, 0.18);
+    border-color: rgba(166, 95, 36, 0.62);
+    box-shadow:
+        inset 0 0 0 2px rgba(166, 95, 36, 0.44),
+        0 0 0 2px rgba(166, 95, 36, 0.16);
+}
+
+[data-theme='light'] .today .gregorianDay {
+    color: var(--accent-gold);
+}
+
+.gregorianDay {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.lunarDay {
+    position: absolute;
+    right: 8px;
+    bottom: 7px;
+    min-width: 54px;
+    height: 24px;
+    display: inline-grid;
+    place-items: center;
+    padding: 0 7px;
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 800;
+    white-space: nowrap;
+    color: var(--color-new-moon);
+    background: rgba(142, 202, 230, 0.13);
+    border: 1px solid rgba(142, 202, 230, 0.26);
+    font-variant-numeric: tabular-nums;
+}
+
+[data-theme='light'] .lunarDay {
+    color: var(--color-new-moon);
+    background: rgba(35, 106, 135, 0.12);
+    border-color: rgba(35, 106, 135, 0.25);
+}
+
+.arsar .inRange {
+    background: rgba(233, 196, 106, 0.13);
+    border-color: rgba(233, 196, 106, 0.28);
+}
+
+[data-theme='light'] .arsar .inRange {
+    background: rgba(166, 95, 36, 0.12);
+    border-color: rgba(166, 95, 36, 0.24);
+}
+
+.arsar .lunarDay {
+    color: var(--accent-gold);
+    background: rgba(233, 196, 106, 0.15);
+    border-color: rgba(233, 196, 106, 0.30);
+}
+
+@media (max-width: 760px) {
+    .wrapper {
+        padding: 18px 14px;
+    }
+
+    .sectionsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .grid {
+        grid-template-columns: repeat(7, minmax(36px, 1fr));
+        gap: 3px;
+    }
+
+    .dayCell {
+        min-height: 60px;
+    }
+
+    .gregorianDay {
+        font-size: 21px;
+    }
+
+    .lunarDay {
+        right: 6px;
+        bottom: 6px;
+        min-width: 44px;
+        max-width: calc(100% - 12px);
+        height: 20px;
+        padding: 0 5px;
+        font-size: 10px;
+        overflow: hidden;
+        text-overflow: clip;
+    }
+}
