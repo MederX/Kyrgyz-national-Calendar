@@ -7,6 +7,7 @@ import { EventLegend } from './EventLegend';
 import { LocationSelector } from './LocationSelector';
 import { YearControl } from './YearControl';
 import { LunarMonthCalendarView } from './LunarMonthCalendarView';
+import { SiteFooter } from './SiteFooter';
 import type { CalendarEvent, CalendarPeriod } from '../types/calendar.types';
 import styles from './CalendarScreen.module.css';
 
@@ -380,6 +381,8 @@ export const CalendarScreen: React.FC = () => {
                     />
                 </section>
             )}
+
+            <SiteFooter language={language} />
 
             {showLocation && (
                 <LocationSelector
