@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Footer Variant B Demo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #d9d2c4;
+            color: #201a15;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        main {
+            width: min(1400px, calc(100vw - 40px));
+            margin: 36px auto;
+            display: grid;
+            gap: 28px;
+        }
+
+        .pageTitle {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 32px;
+            line-height: 1.1;
+            font-weight: 700;
+        }
+
+        .intro {
+            margin: 10px 0 0;
+            max-width: 900px;
+            color: #514940;
+            font-size: 16px;
+            line-height: 1.55;
+        }
+
+        .previewGrid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            align-items: start;
+        }
+
+        .preview {
+            min-width: 0;
+            border: 1px solid rgba(32, 26, 21, 0.16);
+            overflow: hidden;
+            box-shadow: 0 18px 44px rgba(20, 17, 13, 0.16);
+            background: var(--page-bg);
+            color: var(--text-primary);
+        }
+
+        .previewHeader {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            align-items: center;
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--main-border);
+            background: var(--main-bg);
+        }
+
+        .previewName {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .previewMeta {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.35;
+            text-align: right;
+        }
+
+        .mockPage {
+            padding: 24px;
+            display: grid;
+            gap: 20px;
+            background: var(--page-bg);
+        }
+
+        .mockMain {
+            padding: 24px;
+            min-height: 250px;
+            display: grid;
+            gap: 18px;
+            align-content: start;
+            background: var(--main-bg);
+            border: 1px solid var(--main-border);
+        }
+
+        .mockTop {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 18px;
+        }
+
+        .mockTitle {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 27px;
+            line-height: 1.12;
+            font-weight: 700;
+        }
+
+        .mockSub {
+            margin: 8px 0 0;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.45;
+        }
+
+        .yearPill {
+            flex: 0 0 auto;
+            padding: 9px 13px;
+            border: 1px solid var(--main-border);
+            background: var(--control-bg);
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .mockCalendar {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .mockMonth {
+            height: 58px;
+            padding: 10px;
+            border: 1px solid var(--main-border);
+            background: var(--month-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .monthLabel {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        .monthLine {
+            width: 56%;
+            height: 4px;
+            background: var(--accent);
+            opacity: 0.72;
+        }
+
+        .siteFooter {
+            background:
+                linear-gradient(180deg, var(--footer-topline), transparent 1px),
+                var(--footer-bg);
+            border: 1px solid var(--footer-border);
+            color: var(--footer-text);
+        }
+
+        .footerInner {
+            padding: 28px 26px 22px;
+            display: grid;
+            gap: 24px;
+        }
+
+        .footerLead {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+            gap: 26px;
+            align-items: start;
+        }
+
+        .brandMark {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .markIcon {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--footer-accent-border);
+            background: var(--footer-accent-bg);
+            color: var(--footer-accent);
+            font-size: 22px;
+        }
+
+        .footerBrand {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 22px;
+            line-height: 1.1;
+            font-weight: 700;
+        }
+
+        .footerDescription {
+            max-width: 660px;
+            margin: 0;
+            color: var(--footer-muted);
+            font-size: 15px;
+            line-height: 1.55;
+        }
+
+        .footerNotice {
+            padding: 14px 16px;
+            background: var(--notice-bg);
+            border: 1px solid var(--notice-border);
+        }
+
+        .noticeTitle {
+            display: block;
+            color: var(--footer-accent);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .noticeText {
+            margin: 0;
+            color: var(--footer-muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .footerColumns {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            padding-top: 20px;
+            border-top: 1px solid var(--footer-divider);
+        }
+
+        .footerBlock {
+            padding: 16px;
+            min-height: 100%;
+            background: var(--footer-panel);
+            border: 1px solid var(--footer-panel-border);
+        }
+
+        .footerColumnTitle {
+            margin: 0 0 10px;
+            color: var(--footer-text);
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .footerText {
+            margin: 0;
+            color: var(--footer-muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .footerList {
+            display: grid;
+            gap: 8px;
+            margin: 12px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .footerItem {
+            color: var(--footer-muted);
+            font-size: 14px;
+            line-height: 1.42;
+        }
+
+        .footerItem strong {
+            color: var(--footer-text);
+            font-weight: 750;
+        }
+
+        .footerLink {
+            color: var(--footer-link);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+        }
+
+        .footerLink:hover {
+            border-bottom-color: currentColor;
+        }
+
+        .footerBottom {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+            padding-top: 18px;
+            border-top: 1px solid var(--footer-divider);
+            color: var(--footer-quiet);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .night {
+            --page-bg: #0a141b;
+            --main-bg: #112028;
+            --main-border: rgba(255, 255, 255, 0.10);
+            --control-bg: #182a33;
+            --month-bg: rgba(255, 255, 255, 0.035);
+            --text-primary: #eaeaea;
+            --text-secondary: #93a3ab;
+            --accent: #e9c46a;
+            --footer-bg: #0b2f4a;
+            --footer-topline: rgba(142, 202, 230, 0.52);
+            --footer-border: rgba(142, 202, 230, 0.24);
+            --footer-divider: rgba(218, 236, 246, 0.13);
+            --footer-panel: rgba(231, 245, 252, 0.055);
+            --footer-panel-border: rgba(218, 236, 246, 0.12);
+            --footer-text: #eef8f5;
+            --footer-muted: #a9bdc9;
+            --footer-quiet: #89a1af;
+            --footer-link: #e9c46a;
+            --footer-accent: #e9c46a;
+            --footer-accent-bg: rgba(233, 196, 106, 0.13);
+            --footer-accent-border: rgba(233, 196, 106, 0.32);
+            --notice-bg: rgba(233, 196, 106, 0.10);
+            --notice-border: rgba(233, 196, 106, 0.26);
+        }
+
+        .day {
+            --page-bg: #f6f1e7;
+            --main-bg: #fffcf6;
+            --main-border: rgba(95, 74, 52, 0.13);
+            --control-bg: #ece3d4;
+            --month-bg: rgba(95, 74, 52, 0.045);
+            --text-primary: #201a15;
+            --text-secondary: #5b5047;
+            --accent: #a65f24;
+            --footer-bg: #e2d4bf;
+            --footer-topline: rgba(166, 95, 36, 0.46);
+            --footer-border: rgba(95, 74, 52, 0.22);
+            --footer-divider: rgba(95, 74, 52, 0.18);
+            --footer-panel: rgba(255, 252, 246, 0.38);
+            --footer-panel-border: rgba(95, 74, 52, 0.15);
+            --footer-text: #211812;
+            --footer-muted: #5a4b3e;
+            --footer-quiet: #74685d;
+            --footer-link: #884916;
+            --footer-accent: #884916;
+            --footer-accent-bg: rgba(166, 95, 36, 0.11);
+            --footer-accent-border: rgba(166, 95, 36, 0.26);
+            --notice-bg: rgba(10, 132, 122, 0.11);
+            --notice-border: rgba(10, 132, 122, 0.25);
+        }
+
+        @media (max-width: 1180px) {
+            .previewGrid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+            main {
+                width: min(100vw - 24px, 1400px);
+                margin: 20px auto;
+            }
+
+            .previewHeader,
+            .mockTop,
+            .footerBottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .previewMeta {
+                text-align: left;
+            }
+
+            .footerLead,
+            .footerColumns {
+                grid-template-columns: 1fr;
+            }
+
+            .mockCalendar {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .mockPage {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div>
+            <h1 class="pageTitle">Footer Variant B · bilingual content</h1>
+            <p class="intro">
+                Демонстрация футера с тремя утвержденными блоками: заказчик, версия календаря и авторы проекта.
+                Ниже показаны кыргызская и русская версии в ночной и дневной теме; фон футера намеренно отличается от основного блока календаря.
+            </p>
+        </div>
+
+        <section class="previewGrid" aria-label="Footer theme and language previews">
+            <article class="preview night">
+                <header class="previewHeader">
+                    <h2 class="previewName">Night theme · Кыргызча</h2>
+                    <div class="previewMeta">Dark page surface + deeper footer band</div>
+                </header>
+
+                <div class="mockPage">
+                    <section class="mockMain" aria-label="Main page context">
+                        <div class="mockTop">
+                            <div>
+                                <h3 class="mockTitle">Кыргыз Элинин Улуттук ай күн календары</h3>
+                                <p class="mockSub">Күн календары жана Ай календары үчүн негизги экрандын кыскача көрүнүшү.</p>
+                            </div>
+                            <div class="yearPill">2026</div>
+                        </div>
+                        <div class="mockCalendar" aria-hidden="true">
+                            <div class="mockMonth"><span class="monthLabel">Бирдин айы</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Жалган куран</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Чын куран</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Бугу</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Кулжа</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Теке</span><span class="monthLine"></span></div>
+                        </div>
+                    </section>
+
+                    <footer class="siteFooter">
+                        <div class="footerInner">
+                            <div class="footerLead">
+                                <div>
+                                    <div class="brandMark">
+                                        <span class="markIcon" aria-hidden="true">☾</span>
+                                        <div class="footerBrand">Кыргыз улуттук ай күн календары</div>
+                                    </div>
+                                    <p class="footerDescription">
+                                        Кыргыз элинин салттуу жыл санагын, ай фазаларын, тоголду, мүчөлдү жана маанилүү
+                                        календардык белгилерди бир жылдык көрүнүштө түшүндүргөн веб-календарь.
+                                    </p>
+                                </div>
+                                <div class="footerNotice">
+                                    <span class="noticeTitle">Маанилүү эскертүү</span>
+                                    <p class="noticeText">
+                                        Рамазан жана Айт күндөрү эсептик маалымат катары берилет; расмий даталар
+                                        жергиликтүү диний органдар тарабынан такталышы мүмкүн.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="footerColumns">
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">Биз жөнүндө</h3>
+                                    <p class="footerText">
+                                        ОФ «Айгине» Маданий-изилдөө борбору — 2004-жылы Бишкекте негизделген коммерциялык эмес уюм. Борбор -
+                                        салттуу билимдер, билим берүү, гуманитардык жана социалдык изилдөөлөргө адистешип, НКО, мамлекеттик
+                                        мекемелер жана эл аралык уюмдар менен иштешет. Ошондой эле материалдык эмес маданий мурасты сактоо багытында иш алып барат.
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem"><strong>Email:</strong> <a class="footerLink" href="mailto:office.aigine@gmail.com">office.aigine@gmail.com</a></li>
+                                        <li class="footerItem"><strong>Сайт:</strong> <a class="footerLink" href="https://aigine.kg/">aigine.kg</a></li>
+                                    </ul>
+                                </section>
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">Календардын версиясы</h3>
+                                    <p class="footerText">
+                                        Негиз катары Төрөн Жумаевдин кыргыз элинин улуттук «Ай-Күн» календарынын версиясы алынган.
+                                        Ал ай жаңырган күндөрдү, тоголду, Ислам дининдеги маанилүү күндөрдү, мүчөл жыл санагын жана башка
+                                        кыргыз республикасында белгиленчүү майрам күндөрдү бириктирет. Бул сайтта календарь санариптик форматка
+                                        ылайыкташтырылып, астрономиялык эсептөөлөр менен толукталды.
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem">Колдоого алынган аралык: 1900-жылдан 2050-жылга чейин.</li>
+                                        <li class="footerItem">Эсептөөлөр: Skyfield, Ephem, de421.bsp.</li>
+                                    </ul>
+                                </section>
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">Долбоордун авторлору</h3>
+                                    <p class="footerText">
+                                        «Hack the Heritage» хакатонунун жеңүүчүсү болгон «Үркөр» командасы.
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem"><strong>Роговцов Артём</strong> — мобилдик тиркеме бөлүгүн иштеп чыгуучу, 98-лицей.</li>
+                                        <li class="footerItem"><strong>Анжелина Чойбалсанова</strong> — питчер, «Ала-Тоо» университети.</li>
+                                        <li class="footerItem"><strong>Ыманалиев Медер</strong> — веб-сайт бөлүгүн иштеп чыгуучу, УЦА.</li>
+                                        <li class="footerItem"><strong>Элчи Келсинбеков</strong> — веб-сайт бөлүгүн иштеп чыгуучу, УЦА.</li>
+                                        <li class="footerItem"><strong>Алиаскар Жумаев</strong> — календарь боюнча аналитик-эксперт, тимлид.</li>
+                                    </ul>
+                                </section>
+                            </div>
+
+                            <div class="footerBottom">
+                                <span>© 2026 Кыргыз улуттук календарь</span>
+                                <span>Команда «Үркөр» · Hack the Heritage</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>
+
+            <article class="preview night">
+                <header class="previewHeader">
+                    <h2 class="previewName">Night theme · Русский</h2>
+                    <div class="previewMeta">Темная основа + более глубокая полоса футера</div>
+                </header>
+
+                <div class="mockPage">
+                    <section class="mockMain" aria-label="Main page context">
+                        <div class="mockTop">
+                            <div>
+                                <h3 class="mockTitle">Кыргызский национальный календарь</h3>
+                                <p class="mockSub">Короткий макет основного экрана для солнечного и лунного календаря.</p>
+                            </div>
+                            <div class="yearPill">2026</div>
+                        </div>
+                        <div class="mockCalendar" aria-hidden="true">
+                            <div class="mockMonth"><span class="monthLabel">Январь</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Февраль</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Март</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Апрель</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Май</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Июнь</span><span class="monthLine"></span></div>
+                        </div>
+                    </section>
+
+                    <footer class="siteFooter">
+                        <div class="footerInner">
+                            <div class="footerLead">
+                                <div>
+                                    <div class="brandMark">
+                                        <span class="markIcon" aria-hidden="true">☾</span>
+                                        <div class="footerBrand">Кыргызский национальный календарь</div>
+                                    </div>
+                                    <p class="footerDescription">
+                                        Веб-календарь о традиционном кыргызском счете времени, фазах Луны, тоголе, мучоле
+                                        и важных календарных отметках в годовом представлении.
+                                    </p>
+                                </div>
+                                <div class="footerNotice">
+                                    <span class="noticeTitle">Важное примечание</span>
+                                    <p class="noticeText">
+                                        Даты Рамазана и Айт приведены как расчетная информация; официальные даты могут
+                                        уточняться местными религиозными органами.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="footerColumns">
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">О нас</h3>
+                                    <p class="footerText">
+                                        ОФ Культурно-исследовательский центр «Айгине» — некоммерческая организация в Бишкеке, основанная в 2004 году.
+                                        Центр специализируется на традиционных знаниях, образовании, гуманитарных и социальных исследованиях,
+                                        активно работает с НКО, государственными учреждениями и международными организациями. Также занимается
+                                        сохранением нематериального культурного наследия.
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem"><strong>Email:</strong> <a class="footerLink" href="mailto:office.aigine@gmail.com">office.aigine@gmail.com</a></li>
+                                        <li class="footerItem"><strong>Сайт:</strong> <a class="footerLink" href="https://aigine.kg/">aigine.kg</a></li>
+                                    </ul>
+                                </section>
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">Версия календаря</h3>
+                                    <p class="footerText">
+                                        За основу взята версия кыргызского национального «Ай-Күн» календаря Торона Жумаева.
+                                        Она объединяет дни новолуния, тогол, важные дни в Исламе, летоисчисление "мүчөл" и другие праздничные дни
+                                        отмечаемые в Кыргызской Республике. В этом сайте календарь адаптирован в цифровой формат и дополнен
+                                        астрономическими расчетами.
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem">Поддерживаемый период: 1900-2050.</li>
+                                        <li class="footerItem">Расчеты: Skyfield, Ephem, de421.bsp.</li>
+                                    </ul>
+                                </section>
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">Авторы проекта</h3>
+                                    <p class="footerText">
+                                        Команда «Үркөр», победитель хакатона «Hack the Heritage».
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem"><strong>Роговцов Артём</strong> — разработчик мобильного приложения, Лицей 98.</li>
+                                        <li class="footerItem"><strong>Анжелина Чойбалсанова</strong> — питчер, университет «Ала-Тоо».</li>
+                                        <li class="footerItem"><strong>Ыманалиев Медер</strong> — разработчик сайта, УЦА.</li>
+                                        <li class="footerItem"><strong>Элчи Келсинбеков</strong> — разработчик сайта, УЦА.</li>
+                                        <li class="footerItem"><strong>Алиаскар Жумаев</strong> — аналитик-эксперт по вопросам календаря, тимлид.</li>
+                                    </ul>
+                                </section>
+                            </div>
+
+                            <div class="footerBottom">
+                                <span>© 2026 Кыргызский национальный календарь</span>
+                                <span>Команда «Үркөр» · Hack the Heritage</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>
+
+            <article class="preview day">
+                <header class="previewHeader">
+                    <h2 class="previewName">Day theme · Кыргызча</h2>
+                    <div class="previewMeta">Warm page surface + denser footer band</div>
+                </header>
+
+                <div class="mockPage">
+                    <section class="mockMain" aria-label="Main page context">
+                        <div class="mockTop">
+                            <div>
+                                <h3 class="mockTitle">Кыргыз Элинин Улуттук ай күн календары</h3>
+                                <p class="mockSub">Күн календары жана Ай календары үчүн негизги экрандын кыскача көрүнүшү.</p>
+                            </div>
+                            <div class="yearPill">2026</div>
+                        </div>
+                        <div class="mockCalendar" aria-hidden="true">
+                            <div class="mockMonth"><span class="monthLabel">Бирдин айы</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Жалган куран</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Чын куран</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Бугу</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Кулжа</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Теке</span><span class="monthLine"></span></div>
+                        </div>
+                    </section>
+
+                    <footer class="siteFooter">
+                        <div class="footerInner">
+                            <div class="footerLead">
+                                <div>
+                                    <div class="brandMark">
+                                        <span class="markIcon" aria-hidden="true">☾</span>
+                                        <div class="footerBrand">Кыргыз улуттук ай күн календары</div>
+                                    </div>
+                                    <p class="footerDescription">
+                                        Кыргыз элинин салттуу жыл санагын, ай фазаларын, тоголду, мүчөлдү жана маанилүү
+                                        календардык белгилерди бир жылдык көрүнүштө түшүндүргөн веб-календарь.
+                                    </p>
+                                </div>
+                                <div class="footerNotice">
+                                    <span class="noticeTitle">Маанилүү эскертүү</span>
+                                    <p class="noticeText">
+                                        Рамазан жана Айт күндөрү эсептик маалымат катары берилет; расмий даталар
+                                        жергиликтүү диний органдар тарабынан такталышы мүмкүн.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="footerColumns">
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">Биз жөнүндө</h3>
+                                    <p class="footerText">
+                                        ОФ «Айгине» Маданий-изилдөө борбору — 2004-жылы Бишкекте негизделген коммерциялык эмес уюм. Борбор -
+                                        салттуу билимдер, билим берүү, гуманитардык жана социалдык изилдөөлөргө адистешип, НКО, мамлекеттик
+                                        мекемелер жана эл аралык уюмдар менен иштешет. Ошондой эле материалдык эмес маданий мурасты сактоо багытында иш алып барат.
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem"><strong>Email:</strong> <a class="footerLink" href="mailto:office.aigine@gmail.com">office.aigine@gmail.com</a></li>
+                                        <li class="footerItem"><strong>Сайт:</strong> <a class="footerLink" href="https://aigine.kg/">aigine.kg</a></li>
+                                    </ul>
+                                </section>
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">Календардын версиясы</h3>
+                                    <p class="footerText">
+                                        Негиз катары Төрөн Жумаевдин кыргыз элинин улуттук «Ай-Күн» календарынын версиясы алынган.
+                                        Ал ай жаңырган күндөрдү, тоголду, Ислам дининдеги маанилүү күндөрдү, мүчөл жыл санагын жана башка
+                                        кыргыз республикасында белгиленчүү майрам күндөрдү бириктирет. Бул сайтта календарь санариптик форматка
+                                        ылайыкташтырылып, астрономиялык эсептөөлөр менен толукталды.
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem">Колдоого алынган аралык: 1900-жылдан 2050-жылга чейин.</li>
+                                        <li class="footerItem">Эсептөөлөр: Skyfield, Ephem, de421.bsp.</li>
+                                    </ul>
+                                </section>
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">Долбоордун авторлору</h3>
+                                    <p class="footerText">
+                                        «Hack the Heritage» хакатонунун жеңүүчүсү болгон «Үркөр» командасы.
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem"><strong>Роговцов Артём</strong> — мобилдик тиркеме бөлүгүн иштеп чыгуучу, 98-лицей.</li>
+                                        <li class="footerItem"><strong>Анжелина Чойбалсанова</strong> — питчер, «Ала-Тоо» университети.</li>
+                                        <li class="footerItem"><strong>Ыманалиев Медер</strong> — веб-сайт бөлүгүн иштеп чыгуучу, УЦА.</li>
+                                        <li class="footerItem"><strong>Элчи Келсинбеков</strong> — веб-сайт бөлүгүн иштеп чыгуучу, УЦА.</li>
+                                        <li class="footerItem"><strong>Алиаскар Жумаев</strong> — календарь боюнча аналитик-эксперт, тимлид.</li>
+                                    </ul>
+                                </section>
+                            </div>
+
+                            <div class="footerBottom">
+                                <span>© 2026 Кыргыз улуттук календарь</span>
+                                <span>Команда «Үркөр» · Hack the Heritage</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>
+
+            <article class="preview day">
+                <header class="previewHeader">
+                    <h2 class="previewName">Day theme · Русский</h2>
+                    <div class="previewMeta">Теплая основа + более плотная полоса футера</div>
+                </header>
+
+                <div class="mockPage">
+                    <section class="mockMain" aria-label="Main page context">
+                        <div class="mockTop">
+                            <div>
+                                <h3 class="mockTitle">Кыргызский национальный календарь</h3>
+                                <p class="mockSub">Короткий макет основного экрана для солнечного и лунного календаря.</p>
+                            </div>
+                            <div class="yearPill">2026</div>
+                        </div>
+                        <div class="mockCalendar" aria-hidden="true">
+                            <div class="mockMonth"><span class="monthLabel">Январь</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Февраль</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Март</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Апрель</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Май</span><span class="monthLine"></span></div>
+                            <div class="mockMonth"><span class="monthLabel">Июнь</span><span class="monthLine"></span></div>
+                        </div>
+                    </section>
+
+                    <footer class="siteFooter">
+                        <div class="footerInner">
+                            <div class="footerLead">
+                                <div>
+                                    <div class="brandMark">
+                                        <span class="markIcon" aria-hidden="true">☾</span>
+                                        <div class="footerBrand">Кыргызский национальный календарь</div>
+                                    </div>
+                                    <p class="footerDescription">
+                                        Веб-календарь о традиционном кыргызском счете времени, фазах Луны, тоголе, мучоле
+                                        и важных календарных отметках в годовом представлении.
+                                    </p>
+                                </div>
+                                <div class="footerNotice">
+                                    <span class="noticeTitle">Важное примечание</span>
+                                    <p class="noticeText">
+                                        Даты Рамазана и Айт приведены как расчетная информация; официальные даты могут
+                                        уточняться местными религиозными органами.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="footerColumns">
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">О нас</h3>
+                                    <p class="footerText">
+                                        ОФ Культурно-исследовательский центр «Айгине» — некоммерческая организация в Бишкеке, основанная в 2004 году.
+                                        Центр специализируется на традиционных знаниях, образовании, гуманитарных и социальных исследованиях,
+                                        активно работает с НКО, государственными учреждениями и международными организациями. Также занимается
+                                        сохранением нематериального культурного наследия.
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem"><strong>Email:</strong> <a class="footerLink" href="mailto:office.aigine@gmail.com">office.aigine@gmail.com</a></li>
+                                        <li class="footerItem"><strong>Сайт:</strong> <a class="footerLink" href="https://aigine.kg/">aigine.kg</a></li>
+                                    </ul>
+                                </section>
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">Версия календаря</h3>
+                                    <p class="footerText">
+                                        За основу взята версия кыргызского национального «Ай-Күн» календаря Торона Жумаева.
+                                        Она объединяет дни новолуния, тогол, важные дни в Исламе, летоисчисление "мүчөл" и другие праздничные дни
+                                        отмечаемые в Кыргызской Республике. В этом сайте календарь адаптирован в цифровой формат и дополнен
+                                        астрономическими расчетами.
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem">Поддерживаемый период: 1900-2050.</li>
+                                        <li class="footerItem">Расчеты: Skyfield, Ephem, de421.bsp.</li>
+                                    </ul>
+                                </section>
+                                <section class="footerBlock">
+                                    <h3 class="footerColumnTitle">Авторы проекта</h3>
+                                    <p class="footerText">
+                                        Команда «Үркөр», победитель хакатона «Hack the Heritage».
+                                    </p>
+                                    <ul class="footerList">
+                                        <li class="footerItem"><strong>Роговцов Артём</strong> — разработчик мобильного приложения, Лицей 98.</li>
+                                        <li class="footerItem"><strong>Анжелина Чойбалсанова</strong> — питчер, университет «Ала-Тоо».</li>
+                                        <li class="footerItem"><strong>Ыманалиев Медер</strong> — разработчик сайта, УЦА.</li>
+                                        <li class="footerItem"><strong>Элчи Келсинбеков</strong> — разработчик сайта, УЦА.</li>
+                                        <li class="footerItem"><strong>Алиаскар Жумаев</strong> — аналитик-эксперт по вопросам календаря, тимлид.</li>
+                                    </ul>
+                                </section>
+                            </div>
+
+                            <div class="footerBottom">
+                                <span>© 2026 Кыргызский национальный календарь</span>
+                                <span>Команда «Үркөр» · Hack the Heritage</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
+</html>
