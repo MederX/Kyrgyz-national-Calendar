@@ -15,8 +15,9 @@ Primary audiences, in priority order:
 3. Wider Kyrgyz-speaking audience.
 
 The interface should first help a visitor understand where they are and what the
-calendar is showing. UX/UI priority is desktop web first; mobile is a later
-stage. Readability for older users is a hard requirement.
+calendar is showing. The responsive scope includes phones, tablets, and laptops;
+phone users retain all twelve months in one column. `DESIGN.md` defines the current
+layout contract. Readability for older users is a hard requirement.
 
 ## 2. Tech Stack And Run Commands
 

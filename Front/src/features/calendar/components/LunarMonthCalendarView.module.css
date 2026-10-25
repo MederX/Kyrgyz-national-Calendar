@@ -1,5 +1,7 @@
 .wrapper {
     position: relative;
+    width: 100%;
+    min-width: 0;
     overflow: visible;
     display: flex;
     flex-direction: column;
@@ -114,7 +116,7 @@
 
 .monthStepButton,
 .monthSelectButton {
-    min-height: 42px;
+    min-height: 44px;
     border-radius: 8px;
     border: 1px solid var(--bg-border);
     color: var(--text-primary);
@@ -126,7 +128,8 @@
 }
 
 .monthStepButton {
-    width: 42px;
+    width: 44px;
+    flex: 0 0 44px;
     font-size: 23px;
     font-weight: 900;
 }
@@ -156,9 +159,8 @@
     font-size: 17px;
     font-weight: 900;
     line-height: 1.15;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
 .monthChevron {
@@ -208,9 +210,8 @@
     font-size: 14px;
     font-weight: 900;
     line-height: 1.15;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
 .monthOptionDates {
@@ -219,9 +220,8 @@
     font-size: 12px;
     font-weight: 700;
     line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
 [data-theme='light'] .monthDropdown {
@@ -265,7 +265,7 @@
 
 .sectionsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 600px), 1fr));
     gap: 18px;
 }
 
@@ -286,7 +286,8 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(7, minmax(70px, 1fr));
+    min-width: 0;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 4px;
 }
 
@@ -302,6 +303,7 @@
 
 .dayCell {
     position: relative;
+    min-width: 0;
     min-height: 76px;
     border-radius: 8px;
     border: 1px solid transparent;
@@ -363,18 +365,21 @@
 
 .lunarDay {
     position: absolute;
-    right: 8px;
-    bottom: 7px;
-    min-width: 54px;
-    height: 24px;
+    left: 2px;
+    right: 2px;
+    bottom: 3px;
+    min-width: 0;
+    min-height: 24px;
     display: inline-grid;
     place-items: center;
-    padding: 0 7px;
+    padding: 3px 1px;
     border-radius: 999px;
     font-size: 11px;
-    line-height: 1;
+    line-height: 1.15;
     font-weight: 800;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
     color: var(--color-new-moon);
     background: rgba(142, 202, 230, 0.13);
     border: 1px solid rgba(142, 202, 230, 0.26);
@@ -413,27 +418,62 @@
     }
 
     .grid {
-        grid-template-columns: repeat(7, minmax(36px, 1fr));
-        gap: 3px;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 2px;
     }
 
     .dayCell {
-        min-height: 60px;
+        min-height: 72px;
     }
 
     .gregorianDay {
         font-size: 21px;
     }
 
-    .lunarDay {
-        right: 6px;
-        bottom: 6px;
-        min-width: 44px;
-        max-width: calc(100% - 12px);
-        height: 20px;
-        padding: 0 5px;
-        font-size: 10px;
-        overflow: hidden;
-        text-overflow: clip;
+
+}
+
+@media (max-width: 380px) {
+    .wrapper {
+        gap: 14px;
+        padding: 14px 10px;
     }
+
+    .header {
+        align-items: stretch;
+    }
+
+    .title {
+        font-size: 26px;
+    }
+
+    .selectorLabel {
+        width: 100%;
+    }
+
+    .grid {
+        gap: 1px;
+    }
+
+    .dayHeader {
+        font-size: 10px;
+    }
+
+    .dayCell {
+        min-height: 72px;
+        border-radius: 5px;
+    }
+
+    .gregorianDay {
+        top: 6px;
+        left: 5px;
+        font-size: 19px;
+    }
+}
+
+
+.titleBlock { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+.monthSelectButton { padding: 8px 10px; }
+@media (max-width: 600px) {
+    .monthOption { grid-template-columns: minmax(0, 1fr); gap: 4px; }
 }

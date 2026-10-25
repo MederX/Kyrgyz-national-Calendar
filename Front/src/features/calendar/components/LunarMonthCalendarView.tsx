@@ -1,3 +1,4 @@
+import { useViewportMenu, centerMenuOption } from '../hooks/useViewportMenu';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { Language, LunarMonth } from '../types/calendar.types';
 import {
@@ -40,6 +41,7 @@ export const LunarMonthCalendarView: React.FC<Props> = ({
     const [monthDropdownOpen, setMonthDropdownOpen] = useState(false);
     const monthSelectorRef = useRef<HTMLDivElement | null>(null);
     const selectedMonthOptionRef = useRef<HTMLButtonElement | null>(null);
+    const { menuRef, menuStyle } = useViewportMenu(monthDropdownOpen, monthSelectorRef);
     const selectedMonth = months[selectedIndex] ?? null;
     const monthsSignature = months.map((month) => `${month.name}:${getLunarMonthStartDate(month)}:${getLunarMonthEndDate(month)}`).join('|');
 
@@ -53,7 +55,7 @@ export const LunarMonthCalendarView: React.FC<Props> = ({
 
         const selectedOption = selectedMonthOptionRef.current;
         window.requestAnimationFrame(() => {
-            selectedOption?.scrollIntoView({ block: 'center' });
+            centerMenuOption(selectedOption, menuRef.current);
         });
 
         const handlePointerDown = (event: PointerEvent) => {
@@ -163,7 +165,7 @@ export const LunarMonthCalendarView: React.FC<Props> = ({
                         )}
                     </div>
                     {monthDropdownOpen && (
-                        <div className={styles.monthDropdown} role="listbox">
+                        <div className={styles.monthDropdown} role="listbox" ref={menuRef} style={menuStyle}>
                             {months.map((month, index) => {
                                 const optionStartDate = getLunarMonthStartDate(month);
                                 const optionEndDate = getLunarMonthEndDate(month);

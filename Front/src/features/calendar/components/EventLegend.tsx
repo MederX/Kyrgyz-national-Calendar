@@ -91,6 +91,14 @@ export const EventLegend: React.FC<Props> = ({ language }) => {
                                 key={item.type}
                                 className={`${styles.item} ${item.isInteractive ? styles.clickable : ''}`}
                                 onClick={item.onClick}
+                                role={item.isInteractive ? 'button' : undefined}
+                                tabIndex={item.isInteractive ? 0 : undefined}
+                                onKeyDown={item.isInteractive ? (event) => {
+                                    if (event.key === 'Enter' || event.key === ' ') {
+                                        event.preventDefault();
+                                        item.onClick?.();
+                                    }
+                                } : undefined}
                             >
                                 {renderLegendIcon(item.type)}
                                 <span className={styles.label}>{language === 'ky' ? item.label_ky : item.label_ru}</span>

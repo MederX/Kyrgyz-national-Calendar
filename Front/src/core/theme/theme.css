@@ -6,6 +6,10 @@
 @import '@fontsource/cormorant-garamond/400-italic.css';
 
 :root {
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
   /* Default Dark Theme (Nature/Mountains Night) */
   --bg-primary: #0A141B;
   --bg-surface: #112028;

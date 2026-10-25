@@ -1,4 +1,5 @@
 import React from 'react';
+import { CalendarDialog } from './CalendarDialog';
 import type { CalendarEvent, Language, LunarMonth } from '../types/calendar.types';
 import { EventIcon, getEventColorVar } from './EventIcon';
 import { splitAiBashyNote } from '../utils/eventDisplay';
@@ -23,19 +24,15 @@ export const EventDetailSheet: React.FC<Props> = ({
     const { visibleEvents, aiBashyNote } = splitAiBashyNote(events);
 
     return (
-        <div className={styles.backdrop} onClick={onClose}>
-            <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
-                <div className={styles.handle} />
-                <div className={styles.header}>
-                    <h3 className={styles.dateTitle}>{date}</h3>
-                    <button className={styles.closeBtn} onClick={onClose}>
-                        ✕
-                    </button>
-                </div>
-
-                {visibleEvents.length > 0 && (
-                    <div className={styles.eventList}>
-                        {visibleEvents.map((ev, i) => (
+        <CalendarDialog
+            title={date}
+            language={language}
+            onClose={onClose}
+            width={520}
+        >
+            {visibleEvents.length > 0 && (
+                <div className={styles.eventList}>
+                    {visibleEvents.map((ev, i) => (
                         <div key={i} className={styles.eventCard}>
                             <div
                                 className={styles.iconCircle}
@@ -132,10 +129,9 @@ export const EventDetailSheet: React.FC<Props> = ({
                                 )}
                             </div>
                         </div>
-                        ))}
-                    </div>
-                )}
-            </div>
-        </div>
+                    ))}
+                </div>
+            )}
+        </CalendarDialog>
     );
 };

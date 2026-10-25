@@ -1,10 +1,10 @@
 # Web UX/UI Refresh Design
 
 ## Status
-- Status: Draft for user review
-- Last refreshed: 2026-06-10
-- Scope: desktop/web version of the existing yearly calendar screen
-- Out of scope for this phase: mobile layout, new "today", "nearest events", or "current month" blocks
+- Status: Active direction; mobile support added by user request on 2026-10-11
+- Last refreshed: 2026-10-11
+- Scope: responsive desktop, tablet, and mobile layouts for the existing yearly calendar screen
+- Out of scope for this phase: new "today", "nearest events", or "current month" blocks
 
 ## Product Purpose
 This project is a web calendar for the Kyrgyz national lunar-solar calendar. Its purpose is to make culturally significant, astronomical, religious, and state calendar events understandable in a modern web interface.
@@ -48,6 +48,15 @@ The first web screen keeps the current "year immediately visible" direction:
 - yearly month grid.
 
 Do not introduce a new overview module in this phase.
+
+## Responsive Layout
+Preserve the existing page order and year-at-a-glance experience across screen sizes.
+- On phones, show all twelve month cards in one vertical column.
+- On tablets, allow two month cards per row when each remains wide enough to read.
+- On wider screens, use additional columns as space allows.
+- Keep seven weekday columns in each calendar and let cells fit their container without horizontal scrolling.
+- Let header controls wrap and constrain dialogs to the visible viewport, including mobile safe areas.
+- Keep calendar numerals, descriptions, and touch controls readable; adapt spacing before shrinking text.
 
 ## Date Cell System
 Approved cell structure:

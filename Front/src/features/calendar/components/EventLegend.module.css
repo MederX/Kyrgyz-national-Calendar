@@ -1,9 +1,8 @@
 .legendContainer {
-    display: flex;
-    justify-content: center;
-    gap: 44px;
-    flex-wrap: wrap;
-    padding: 30px 34px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+    gap: 28px;
+    padding: clamp(18px, 3vw, 30px) clamp(14px, 3vw, 34px);
     background: var(--bg-surface);
     border-radius: var(--radius-lg);
     border: 1px solid var(--bg-border);
@@ -19,7 +18,7 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
-    min-width: 210px;
+    min-width: 0;
 }
 
 .blockTitle {
@@ -121,6 +120,7 @@
     color: var(--text-primary);
     font-weight: 500;
     line-height: 1.4;
+    overflow-wrap: anywhere;
 }
 
 .infoBadge {
@@ -136,3 +136,7 @@
     font-family: var(--font-family);
     line-height: 1;
 }
+
+.label { min-width: 0; }
+.infoBadge { flex: 0 0 18px; }
+.clickable { min-height: 44px; }

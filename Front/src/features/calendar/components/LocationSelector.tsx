@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CalendarDialog } from './CalendarDialog';
 import type { LatLon, Language } from '../types/calendar.types';
 import styles from './LocationSelector.module.css';
 
@@ -87,59 +88,56 @@ export const LocationSelector: React.FC<Props> = ({
     };
 
     return (
-        <div className={styles.backdrop} onClick={onClose}>
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-                <div className={styles.header}>
-                    <h3>{language === 'ky' ? 'Жайгашуу тандоо' : 'Выбор локации'}</h3>
-                    <button className={styles.closeBtn} onClick={onClose}>
-                        ✕
+        <CalendarDialog
+            title={language === 'ky' ? 'Жайгашуу тандоо' : 'Выбор локации'}
+            language={language}
+            onClose={onClose}
+            width={440}
+            bodyClassName={styles.content}
+        >
+            <button
+                className={styles.geoBtn}
+                onClick={handleGeolocate}
+                disabled={geoLoading}
+            >
+                📍{' '}
+                {geoLoading
+                    ? language === 'ky'
+                        ? 'Аныкталууда...'
+                        : 'Определение...'
+                    : language === 'ky'
+                        ? 'Геолокацияны колдонуу'
+                        : 'Использовать геолокацию'}
+            </button>
+
+            <input
+                type="text"
+                className={styles.searchInput}
+                placeholder={language === 'ky' ? 'Шаар издөө...' : 'Поиск города...'}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+            />
+
+            <div className={styles.cityList}>
+                {filtered.map((city) => (
+                    <button
+                        key={city.cityName}
+                        className={`${styles.cityBtn} ${city.cityName === currentLocation.cityName
+                            ? styles.cityBtnActive
+                            : ''
+                            }`}
+                        onClick={() => {
+                            onSelect(city);
+                            onClose();
+                        }}
+                    >
+                        <span className={styles.cityName}>{city.cityName}</span>
+                        <span className={styles.cityCoords}>
+                            {city.latitude.toFixed(2)}°, {city.longitude.toFixed(2)}°
+                        </span>
                     </button>
-                </div>
-
-                <button
-                    className={styles.geoBtn}
-                    onClick={handleGeolocate}
-                    disabled={geoLoading}
-                >
-                    📍{' '}
-                    {geoLoading
-                        ? language === 'ky'
-                            ? 'Аныкталууда...'
-                            : 'Определение...'
-                        : language === 'ky'
-                            ? 'Геолокацияны колдонуу'
-                            : 'Использовать геолокацию'}
-                </button>
-
-                <input
-                    type="text"
-                    className={styles.searchInput}
-                    placeholder={language === 'ky' ? 'Шаар издөө...' : 'Поиск города...'}
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-
-                <div className={styles.cityList}>
-                    {filtered.map((city) => (
-                        <button
-                            key={city.cityName}
-                            className={`${styles.cityBtn} ${city.cityName === currentLocation.cityName
-                                ? styles.cityBtnActive
-                                : ''
-                                }`}
-                            onClick={() => {
-                                onSelect(city);
-                                onClose();
-                            }}
-                        >
-                            <span className={styles.cityName}>{city.cityName}</span>
-                            <span className={styles.cityCoords}>
-                                {city.latitude.toFixed(2)}°, {city.longitude.toFixed(2)}°
-                            </span>
-                        </button>
-                    ))}
-                </div>
+                ))}
             </div>
-        </div>
+        </CalendarDialog>
     );
 };

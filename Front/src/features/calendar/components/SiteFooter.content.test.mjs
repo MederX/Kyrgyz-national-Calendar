@@ -24,8 +24,8 @@ test('site footer contains Kyrgyz and Russian content for client, calendar versi
     assert.match(source, /Авторы проекта/);
     assert.match(source, /office\.aigine@gmail\.com/);
     assert.match(source, /aigine\.kg/);
-    assert.match(source, /Төрөн Жумаев/);
-    assert.match(source, /Торона Жумаева/);
+    assert.match(source, /Тороң Жумаевдин/);
+    assert.match(source, /Тороң Жумаева/);
     assert.match(source, /Үркөр/);
     assert.match(source, /Hack the Heritage/);
 });

@@ -203,3 +203,7 @@
         gap: 8px;
     }
 }
+
+.footerLead > *, .footerBlock, .footerBottom > * { min-width: 0; overflow-wrap: anywhere; }
+.brandMark { max-width: 100%; }
+.footerBrand { min-width: 0; overflow-wrap: anywhere; }

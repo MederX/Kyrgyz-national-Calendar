@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { centerMenuOption } from '../hooks/useViewportMenu.ts';
 
 const source = readFileSync(new URL('./LunarMonthCalendarView.tsx', import.meta.url), 'utf8');
 const css = readFileSync(new URL('./LunarMonthCalendarView.module.css', import.meta.url), 'utf8');
@@ -38,10 +39,17 @@ test('lunar month dropdown uses the same internal scroll sizing as year dropdown
     assert.match(source, /styles\.monthOptionDates/);
 });
 
-test('lunar month dropdown scrolls to the selected month when opened', () => {
-    assert.match(source, /selectedMonthOptionRef/);
-    assert.match(source, /scrollIntoView\(\{\s*block:\s*'center'\s*\}\)/);
-    assert.match(source, /ref=\{isSelected \? selectedMonthOptionRef : undefined\}/);
+test('lunar month selection is centered by scrolling only its own list', () => {
+    const menu = { clientHeight: 200, scrollTop: 80, getBoundingClientRect: () => ({ top: 100 }) };
+    const optionOffset = 240;
+    const option = {
+        offsetHeight: 44,
+        getBoundingClientRect: () => ({ top: 100 + optionOffset - menu.scrollTop }),
+        scrollIntoView: () => { throw new Error('Must not scroll the page'); },
+    };
+    centerMenuOption(option, menu);
+    const visibleCenter = option.getBoundingClientRect().top - 100 + option.offsetHeight / 2;
+    assert.equal(visibleCenter, menu.clientHeight / 2);
 });
 
 test('lunar month dropdown is selectable, opaque, and lays dates to the right', () => {

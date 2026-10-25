@@ -1,3 +1,4 @@
+import { useViewportMenu, centerMenuOption } from '../hooks/useViewportMenu';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { Language } from '../types/calendar.types';
 import styles from './YearControl.module.css';
@@ -21,6 +22,7 @@ export const YearControl: React.FC<Props> = ({
     const [open, setOpen] = useState(false);
     const wrapperRef = useRef<HTMLDivElement | null>(null);
     const selectedOptionRef = useRef<HTMLButtonElement | null>(null);
+    const { menuRef, menuStyle } = useViewportMenu(open, wrapperRef);
     const years = useMemo(
         () => Array.from({ length: END_YEAR - START_YEAR + 1 }, (_, i) => START_YEAR + i),
         []
@@ -31,7 +33,7 @@ export const YearControl: React.FC<Props> = ({
 
         const selectedOption = selectedOptionRef.current;
         window.requestAnimationFrame(() => {
-            selectedOption?.scrollIntoView({ block: 'center' });
+            centerMenuOption(selectedOption, menuRef.current);
         });
 
         const handlePointerDown = (event: PointerEvent) => {
@@ -92,7 +94,7 @@ export const YearControl: React.FC<Props> = ({
                 ›
             </button>
             {open && (
-                <div className={styles.dropdown} role="listbox">
+                <div className={styles.dropdown} role="listbox" ref={menuRef} style={menuStyle}>
                     {years.map((year) => (
                         <button
                             key={year}

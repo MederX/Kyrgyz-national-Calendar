@@ -22,6 +22,7 @@
 
 .stepButton {
     width: 44px;
+    flex: 0 0 44px;
     font-size: 24px;
     font-weight: 800;
 }
@@ -68,7 +69,7 @@
 
 .option {
     width: 100%;
-    min-height: 38px;
+    min-height: 44px;
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
@@ -87,3 +88,6 @@
     color: var(--accent-gold);
     outline: none;
 }
+
+.dropdown { overscroll-behavior: contain; }
+.option { overflow-wrap: anywhere; }
