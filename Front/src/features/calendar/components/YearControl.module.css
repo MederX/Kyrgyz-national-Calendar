@@ -3,13 +3,13 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    width: 220px;
+    width: var(--year-control-width, 220px);
     max-width: 100%;
 }
 
 .stepButton,
 .yearButton {
-    min-height: 44px;
+    min-height: var(--year-control-height, 44px);
     border-radius: 8px;
     border: 1px solid var(--bg-border);
     background: rgba(255, 255, 255, 0.05);
@@ -21,9 +21,9 @@
 }
 
 .stepButton {
-    width: 44px;
-    flex: 0 0 44px;
-    font-size: 24px;
+    width: var(--year-control-height, 44px);
+    flex: 0 0 var(--year-control-height, 44px);
+    font-size: var(--year-control-font-size, 24px);
     font-weight: 800;
 }
 
@@ -33,7 +33,7 @@
     gap: 10px;
     padding: 0 14px;
     color: var(--accent-gold);
-    font-size: 24px;
+    font-size: var(--year-control-font-size, 24px);
     font-weight: 800;
 }
 
@@ -69,7 +69,7 @@
 
 .option {
     width: 100%;
-    min-height: 44px;
+    min-height: var(--year-control-height, 44px);
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
@@ -77,7 +77,7 @@
     gap: 12px;
     padding: 0 10px;
     color: var(--text-primary);
-    font-size: 14px;
+    font-size: var(--year-option-font-size, 14px);
     font-weight: 700;
 }
 

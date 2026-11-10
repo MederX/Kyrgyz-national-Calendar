@@ -7,20 +7,33 @@ Astronomical calculations for the Kyrgyz Root Calendar.
 """
 
 import math
+import os
+import json
 import numpy as np
 from datetime import date, datetime, timedelta, timezone
 from functools import lru_cache
+from pathlib import Path
 from zoneinfo import ZoneInfo
 import ephem
-from skyfield.api import load, wgs84, Star
+from skyfield.api import load, load_file, wgs84, Star
 from skyfield.almanac import find_discrete
 from skyfield import almanac
 
 # ── Load ephemeris and timescale once at module level ──────────────────────
-eph = load('de421.bsp')
+def _load_ephemeris():
+    bundled = Path(__file__).resolve().with_name('de421.bsp')
+    if bundled.is_file():
+        return load_file(str(bundled))
+    if os.environ.get('CALENDAR_OFFLINE') == '1':
+        raise FileNotFoundError('Bundled calendar ephemeris de421.bsp is missing')
+    # Preserve the website's existing bootstrap when its local file is absent.
+    return load('de421.bsp')
+
+
+eph = _load_ephemeris()
 earth = eph['earth']
 moon = eph['moon']
-ts = load.timescale()
+ts = load.timescale(builtin=True)
 
 # Alcyone — brightest star in the Pleiades (η Tauri)
 alcyone = Star(ra_hours=(3, 47, 29.0), dec_degrees=(24, 6, 18.0))
@@ -371,6 +384,11 @@ def calculate_nooruz(year: int, tz_name: str = "Asia/Bishkek") -> datetime:
     Calculate the Lunar New Year (Мүчөл жылы башталышы).
     Astronomically, it is the second New Moon after the Winter Solstice.
     """
+    if os.environ.get('CALENDAR_OFFLINE') == '1':
+        cached = _bundled_nooruz_times().get(str(year))
+        if cached:
+            return datetime.fromisoformat(cached).astimezone(_get_timezone(tz_name))
+
     t0 = ts.utc(year - 1, 12, 1)
     t1 = ts.utc(year - 1, 12, 31)
     times_s, _ = almanac.find_discrete(t0, t1, almanac.seasons(eph))
@@ -387,6 +405,15 @@ def calculate_nooruz(year: int, tz_name: str = "Asia/Bishkek") -> datetime:
 
     lny_time = new_moons[1] if len(new_moons) >= 2 else new_moons[0]
     return _to_local_datetime(lny_time, tz_name)
+
+
+@lru_cache(maxsize=1)
+def _bundled_nooruz_times() -> dict:
+    path = Path(__file__).resolve().with_name('nooruz-utc.json')
+    if not path.is_file():
+        return {}
+    with path.open(encoding='utf-8') as source:
+        return json.load(source)['years']
 
 
 # ── Islamic calendar helpers ──────────────────────────────────────────────

@@ -36,7 +36,7 @@ test('year dropdown aligns with the full arrow-to-arrow control width', () => {
     const wrapperRuleBody = getRuleBody('.wrapper');
     const dropdownRuleBody = getRuleBody('.dropdown');
 
-    assert.match(wrapperRuleBody, /width\s*:\s*220px/);
+    assert.match(wrapperRuleBody, /width\s*:\s*var\(--year-control-width,\s*220px\)/);
     assert.match(css, /\.yearButton\s*\{[^}]*flex\s*:\s*1\s+1\s+auto/);
     assert.match(dropdownRuleBody, /left\s*:\s*0/);
     assert.match(dropdownRuleBody, /right\s*:\s*0/);
