@@ -5,5 +5,10 @@
 }
 
 .content strong {
-    color: #10B981;
+    color: var(--mobile-info-emphasis-color, #10B981);
+    font-weight: 700;
+}
+
+.content .term {
+    color: var(--mobile-info-heading-color, #10B981);
 }

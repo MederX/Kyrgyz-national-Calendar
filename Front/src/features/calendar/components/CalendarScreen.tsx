@@ -1,3 +1,4 @@
+import { CALENDAR_TITLES, MONTH_NAMES_KY, MONTH_NAMES_RU, MONTH_NAMES_RU_GENITIVE, KY_DAY_NAMES, ANIMAL_NAMES_KY, ANIMAL_NAMES_RU, ANIMAL_YEAR_NAMES_RU, ANIMAL_EMOJIS, getKyMonthGenitive, formatKyFullDate } from '../utils/calendarCopy';
 import React, { useState, useEffect, useMemo } from 'react';
 import { useCalendarStore } from '../store/calendarStore';
 import { useCalendarEvents } from '../hooks/useCalendarEvents';
@@ -10,66 +11,6 @@ import { LunarMonthCalendarView } from './LunarMonthCalendarView';
 import { SiteFooter } from './SiteFooter';
 import type { CalendarEvent, CalendarPeriod } from '../types/calendar.types';
 import styles from './CalendarScreen.module.css';
-
-const MONTH_NAMES_KY = [
-    'Бирдин айы (январь)',
-    'Жалган куран (февраль)',
-    'Чын куран (март)',
-    'Бугу (апрель)',
-    'Кулжа (май)',
-    'Теке (июнь)',
-    'Баш оона (июль)',
-    'Аяк оона (август)',
-    'Тогуздун айы (сентябрь)',
-    'Жетинин айы (октябрь)',
-    'Бештин айы (ноябрь)',
-    'Үчтүн айы (декабрь)'
-];
-
-const MONTH_NAMES_RU = [
-    'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-    'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
-];
-
-const MONTH_NAMES_RU_GENITIVE = [
-    'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-    'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
-];
-
-const KY_DAY_NAMES = [
-    '', 'бири', 'экиси', 'үчү', 'төртү', 'беши', 'алтысы', 'жетиси', 'сегизи', 'тогузу', 'ону',
-    'он бири', 'он экиси', 'он үчү', 'он төртү', 'он беши', 'он алтысы', 'он жетиси', 'он сегизи', 'он тогузу', 'жыйырмасы',
-    'жыйырма бири', 'жыйырма экиси', 'жыйырма үчү', 'жыйырма төртү', 'жыйырма беши', 'жыйырма алтысы', 'жыйырма жетиси', 'жыйырма сегизи', 'жыйырма тогузу', 'отузу',
-    'отуз бири'
-];
-
-const ANIMAL_NAMES_KY = [
-    'Чычкан', 'Уй', 'Жолборс', 'Коён', 'Балык', 'Жылан', 'Жылкы', 'Кой', 'Маймыл', 'Тоок', 'Ит', 'Доңуз'
-];
-
-const ANIMAL_NAMES_RU = [
-    'Мышь', 'Корова', 'Тигр', 'Заяц', 'Рыба', 'Змея', 'Лошадь', 'Овца', 'Обезьяна', 'Петух', 'Собака', 'Кабан'
-];
-
-const ANIMAL_YEAR_NAMES_RU = [
-    'Год мыши', 'Год коровы', 'Год тигра', 'Год зайца', 'Год рыбы', 'Год змеи',
-    'Год лошади', 'Год овцы', 'Год обезьяны', 'Год петуха', 'Год собаки', 'Год кабана'
-];
-
-const ANIMAL_EMOJIS = [
-    '🐭', '🐄', '🐅', '🐇', '🐟', '🐍', '🐎', '🐑', '🐒', '🐓', '🐕', '🐗'
-];
-
-const getKyMonthGenitive = (monthIndex: number) => {
-    const baseMonth = MONTH_NAMES_KY[monthIndex].split('(')[0].trim();
-    return baseMonth.endsWith('айы')
-        ? baseMonth.replace('айы', 'айынын')
-        : `${baseMonth} айынын`;
-};
-
-const formatKyFullDate = (date: Date) => {
-    return `${getKyMonthGenitive(date.getUTCMonth())} ${KY_DAY_NAMES[date.getUTCDate()]}`;
-};
 
 const formatLocalDateString = (date: Date) => {
     const year = date.getFullYear();
@@ -233,7 +174,7 @@ export const CalendarScreen: React.FC = () => {
             <header className={styles.header}>
                 <div className={styles.headerText}>
                     <h1 className={styles.title}>
-                        {language === 'ky' ? 'Кыргыз Элинин Улуттук ай күн календары' : 'Кыргызский национальный календарь'}
+                        {CALENDAR_TITLES[language]}
                     </h1>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginTop: '10px' }}>
                         <span style={{ fontSize: '32px', fontWeight: 800, color: 'var(--accent-gold)', fontFamily: 'var(--font-family-serif)', lineHeight: 1 }}>

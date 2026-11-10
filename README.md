@@ -40,3 +40,8 @@ In local development Vite proxies `/api` to `http://localhost:8000`.
 
 - Timezone handling is based on IANA timezone names such as `Asia/Bishkek` or `America/New_York`.
 - Ramadan dates are calculated with a tabular Islamic calendar approximation for UI planning.
+
+## Android application
+
+The mobile interface has its own React entry and Capacitor Android project.
+See [mobile development and APK instructions](docs/mobile-development.md).

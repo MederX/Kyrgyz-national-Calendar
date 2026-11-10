@@ -15,6 +15,7 @@ export const ArsarInfoModal: React.FC<Props> = ({ language, onClose }) => {
             language={language}
             onClose={onClose}
             width={620}
+            emblemType="new_moon"
             bodyClassName={styles.content}
         >
             {language === 'ky' ? (

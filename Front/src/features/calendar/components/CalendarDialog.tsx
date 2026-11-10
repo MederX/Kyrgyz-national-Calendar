@@ -1,6 +1,7 @@
-import { useEffect, useId, useRef, type CSSProperties, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useId, useRef, type CSSProperties, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import type { Language } from '../types/calendar.types';
+import type { EventType, Language } from '../types/calendar.types';
+import { EventIcon, getEventColorVar } from './EventIcon';
 import styles from './CalendarDialog.module.css';
 
 interface Props {
@@ -10,10 +11,15 @@ interface Props {
     children: ReactNode;
     width?: number;
     bodyClassName?: string;
+    emblemType?: EventType;
 }
 
+export const CalendarDialogPresentation = createContext<'dialog' | 'sheet'>('dialog');
+
 /** One viewport and scroll contract for event, terminology and location dialogs. */
-export function CalendarDialog({ title, language, onClose, children, width = 460, bodyClassName }: Props) {
+export function CalendarDialog({ title, language, onClose, children, width = 460, bodyClassName, emblemType }: Props) {
+    const presentation = useContext(CalendarDialogPresentation);
+    const showEmblem = presentation === 'sheet' && emblemType !== undefined;
     const dialogRef = useRef<HTMLDialogElement>(null);
     const titleId = useId();
 
@@ -27,6 +33,7 @@ export function CalendarDialog({ title, language, onClose, children, width = 460
             dialog.style.setProperty('--viewport-width', `${viewport?.width ?? window.innerWidth}px`);
             dialog.style.setProperty('--viewport-top', `${viewport?.offsetTop ?? 0}px`);
             dialog.style.setProperty('--viewport-left', `${viewport?.offsetLeft ?? 0}px`);
+            dialog.style.setProperty('--viewport-bottom', `${Math.max(0, window.innerHeight - (viewport?.offsetTop ?? 0) - (viewport?.height ?? window.innerHeight))}px`);
         };
         updateViewport();
         dialog.showModal();
@@ -49,7 +56,7 @@ export function CalendarDialog({ title, language, onClose, children, width = 460
     return createPortal(
         <dialog
             ref={dialogRef}
-            className={styles.dialog}
+            className={`${styles.dialog} ${presentation === 'sheet' ? styles.sheet : ''}`}
             style={{ '--dialog-width': `${width}px` } as CSSProperties}
             aria-labelledby={titleId}
             aria-modal="true"
@@ -76,8 +83,9 @@ export function CalendarDialog({ title, language, onClose, children, width = 460
                     event.clientY < rect.top || event.clientY > rect.bottom) onClose();
             }}
         >
-            <div className={styles.header}>
-                <h3 id={titleId} className={styles.title}>{title}</h3>
+            <div className={`${styles.header} ${showEmblem ? styles.termHeader : ''}`}>
+                {showEmblem && <span className={styles.emblem} style={{ color: getEventColorVar(emblemType) }} aria-hidden="true" data-term-emblem={emblemType}><EventIcon type={emblemType} /></span>}
+                <h3 id={titleId} className={styles.title}>{showEmblem ? title.replace(/^🌸\s*/u, '') : title}</h3>
                 <button
                     type="button"
                     className={styles.closeBtn}

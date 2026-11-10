@@ -8,6 +8,8 @@ interface Props {
     onSelect: (loc: LatLon) => void;
     onClose: () => void;
     language: Language;
+    getCoordinates?: () => Promise<{ latitude: number; longitude: number }>;
+    reverseGeocode?: boolean;
 }
 
 const CITIES: LatLon[] = [
@@ -44,6 +46,8 @@ export const LocationSelector: React.FC<Props> = ({
     onSelect,
     onClose,
     language,
+    getCoordinates,
+    reverseGeocode = true,
 }) => {
     const [search, setSearch] = useState('');
     const [geoLoading, setGeoLoading] = useState(false);
@@ -53,38 +57,39 @@ export const LocationSelector: React.FC<Props> = ({
     );
 
     const handleGeolocate = async () => {
-        if (!navigator.geolocation) return;
+        if (!getCoordinates && !navigator.geolocation) return;
         setGeoLoading(true);
-        navigator.geolocation.getCurrentPosition(
-            async (pos) => {
-                const { latitude, longitude } = pos.coords;
-                let cityName = `${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
-                try {
-                    const res = await fetch(
-                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
-                        { headers: { 'User-Agent': 'KyrgyzCalendar/1.0' } }
-                    );
-                    const data = await res.json();
-                    cityName =
-                        data.address?.city ||
-                        data.address?.town ||
-                        data.address?.village ||
-                        cityName;
-                } catch {
-                    // fallback to coordinates
-                }
-                onSelect({
-                    latitude,
-                    longitude,
-                    cityName,
-                    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
-                });
-                setGeoLoading(false);
-                onClose();
-            },
-            () => setGeoLoading(false),
-            { enableHighAccuracy: true, timeout: 10000 }
-        );
+        try {
+            const { latitude, longitude } = getCoordinates ? await getCoordinates() : await new Promise<GeolocationCoordinates>((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(position => resolve(position.coords), reject, { enableHighAccuracy: true, timeout: 10000 });
+            });
+            let cityName = `${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
+            if (reverseGeocode) try {
+                const res = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
+                    { headers: { 'User-Agent': 'KyrgyzCalendar/1.0' } }
+                );
+                const data = await res.json();
+                cityName =
+                    data.address?.city ||
+                    data.address?.town ||
+                    data.address?.village ||
+                    cityName;
+            } catch {
+                // fallback to coordinates
+            }
+            onSelect({
+                latitude,
+                longitude,
+                cityName,
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
+            });
+            onClose();
+        } catch {
+            // Permission denial keeps the city list available.
+        } finally {
+            setGeoLoading(false);
+        }
     };
 
     return (

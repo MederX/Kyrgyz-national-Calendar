@@ -1,9 +1,70 @@
 # Project Memory: Kyrgyz National Calendar
 
-Last updated: 2026-06-22, Asia/Bishkek.
+Last updated: 2026-11-08, Asia/Bishkek.
 
 This file is a compact handoff for the next Codex/session. Start here before
 reading the whole repository or long chat history.
+
+## 0. Current Work: Android Application
+
+**Current delivery scope (user clarification, 2026-11-08): demo APK for business
+stakeholders, likely followed by small corrections and another build.** Full
+offline operation remains required. Before the next APK request, read
+[`docs/apk-demo-rebuild.md`](docs/apk-demo-rebuild.md): reuse the installed
+toolchain/caches and debug key; build `:app:assembleDebug`; avoid repeating the
+architecture migration, dependency setup and slow emulator investigation for UI
+changes. The last cached Gradle build took 19 seconds; the previous session's
+long duration was not ordinary APK compilation. Match checks to changed code
+and report actual native UI verification limits. Do not start store/release
+preparation as part of the demo task.
+
+The user approved the mobile visual concept, requested language switching, and
+required mobile names and explanatory text to match the existing website. They
+then approved Android first on React + Capacitor and implementation.
+
+- Approved design: `docs/superpowers/specs/2026-10-25-mobile-application-design.md`.
+- Implementation plan: `docs/superpowers/plans/2026-10-25-mobile-application.md`.
+- Run/build/device instructions: `docs/mobile-development.md`.
+- Production mobile UI: `Front/src/mobile/`; native project: `Front/android/`.
+- `cd Front && npm run dev:mobile` serves the real application on port 5178,
+  using the existing backend on port 8000. Default website entry stays separate.
+- Screens: Today, solar/lunar/month/year browsing, and original explanations.
+  Kyrgyz/Russian, light/dark themes, location, preferences, native back/resume,
+  geolocation, and loading/error/retry states are implemented.
+- Canonical product titles/month dictionaries: `Front/src/features/calendar/utils/calendarCopy.ts`.
+  Information dialogs, event details, icons, and footer reuse website components.
+- Autonomous Android architecture (user correction, 2026-11-08): the APK must
+  work from first installation without internet, computer, USB or any server.
+  `Back/calendar_service.py` is shared event assembly; the website keeps FastAPI.
+  Android embeds the Python calculator, DE421 and timezone/dependency data, called
+  through `CalendarEnginePlugin` and `calendar_mobile.py`. Mobile data transport
+  uses `networkMode: always`; there is no HTTP fallback in packaged builds.
+- Current APK output: `Front/android/app/build/outputs/apk/debug/app-debug.apk`.
+  It now declares `embedded-python` in `mobile-build.json`; no API URL is needed.
+  The formerly supplied 6 MB server-dependent APK is obsolete for this requirement.
+- Mobile logo D, “Calendar and cycle”, approved 2026-11-08, is implemented in
+  `CalendarLogo.tsx`, launcher/splash assets and the mobile favicon. Website
+  branding was not changed.
+- Offline design/plan: `docs/superpowers/specs/2026-11-08-offline-mobile-calendar-design.md`
+  and `docs/superpowers/plans/2026-11-08-offline-mobile-calendar.md`.
+- Development application ID: `org.example.kyrgyzcalendar`. The test APK is
+  debug-signed; production signing/store publication are not configured.
+- Offline validation 2026-11-08: Android 35 native instrumentation passes cold
+  1900/2026/2050 calculations in airplane mode without INTERNET permission.
+  Host reference output remains identical; frontend tests and compiled browser
+  UI with a native bridge contract shim pass. Final APK signature, bundled data,
+  both ABIs and 16 KB alignment pass; size is about 103 MB.
+- Full native UI is not verified: software-emulated WebView crashes before app
+  JavaScript on Android 34/35. The former API-dependent APK also crashes on the
+  Android 35 control run. Physical-device UI/GPS/back/keyboard checks remain.
+- Download copy: `/tmp/calendar-test-mockup/kyrgyz-calendar-offline.apk`, served
+  at `http://127.0.0.1:54597/kyrgyz-calendar-offline.apk`; the old debug filename
+  is also replaced with this autonomous APK. Temporary paths can disappear.
+- Verification: `npm test`, `npm run build`, mobile build + Capacitor sync,
+  `node scripts/check-mobile.cjs`, and Android `assembleDebug`.
+- The earlier `.superpowers/brainstorm/.../mobile-app-concept-v5.html` is an
+  ignored disposable visual reference. Do not copy its demo data or generated
+  HTML into the application.
 
 ## 1. Project Purpose
 
@@ -282,7 +343,10 @@ Useful generated/static artifacts:
 The preview file is useful for visual testing and communication, but production
 behavior lives in `Back/` and `Front/src/features/calendar/`.
 
-## 12. Current Git/Workspace Note
+## 12. Historical Git/Workspace Note (2026-06-22)
+
+The following note describes the June work, which was committed before the
+current Android implementation. Use `git status` for the actual working tree.
 
 At the time this memory file was refreshed on 2026-06-22, `git status --short`
 showed:
@@ -317,6 +381,10 @@ Pre-existing/context changes:
 ```bash
 git status --short
 ```
+
+For demo APK work, read `docs/apk-demo-rebuild.md` next and use its mobile build
+and verification path. Do not run the website build below just because the
+mobile UI changed; `android:sync` already builds and type-checks mobile assets.
 
 3. If touching backend calendar logic, run:
 

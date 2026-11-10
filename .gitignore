@@ -38,3 +38,7 @@ Thumbs.db
 out.json
 *.bsp
 *.download*
+
+# Mobile build outputs and local API configuration
+Front/dist-mobile/
+!Front/.env.mobile.example

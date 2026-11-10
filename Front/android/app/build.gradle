@@ -1,0 +1,123 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.chaquo.python'
+
+android {
+    namespace = "org.example.kyrgyzcalendar"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId = System.getenv("CAPACITOR_APP_ID") ?: "org.example.kyrgyzcalendar"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        ndk { abiFilters "arm64-v8a", "x86_64" }
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+def offlinePythonDir = layout.buildDirectory.dir('generated/offlinePython')
+def offlineAstronomy = layout.buildDirectory.file('generated/offlineAstronomy/nooruz-utc.json')
+tasks.register('prepareOfflineAstronomy', Exec) {
+    inputs.files(rootProject.file('../../Back/calculator.py'), rootProject.file('../../Back/de421.bsp'), rootProject.file('../scripts/prepare-offline-astronomy.py'))
+    outputs.file offlineAstronomy
+    // The interpreter's libraries can change in place without a source edit.
+    outputs.upToDateWhen { false }
+    environment 'CALENDAR_OFFLINE', '0'
+    def backendPython = rootProject.file('../../Back/.venv/bin/python')
+    commandLine(System.getenv('CALENDAR_CALCULATOR_PYTHON') ?: (backendPython.exists() ? backendPython.absolutePath : 'python3.12'),
+        rootProject.file('../scripts/prepare-offline-astronomy.py').absolutePath,
+        '--output', offlineAstronomy.get().asFile.absolutePath)
+}
+tasks.register('syncOfflinePython', Sync) {
+    dependsOn 'prepareOfflineAstronomy'
+    from(rootProject.file('../../Back')) {
+        include 'calculator.py', 'calendar_service.py', 'de421.bsp'
+    }
+    into offlinePythonDir
+    from offlineAstronomy
+    doFirst {
+        if (!rootProject.file('../../Back/de421.bsp').exists()) {
+            throw new GradleException('Offline APK requires Back/de421.bsp at build time.')
+        }
+    }
+}
+chaquopy {
+    defaultConfig {
+        version '3.12'
+        buildPython(System.getenv('CALENDAR_BUILD_PYTHON') ?: 'python3.12')
+        pip {
+            install 'numpy==1.26.2'
+            install 'ephem==4.1.5'
+            install 'skyfield==1.54'
+            install 'sgp4==2.27'
+            install 'tzdata==2025.2'
+        }
+    }
+    sourceSets {
+        main { srcDir offlinePythonDir }
+    }
+}
+tasks.configureEach { task ->
+    if (task.name.contains('Python') && task.name != 'syncOfflinePython') {
+        task.dependsOn('syncOfflinePython')
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+// Both debug and release APKs must bundle the offline engine, never a server URL.
+def verifyOfflineConfiguration = tasks.register('verifyOfflineConfiguration') {
+    doLast {
+        def metadataFile = file('src/main/assets/public/mobile-build.json')
+        def configFile = file('src/main/assets/capacitor.config.json')
+        if (!metadataFile.exists() || !configFile.exists()) {
+            throw new GradleException('Run build:mobile and cap sync android before building the offline APK.')
+        }
+        def metadata = new groovy.json.JsonSlurper().parse(metadataFile)
+        def config = new groovy.json.JsonSlurper().parse(configFile)
+        if (metadata.dataSource != 'embedded-python' || metadata.offline != true || metadata.apiBaseUrl || config.server?.url || config.server?.cleartext || config.android?.allowMixedContent) {
+            throw new GradleException('APK refuses server-dependent assets. Rebuild and sync the offline mobile entry.')
+        }
+    }
+}
+tasks.configureEach { task ->
+    if (task.name == 'preDebugBuild' || task.name == 'preReleaseBuild') task.dependsOn(verifyOfflineConfiguration)
+}
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

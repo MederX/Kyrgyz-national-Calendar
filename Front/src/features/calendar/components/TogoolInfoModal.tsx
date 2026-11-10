@@ -15,6 +15,7 @@ export const TogoolInfoModal: React.FC<Props> = ({ language, onClose }) => {
             language={language}
             onClose={onClose}
             width={440}
+            emblemType="togool"
             bodyClassName={styles.content}
         >
             <div className={styles.illustration}>

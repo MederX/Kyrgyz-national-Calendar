@@ -82,21 +82,21 @@
 }
 
 .eventLabel {
-    font-size: 19px;
-    font-weight: 800;
+    font-size: var(--mobile-sheet-event-label-size, 19px);
+    font-weight: var(--mobile-sheet-event-label-weight, 800);
     color: var(--text-primary);
 }
 
 .eventTime {
-    font-size: 15px;
-    font-weight: 800;
+    font-size: var(--mobile-sheet-event-time-size, 15px);
+    font-weight: var(--mobile-sheet-event-time-weight, 800);
     color: var(--accent-gold);
 }
 
 .eventDesc {
-    font-size: 16px;
+    font-size: var(--mobile-sheet-copy-size, 16px);
     color: var(--text-secondary);
-    line-height: 1.5;
+    line-height: var(--mobile-sheet-copy-line-height, 1.5);
 }
 
 .tipsBox {
@@ -109,7 +109,7 @@
 
 .tipsTitle {
     display: block;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--accent-gold);
     text-transform: uppercase;
@@ -118,9 +118,9 @@
 }
 
 .tipsText {
-    font-size: 15px;
+    font-size: var(--mobile-sheet-copy-size, 15px);
     color: var(--text-primary);
-    line-height: 1.5;
+    line-height: var(--mobile-sheet-copy-line-height, 1.5);
     margin: 0;
 }
 
@@ -134,7 +134,7 @@
 
 .lunarTransitionTitle {
     display: block;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 800;
     color: var(--color-new-moon);
     text-transform: uppercase;
@@ -143,9 +143,9 @@
 }
 
 .lunarTransitionText {
-    font-size: 15px;
+    font-size: var(--mobile-sheet-copy-size, 15px);
     color: var(--text-primary);
-    line-height: 1.55;
+    line-height: var(--mobile-sheet-copy-line-height, 1.55);
     margin: 0;
 }
 
@@ -173,7 +173,7 @@
 .aiBashyTitle {
     display: block;
     color: var(--color-islamic);
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 900;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -183,8 +183,8 @@
 .aiBashyText {
     margin: 0;
     color: var(--text-primary);
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: var(--mobile-sheet-copy-size, 16px);
+    line-height: var(--mobile-sheet-copy-line-height, 1.5);
 }
 
 .eventInfo { min-width: 0; overflow-wrap: anywhere; }

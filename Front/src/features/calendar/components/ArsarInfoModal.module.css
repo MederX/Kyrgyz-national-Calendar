@@ -12,7 +12,7 @@
 }
 
 .content strong {
-    color: var(--accent-gold);
+    color: var(--mobile-info-heading-color, var(--accent-gold));
     font-weight: 800;
 }
 
@@ -25,9 +25,9 @@
 
 .section h4 {
     margin: 0;
-    font-size: 17px;
+    font-size: var(--mobile-sheet-section-heading-size, 17px);
     line-height: 1.25;
-    color: var(--color-new-moon);
+    color: var(--mobile-info-heading-color, var(--color-new-moon));
 }
 
 @media (max-width: 640px) {

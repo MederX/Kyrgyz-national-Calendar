@@ -26,8 +26,8 @@
 }
 
 .text p {
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: var(--mobile-sheet-copy-size, 16px);
+    line-height: var(--mobile-sheet-copy-line-height, 1.5);
     color: var(--text-primary);
 }
 

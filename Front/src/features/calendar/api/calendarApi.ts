@@ -8,8 +8,9 @@ const api = axios.create({
 });
 
 export async function fetchCalendarEvents(
-    req: CalendarRequest
+    req: CalendarRequest,
+    signal?: AbortSignal
 ): Promise<CalendarResponse> {
-    const { data } = await api.post<CalendarResponse>('/calendar/events', req);
+    const { data } = await api.post<CalendarResponse>('/calendar/events', req, { signal, timeout: 30000 });
     return data;
 }
